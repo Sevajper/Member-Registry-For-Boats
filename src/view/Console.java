@@ -24,6 +24,8 @@ public class Console {
 	}
 	public void getInputResult() {
 		
+		//Stefan is a fucking pussy
+		
 		Scanner input = new Scanner(System.in);
 		MemberController mc = new MemberController();
 		RegistryController rc = new RegistryController();
