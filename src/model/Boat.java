@@ -4,7 +4,7 @@ public class Boat {
 
 	private String name;
 	private String type;
-	private double length;
+	private String length;
 
 	public String getName() {
 		return name;
@@ -22,11 +22,11 @@ public class Boat {
 		this.type = type;
 	}
 
-	public double getLength() {
+	public String getLength() {
 		return length;
 	}
 
-	public void setLength(double length) {
+	public void setLength(String length) {
 		this.length = length;
 	}
 

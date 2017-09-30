@@ -1,11 +1,12 @@
 package controller;
 
+import model.Boat;
 import model.Member;
 import java.util.Scanner;
 
 public class MemberController {
 	RegistryController rc = new RegistryController();
-	
+
 	public void registerMember(Scanner input) {
 		System.out.println("Register a new member!");
 		System.out.println("Name: ");
@@ -22,33 +23,76 @@ public class MemberController {
 		rc.memberList.add(mem);
 	}
 	
-	public void updateMember() {
+	public void updateMember(Scanner input) {
+		Member mem = new Member();
+		System.out.println("Update an existing member!");
+		System.out.println("Please enter member ID: ");
+		String memID = input.next();
+																//To be continued
+		
+		System.out.println("New member name: ");
+		String name = input.next();
+		mem.setName(name);
+		
+		System.out.println("New member personnumer: ");
+		String persnum = input.next();
+		mem.setPersNum(persnum);
+																//To be continued
 		
 	}
 	
-	public void removeMember() {
+	public void removeMember(Scanner input) {
+		Member mem = new Member();
+		System.out.println("Remove a member!");
 		
+		System.out.println("Member id: ");
+		String memRemove = input.next();
+																//To be continued
 	}
 	
 	public Member getMemberInfo(String persNum) {
 		Member mem = new Member();
-		
+																//???
 		return mem;
 	}
 	
-	public void registerBoat() {
+	public void registerBoat(Scanner input) {
+		Boat bt = new Boat();
 		
+		System.out.println("Assign boat to a member!");
+		
+		System.out.println("Name of boat: ");
+		String boatName = input.next();
+		bt.setName(boatName);
+		
+		System.out.println("Boat type: ");
+		String boatType = input.next();
+		bt.setType(boatType);
+		
+		System.out.println("Boat length: ");
+		String boatLength = input.next();
+		bt.setLength(boatLength);
+		
+																 //Boat arraylist ?
 	}
 	
 	public void updateBoat() {
+		Boat bt = new Boat();
+		System.out.println("Update boat information!");
+		
+		System.out.println("");                                   //Boat id, member id ?
+																  //To be continued
 		
 	}
 	
 	public void removeBoat() {
+		Boat bt = new Boat();
+		System.out.println("Remove a boat!");
+																	//Gud help us
 		
 	}
 	
 	public void updateView() {
-		
+																	//No clue what this is
 	}
 }

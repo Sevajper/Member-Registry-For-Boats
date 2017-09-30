@@ -1,5 +1,7 @@
 package model;
 
+import controller.RegistryController;
+
 public class Member {
 
 	private String name;
@@ -7,6 +9,7 @@ public class Member {
 	private int id = 0;
 	private int numOfBoats;
 	private Boat boat;
+	RegistryController rc = new RegistryController();
 	
 	public Member() {}
 	
@@ -14,7 +17,7 @@ public class Member {
 		this.name = memberName;
 		this.persNum = memberPersNum;
 	}
-	
+
 	public int createID() {
 		id += 1;
 		return id;
