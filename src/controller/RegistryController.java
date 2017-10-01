@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -16,7 +17,7 @@ public class RegistryController {
 
 	public ArrayList<Member> memberList = new ArrayList<Member>();
 	String desktop = System.getProperty("user.home");
-	File file = new File(desktop);
+	File file = new File(desktop, "Member Registry.txt");
 	
 	public RegistryController() {
 		
@@ -36,8 +37,11 @@ public class RegistryController {
 			context = JAXBContext.newInstance(Member.class);
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-			marshaller.marshal(memberList, out);
+			
+			for(int i = 0; i < memberList.size(); i++) {
+				
+			marshaller.marshal(memberList.get(i), out);
+			}
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
