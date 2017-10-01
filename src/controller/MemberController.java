@@ -9,6 +9,7 @@ import java.util.Scanner;
 
 public class MemberController {
 	RegistryController rc = new RegistryController();
+	Console c = new Console();
 	
 	
 	public void appStart(view.Console view) {
@@ -21,19 +22,43 @@ public class MemberController {
 	}
 	
 	public void registerMember(Scanner input) {
+		boolean persNum;
 		System.out.println("Register a new member!");
 		System.out.println("Name: ");
 		String memberName = input.next();
 		
-		System.out.println("Personnumer: ");
+		System.out.println("Personnumer in the form YYMMDD-XXXX: ");
 		String memberPersNum = input.next();
-		
+		if (memberPersNum.substring(6, 7).equals("-")) {
+			persNum = true;
+		}
+		else {
+			persNum = false;
+		}
+		if (persNum == true) {
 		Member mem = new Member(memberName, memberPersNum);
 		String memberID = mem.createID();
 		mem.setId(memberID);
 		System.out.println("Your member ID is " + mem.getId() + " !");
+		System.out.println("");
+		System.out.println("");
 		
 		rc.memberList.add(mem);
+		try {
+			c.getInputResult();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		}
+		
+		else {
+			System.out.print("Error, something went wrong. Try again");
+			System.out.println("");
+			System.out.println("");
+			registerMember(input);
+		}
 	}
 	
 	public void updateMember(Scanner input) {

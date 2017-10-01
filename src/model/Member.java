@@ -38,9 +38,10 @@ public class Member {
 		this.name = memberName;
 		this.persNum = memberPersNum;
 	}
-
+	//Member ID is the first letter of the name plus the last three numbers of their personal number.
 	public String createID() {
-		id ="";
+		id = getName().substring(0, 1) + getPersNum().substring(8, 11); //needs a dash when making the personal number
+		
 		return id;
 	}
 	
