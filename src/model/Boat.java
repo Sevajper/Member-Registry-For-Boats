@@ -4,14 +4,14 @@ public class Boat {
 
 	private String name;
 	private String type;
-	private int length; 
+	private String length; 
 	/*
 	 * A boat is measured from tip of the bow to the center of the stern
 	 * (from tip to tail)
 	*/
 
 	//constructor to create a boat
-	public Boat(String boatName, String boatType, int boatSize) {
+	public Boat(String boatName, String boatType, String boatSize) {
 		this.name = boatName;
 		this.type = boatType;
 		this.length = boatSize;
@@ -25,6 +25,7 @@ public class Boat {
 	}
 	
 	//getters and setters
+
 	public String getName() {
 		return name;
 	}
@@ -41,11 +42,11 @@ public class Boat {
 		this.type = type;
 	}
 
-	public int getLength() {
+	public String getLength() {
 		return length;
 	}
 
-	public void setLength(int length) {
+	public void setLength(String length) {
 		this.length = length;
 	}
 	
