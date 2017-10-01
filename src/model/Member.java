@@ -40,7 +40,7 @@ public class Member {
 	}
 
 	public String createID() {
-		id = "Anus";
+		id ="";
 		return id;
 	}
 	

@@ -2,11 +2,24 @@ package controller;
 
 import model.Boat;
 import model.Member;
+import view.Console;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MemberController {
 	RegistryController rc = new RegistryController();
-
+	
+	
+	public void appStart(view.Console view) {
+		view.displayWelcome();
+		try {
+			view.getInputResult();
+		} catch (IOException e) {
+			System.err.println("Please check input!");
+		}
+	}
+	
 	public void registerMember(Scanner input) {
 		System.out.println("Register a new member!");
 		System.out.println("Name: ");
@@ -36,16 +49,23 @@ public class MemberController {
 		System.out.println("New member personnumer: ");
 		String persnum = input.next();
 		mem.setPersNum(persnum);
-																//Gud help us
-		
+																//rc.memberlist.add(mem);
+																//Overwriting in the arraylist ?
 	}
 	
 	public void removeMember(Scanner input) {
-		Member mem = new Member();
-		System.out.println("Remove a member!");
-		
-		System.out.println("Member id: ");
-		String memRemove = input.next();
+		Console c = new Console();
+		System.out.println("Are you sure you want to remove a member?");
+		System.out.println("No = 0 , Yes = 1");
+		int text = input.nextInt();
+		if(text == 0) {
+			System.out.println("Returning to Member Registry");
+			appStart(c);
+		}else if(text == 1) {
+			System.out.println("Please enter member ID: ");
+		}
+		String temp = input.next();
+		Member mem = rc.memberList.get(getMemberID(temp));
 																//To be continued
 	}
 	
@@ -55,7 +75,7 @@ public class MemberController {
 				return i;
 			}	
 		}
-		return 0;												//Should not be return = 0;
+		return -1;												//Should not be return = 0;
 	}
 	
 	public void registerBoat(Scanner input) {
