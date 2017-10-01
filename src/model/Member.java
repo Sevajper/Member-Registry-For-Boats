@@ -1,11 +1,31 @@
 package model;
 
+import java.util.ArrayList;
+
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+@XmlRootElement(name = "Member")
+@XmlType(propOrder = {"Name", "Personal Number", "Identity Number", "Number of Boats", "Boat Info"})
+@XmlAccessorType(XmlAccessType.FIELD)
+
 public class Member {
 
+	@XmlElement(name = "Member Name")
 	private String name;
+	@XmlElement(name = "Personal Number")
 	private int persNum;
+	@XmlElement(name = "Identity Number")
 	private int id;
+	@XmlElement(name = "Number of Boats")
 	private int numOfBoats;
+	@XmlElement(name = "Boat Info")
+	private ArrayList<Boat> boats = new ArrayList<Boat>();
+	
 	private Boat boat;
 
 	public String getName() {

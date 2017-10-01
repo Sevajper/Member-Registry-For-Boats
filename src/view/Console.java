@@ -1,5 +1,6 @@
 package view;
 
+import java.io.IOException;
 import java.util.Scanner;
 import controller.RegistryController;
 import controller.MemberController;
@@ -22,7 +23,7 @@ public class Console {
 				+ "\n11. Load from registry"
 				+ "\n0. Exit");
 	}
-	public void getInputResult() {
+	public void getInputResult() throws IOException {
 		
 		//Stefan is a fucking pussy
 		
