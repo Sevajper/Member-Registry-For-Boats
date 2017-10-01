@@ -25,8 +25,6 @@ public class Console {
 	}
 	public void getInputResult() throws IOException {
 		
-		//Stefan is a fucking pussy
-		
 		Scanner input = new Scanner(System.in);
 		MemberController mc = new MemberController();
 		RegistryController rc = new RegistryController();
@@ -40,19 +38,19 @@ public class Console {
              break;
          
          case 1:
-             mc.registerMember();
+             mc.registerMember(input);
              break;
          
          case 2:
-             mc.updateMember();
+             mc.updateMember(input);
              break;
          
          case 3:
-             mc.removeMember();
+             mc.removeMember(input);
              break;
          
          case 4:
-             mc.registerBoat();
+             mc.registerBoat(input);
              break;
          
          case 5:
@@ -63,7 +61,7 @@ public class Console {
              break;
          
          case 7:
-             mc.getMemberInfo(0);
+             mc.getMemberInfo(" ");
              break;
          
          case 8:
