@@ -1,5 +1,7 @@
 package model;
 
+import controller.RegistryController;
+
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -12,6 +14,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlRootElement(name = "Member")
 @XmlType(propOrder = {"Name", "Personal Number", "Identity Number", "Number of Boats", "Boat Info"})
 @XmlAccessorType(XmlAccessType.FIELD)
+
 
 public class Member {
 
@@ -27,7 +30,20 @@ public class Member {
 	private ArrayList<Boat> boats = new ArrayList<Boat>();
 	
 	private Boat boat;
+	RegistryController rc = new RegistryController();
+	
+	public Member() {}
+	
+	public Member(String memberName, String memberPersNum) {
+		this.name = memberName;
+		this.persNum = memberPersNum;
+	}
 
+	public int createID() {
+		id += 1;
+		return id;
+	}
+	
 	public String getName() {
 		return name;
 	}
