@@ -20,7 +20,7 @@ public class Console {
 				+ "\n11. Load from registry"
 				+ "\n0. Exit"
 				+ "\n"
-				);
+				+ "\nPlease input a number: ");
 	}
 	
 
