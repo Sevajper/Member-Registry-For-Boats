@@ -24,6 +24,8 @@ public class Boat {
 		this.length = boat.getLength();
 	}
 	
+	public Boat() {}
+	
 	//getters and setters
 
 	public String getName() {
