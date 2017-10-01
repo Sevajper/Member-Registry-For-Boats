@@ -23,7 +23,7 @@ public class Member {
 	@XmlElement(name = "Personal Number")
 	private String persNum;
 	@XmlElement(name = "Identity Number")
-	private int id;
+	private String id;
 	@XmlElement(name = "Number of Boats")
 	private int numOfBoats;
 	@XmlElement(name = "Boat Info")
@@ -39,8 +39,8 @@ public class Member {
 		this.persNum = memberPersNum;
 	}
 
-	public int createID() {
-		id += 1;
+	public String createID() {
+		id ="";
 		return id;
 	}
 	
@@ -60,11 +60,11 @@ public class Member {
 		this.persNum = persNum;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

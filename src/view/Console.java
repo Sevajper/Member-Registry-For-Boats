@@ -8,8 +8,8 @@ import controller.MemberController;
 public class Console {
 
 	public void displayWelcome() {
-		System.out.println("Hello! Welcome to the Member Registry!"
-				+ "\nPlease select an option from below: "
+		System.out.print("Hello! Welcome to the Member Registry!"
+				+ "\n"
 				+ "\n1. Register a new member"
 				+ "\n2. Update an existing member"
 				+ "\n3. Delete a member"
@@ -21,7 +21,9 @@ public class Console {
 				+ "\n9. Display compact list"
 				+ "\n10. Save to registry"
 				+ "\n11. Load from registry"
-				+ "\n0. Exit");
+				+ "\n0. Exit"
+				+ "\n"
+				+ "\nEnter a number: ");
 	}
 	public void getInputResult() throws IOException {
 		
@@ -61,7 +63,7 @@ public class Console {
              break;
          
          case 7:
-             mc.getMemberInfo(" ");
+             displaySpecific();
              break;
          
          case 8:
