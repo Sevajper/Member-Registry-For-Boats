@@ -1,12 +1,9 @@
 package view;
 
-import java.io.IOException;
-import java.util.Scanner;
-import controller.RegistryController;
-import controller.MemberController;
+
 
 public class Console {
-
+	
 	public void displayWelcome() {
 		System.out.print("Hello! Welcome to the Member Registry!"
 				+ "\n"
@@ -23,74 +20,12 @@ public class Console {
 				+ "\n11. Load from registry"
 				+ "\n0. Exit"
 				+ "\n"
-				+ "\nEnter a number: ");
+				+ "\nPlease input a number: ");
 	}
-	public void getInputResult() throws IOException {
-		
-		Scanner input = new Scanner(System.in);
-		MemberController mc = new MemberController();
-		RegistryController rc = new RegistryController();
-		
-		 int selection = input.nextInt();
-
-         switch (selection){
-         
-         case 0:
-             System.exit(0);
-             break;
-         
-         case 1:
-             mc.registerMember(input);
-             break;
-         
-         case 2:
-             mc.updateMember(input);
-             break;
-         
-         case 3:
-             mc.removeMember(input);
-             break;
-         
-         case 4:
-             mc.registerBoat(input);
-             break;
-         
-         case 5:
-        	 mc.updateBoat();
-             break;
-         case 6:
-             mc.removeBoat();
-             break;
-         
-         case 7:
-             displaySpecific();
-             break;
-         
-         case 8:
-             displayVerbose();
-             break;
-         
-         case 9:
-             displayCompact();
-             break;
-         
-                 
-         case 10:
-        	 rc.saveToRegistry();
-        	 break;
-        	 
-         case 11:
-        	 rc.loadFromRegistry();
-        	 break;
-         default:
-                 input.close();
-                 break;
-                 
-         }
-	}
+	
 
 	public void displayCompact() {
-
+		
 	}
 
 	public void displayVerbose() {

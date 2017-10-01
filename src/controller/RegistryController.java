@@ -17,6 +17,14 @@ public class RegistryController {
 	public ArrayList<Member> memberList = new ArrayList<Member>();
 	String desktop = System.getProperty("user.home");
 	File file = new File(desktop);
+	
+	public RegistryController() {
+		
+	}
+	
+	public RegistryController(ArrayList<Member> registry) {
+		this.memberList = registry;
+	}
 
 	// Take all the members in the memberList ArrayList and put them into a file on
 	// the desktop
@@ -51,7 +59,7 @@ public class RegistryController {
 
 	// IDK what this method does yet
 	public void getMembers() {
-
+		memberList.toString();
 	}
 
 }
