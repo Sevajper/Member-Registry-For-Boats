@@ -16,7 +16,7 @@ public class MemberController {
 		String memberPersNum = input.next();
 		
 		Member mem = new Member(memberName, memberPersNum);
-		int memberID = mem.createID();
+		String memberID = mem.createID();
 		mem.setId(memberID);
 		System.out.println("Your member ID is " + mem.getId() + " !");
 		
@@ -24,12 +24,11 @@ public class MemberController {
 	}
 	
 	public void updateMember(Scanner input) {
-		Member mem = new Member();
-		System.out.println("Update an existing member!");
 		System.out.println("Please enter member ID: ");
-		String memID = input.next();
-																//To be continued
-		
+		String temp = input.next();
+		Member mem = rc.memberList.get(getMemberID(temp));
+		System.out.println("Update an existing member!");
+																
 		System.out.println("New member name: ");
 		String name = input.next();
 		mem.setName(name);
@@ -37,7 +36,7 @@ public class MemberController {
 		System.out.println("New member personnumer: ");
 		String persnum = input.next();
 		mem.setPersNum(persnum);
-																//To be continued
+																//Gud help us
 		
 	}
 	
@@ -50,10 +49,13 @@ public class MemberController {
 																//To be continued
 	}
 	
-	public Member getMemberInfo(String persNum) {
-		Member mem = new Member();
-																//???
-		return mem;
+	public int getMemberID(String ID) {
+		for(int i = 0; i < rc.memberList.size();i++) {
+			if(rc.memberList.get(i).getId().equals(ID)) {
+				return i;
+			}	
+		}
+		return 0;												//Should not be return = 0;
 	}
 	
 	public void registerBoat(Scanner input) {

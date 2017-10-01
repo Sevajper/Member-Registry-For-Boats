@@ -61,7 +61,7 @@ public class Console {
              break;
          
          case 7:
-             mc.getMemberInfo(" ");
+             displaySpecific();
              break;
          
          case 8:
