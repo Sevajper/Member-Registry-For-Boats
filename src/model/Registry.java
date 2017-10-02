@@ -5,11 +5,12 @@ import java.util.ArrayList;
 public class Registry {
 
 	private ArrayList<Member> memberList = new ArrayList<Member>();
+	private ArrayList<Boat> boatList = new ArrayList<Boat>();
 
 	public Registry() {
 
 	}
-
+	
 	public Registry(ArrayList<Member> members) {
 		this.memberList = members;
 	}
@@ -25,7 +26,7 @@ public class Registry {
 	public void addMember(Member mem) {
 		memberList.add(mem);
 	}
-
+	
 	public Member getMember(String ID) {
 		Member mem = new Member();
 		if (memberList.isEmpty()) {

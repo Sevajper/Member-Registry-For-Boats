@@ -2,9 +2,9 @@ package model;
 
 public class Boat {
 
-	private String name;
-	private String type;
-	private String length; 
+	private String name = "Not available yet";
+	private String type = "Not available yet";
+	private String length = "Not available yet"; 
 	/*
 	 * A boat is measured from tip of the bow to the center of the stern
 	 * (from tip to tail)
@@ -54,12 +54,12 @@ public class Boat {
 	
 	//Boat description
 	public String toString() {
-		StringBuilder description = new StringBuilder();
-		description.append(
+		StringBuilder sb = new StringBuilder();
+		sb.append(
 				"\nBoat description: " 
-				+ "\nName: " + this.name
-				+ "\nBoat type: " + this.type
-				+ "\nBoat length: " + this.length);
-		return description.toString();
+				+ "\nBoat Name: " + this.name
+				+ "\nBoat Type: " + this.type
+				+ "\nBoat Length: " + this.length);
+		return sb.toString();
 	}
 }

@@ -30,7 +30,7 @@ public class Member {
 	private ArrayList<Boat> boats = new ArrayList<Boat>();
 	
 	@XmlElement(name = "boat")
-	private Boat boat;
+	private Boat boat = new Boat();
 	
 	
 	public Member() {}
@@ -78,7 +78,7 @@ public class Member {
 	public void setNumOfBoats(int numOfBoats) {
 		this.numOfBoats = numOfBoats;
 	}
-
+	
 	public Boat getBoat() {
 		return boat;
 	}
@@ -86,7 +86,14 @@ public class Member {
 	public void setBoat(Boat boat) {
 		this.boat = boat;
 	}
-	
+	public ArrayList<Boat> getBoats() {
+		return boats;
+	}
+	public void setBoats(Boat boat) {
+		boats.add(boat);
+	}
+
+
 	 public String toString(){
 	        String temp = 
 	        		  "\nMember: "  + this.name + " "
