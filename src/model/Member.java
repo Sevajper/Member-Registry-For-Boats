@@ -40,7 +40,7 @@ public class Member {
 	}
 	//Member ID is the first letter of the name plus the last three numbers of their personal number.
 	public String createID() {
-		id = getName().substring(0, 1) + getPersNum().substring(8, 11); //needs a dash when making the personal number
+		id = getName().substring(0, 1).toUpperCase() + getPersNum().substring(8, 11); //needs a dash when making the personal number
 		
 		
 		return id;
@@ -87,11 +87,12 @@ public class Member {
 	}
 	
 	 public String toString(){
-	        String temp = "Member: "  + this.name + " "
-	                + "\n\tMemberid: " + this.id + "\n"
-	                + " " + "\n\tPersonal Number: " + this.persNum
-	                + " " + "\n\tNumber of Boats: " + this.numOfBoats
-	                + "\n";
+	        String temp = 
+	        		  "\nMember: "  + this.name + " "
+	                + "\nMember ID: " + this.id
+	                + " " + "\nPersonal Number: " + this.persNum
+	                + " " + "\nNumber of Boats: " + this.numOfBoats
+	                +"\n";
 	        return temp;
 	}
 }
