@@ -1,7 +1,6 @@
 package controller;
 
 import model.Boat;
-import model.CompactRegistry;
 import model.Member;
 import model.Registry;
 import view.Console;
@@ -13,7 +12,6 @@ public class MemberController {
 	Console c = new Console();
 	RegistryController rc = new RegistryController();
 	private Registry memberList = new Registry();
-	private CompactRegistry compactList = new CompactRegistry();
 
 	public void getInputResult() throws IOException {
 
@@ -105,7 +103,6 @@ public class MemberController {
 			Member mem = new Member(memberName, memberPersNum);
 			String memberID = mem.createID();
 			mem.setId(memberID);
-			compactList.addCompactMember(mem);
 			memberList.addMember(mem);
 			System.out.println("");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
@@ -314,23 +311,16 @@ public class MemberController {
 
 	public void displayCompact() {
 		System.out.println("=========== Displaying a compact list of the members ===========");
-
-		if (compactList.getCompactRegistry().isEmpty()) {
+		if (memberList.getRegistry().isEmpty().isEmpty()) {
 			System.out.println("The Member Registry is currently empty.");
 			goBack();
 		} else {
-			StringBuilder sb = new StringBuilder();
-			if (compactList.getCompactRegistry().isEmpty()) {
-				sb.append("The Member Registry is empty.");
-			} else
-				System.out.println("=========== Member =========== ID =========== Number of boats ==");
-			for (int i = 0; i < compactList.getCompactRegistry().size(); i++) {
-				System.out.print(" " + compactList.getCompactRegistry().get(i) + "\t\t\t");
-				if (compactList.getCompactRegistry().get(i) instanceof Integer) {
-					System.out.println();
-				}
+			for (int i = 0; i < memberList.getRegistry().size(); i++) {
+			System.out.print("\nName: " + memberList.getRegistry().get(i).getName() + "\nID: "
+					+ memberList.getRegistry().get(i).getId() + "\nNumber of boats: "
+					+ memberList.getRegistry().get(i).getNumOfBoats() + "\n");
 			}
-			System.out.println(sb.toString());
+			goBack();
 		}
 	}
 
