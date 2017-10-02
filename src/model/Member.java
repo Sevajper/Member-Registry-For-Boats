@@ -25,7 +25,7 @@ public class Member {
 	@XmlElement(name = "IdentityNumber")
 	private String id;
 	@XmlElement(name = "NumberofBoats")
-	private int numOfBoats;
+	private int numOfBoats = 0;
 	@XmlElement(name = "BoatInfo")
 	private ArrayList<Boat> boats = new ArrayList<Boat>();
 	@XmlElement(name = "Boat")

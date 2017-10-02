@@ -185,29 +185,52 @@ public class MemberController {
 		return -1; // Should not be return = 0;
 	}
 
-	public void registerBoat(Scanner input) {
+	public void registerBoat(Scanner input) throws JAXBException {
 		Boat bt = new Boat();
+		
 
 		System.out.println("Assign boat to a member!");
 		
 		System.out.println("Please input member ID: ");
 		String id = input.next();
 		
-		Member mem = rc.memberList.get(getMemberID(id));
+		if (rc.memberList.isEmpty()) {
+			   System.err.println("There are no members in the registry, please register a member first!");
+			   System.out.println(" ");
+			   goBack();
+			  }
+		try {
+			Member mem = rc.memberList.get(getMemberID(id));
+			
+			System.out.println("Name of boat: ");
+			String boatName = input.next();
+			bt.setName(boatName);
 
-		System.out.println("Name of boat: ");
-		String boatName = input.next();
-		bt.setName(boatName);
+			System.out.println("Boat type: ");
+			String boatType = input.next();
+			bt.setType(boatType);
 
-		System.out.println("Boat type: ");
-		String boatType = input.next();
-		bt.setType(boatType);
-
-		System.out.println("Boat length: ");
-		String boatLength = input.next();
-		bt.setLength(boatLength);
+			System.out.println("Boat length: ");
+			String boatLength = input.next();
+			bt.setLength(boatLength);
+			
+			
+			mem.setBoat(bt);
+			int i = mem.getNumOfBoats();
+			i++;
+			mem.setNumOfBoats(i);
+			
+			
+			System.out.println("Boat is registered to " + mem.getName());
+			
+			goBack();
+		} catch (Exception e) {
+			System.err.println("The ID was not found!");
+			goBack();
+		}
 		
-		mem.setBoat(bt);
+
+		
 		
 
 		// Boat arraylist ?
