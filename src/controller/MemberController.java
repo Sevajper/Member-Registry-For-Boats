@@ -4,14 +4,18 @@ import model.Boat;
 import model.Member;
 import view.Console;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
+
+import javax.xml.bind.JAXBException;
+import javax.xml.stream.XMLStreamException;
 
 public class MemberController {
 	Console c = new Console();
 	RegistryController rc = new RegistryController();
 
-	public void getInputResult() throws IOException {
+	public void getInputResult() throws IOException, JAXBException, XMLStreamException {
 
 		Scanner input = new Scanner(System.in);
 
@@ -59,11 +63,11 @@ public class MemberController {
 			break;
 
 		case 10:
-			rc.saveToRegistry();
+			saveFunction();
 			break;
 
 		case 11:
-			rc.loadFromRegistry();
+			loadFunction();
 			break;
 		default:
 			input.close();
@@ -72,33 +76,28 @@ public class MemberController {
 		}
 	}
 
-	public void appStart(view.Console view) {
+	public void appStart(view.Console view) throws IOException, XMLStreamException, JAXBException {
 		view.displayWelcome();
-		try {
 			getInputResult();
-		} catch (IOException e) {
-			System.err.println("Please check input!");
-		}
+		
 	}
 
-	public void registerMember(Scanner input) {
+	public void registerMember(Scanner input) throws XMLStreamException, JAXBException, IOException {
 		boolean persNum;
 		System.out.println("Register a new member!");
 		System.out.println("enter name or input 0 to go back: ");
 		String memberName = input.next();
 
 		if (memberName.equals(Integer.toString(0))) {
-			try {
+			
 				System.out.println("Returning back.");
 				getInputResult();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			
 		}
 
-		System.out.println("Personnumer in the form YYMMDD-XXXX: ");
+		System.out.println("Personnumer in the form YYMMDDXXXX: ");
 		String memberPersNum = input.next();
-		if (memberPersNum.substring(6, 7).equals("-")) {
+		if (memberPersNum.length() == 10) {
 			persNum = true;
 		} else {
 			persNum = false;
@@ -118,14 +117,14 @@ public class MemberController {
 		}
 
 		else {
-			System.err.print("Error, something went wrong. Try again");
+			System.err.println("Error, something went wrong. Try again");
 			System.out.println("");
 			System.out.println("");
 			registerMember(input);
 		}
 	}
 
-	public void updateMember(Scanner input) {
+	public void updateMember(Scanner input) throws JAXBException {
 		System.out.println("Please enter member ID or input 0 to go back: ");
 		String temp = input.next();
 
@@ -150,7 +149,7 @@ public class MemberController {
 		// Overwriting in the arraylist ?
 	}
 
-	public void removeMember(Scanner input) {
+	public void removeMember(Scanner input) throws IOException, XMLStreamException, JAXBException {
 
 		System.out.println("Are you sure you want to remove a member?");
 		System.out.println("No = 0 , Yes = 1");
@@ -158,7 +157,8 @@ public class MemberController {
 		int text = input.nextInt();
 		if (text == 0) {
 			System.out.println("Returning to Member Registry");
-			appStart(c);
+				appStart(c);
+			
 		} else if (text == 1) {
 			System.out.print("Please enter member ID: ");
 		}
@@ -219,11 +219,30 @@ public class MemberController {
 	public void updateView() {
 		// No clue what this is
 	}
+	
+	public void saveFunction() throws IOException, JAXBException {
+		rc.saveToRegistry();
+		System.out.println(" ");
+		System.out.println(" ");
+		goBack();
+	}
+	
+	public void loadFunction() throws FileNotFoundException, JAXBException {
+		rc.loadFromRegistry();
+		System.out.println(" ");
+		System.out.println(" ");
+		goBack();
+	}
 
-	public void goBack() {
+	public void goBack() throws JAXBException {
 		try {
-			System.out.print("Select next instruction: ");
-			getInputResult();
+			System.out.println("Select next instruction: ");
+			try {
+				getInputResult();
+			} catch (XMLStreamException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (IOException e) {
 
 			e.printStackTrace();

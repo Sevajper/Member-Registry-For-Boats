@@ -40,7 +40,7 @@ public class Member {
 	}
 	//Member ID is the first letter of the name plus the last three numbers of their personal number.
 	public String createID() {
-		id = getName().substring(0, 1) + getPersNum().substring(8, 11); //needs a dash when making the personal number
+		id = getName().substring(0, 1) + getPersNum().substring(7, 10); //needs a dash when making the personal number
 		
 		
 		return id;
