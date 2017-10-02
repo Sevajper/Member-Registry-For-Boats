@@ -311,7 +311,7 @@ public class MemberController {
 
 	public void displayCompact() {
 		System.out.println("=========== Displaying a compact list of the members ===========");
-		if (memberList.getRegistry().isEmpty().isEmpty()) {
+		if (memberList.getRegistry().isEmpty()) {
 			System.out.println("The Member Registry is currently empty.");
 			goBack();
 		} else {
