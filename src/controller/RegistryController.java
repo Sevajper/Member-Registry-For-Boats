@@ -26,17 +26,17 @@ import org.xml.sax.SAXException;
 import model.Member;
 
 public class RegistryController {
-	
+
 	public ArrayList<Member> memberList = new ArrayList<Member>();
 	String desktop = System.getProperty("user.home");
 	File file = new File(desktop, "Member Registry.txt");;
 	XMLInputFactory inputFactory = XMLInputFactory.newFactory();
 	static Member m;
-	
+
 	public RegistryController() {
-		
+
 	}
-	
+
 	public RegistryController(ArrayList<Member> registry) {
 		this.memberList = registry;
 	}
@@ -44,47 +44,46 @@ public class RegistryController {
 	// Take all the members in the memberList ArrayList and put them into a file on
 	// the desktop
 	public void saveToRegistry() throws IOException {
-		
-		if(memberList.isEmpty()) {
+
+		if (memberList.isEmpty()) {
 			System.err.println("Sorry, you do not have any members in the Registry to Save!");
 		}
 
-		else { 
+		else {
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
-		try {
-			JAXBContext context;
-			context = JAXBContext.newInstance(Member.class);
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			
-			for(int i = 0; i < memberList.size(); i++) {
-				
-			marshaller.marshal(memberList.get(i), out);
+			try {
+				JAXBContext context;
+				context = JAXBContext.newInstance(Member.class);
+				Marshaller marshaller = context.createMarshaller();
+				marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+				for (int i = 0; i < memberList.size(); i++) {
+
+					marshaller.marshal(memberList.get(i), out);
+				}
+
+				System.out.print("Your members have successfully been Saved in C:\\Users");
+			} catch (JAXBException e) {
+				e.printStackTrace();
 			}
-			
-			System.out.print("Your members have successfully been Saved in C:\\Users");
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
 		}
 
 	}
 
 	// Take the members from the file and load them into the ArrayList registry
 	public void loadFromRegistry() throws FileNotFoundException, JAXBException {
-		
+
 		JAXBContext jaxbContext = JAXBContext.newInstance(Member.class);
-	    Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-	     
-	    //We had written this file in marshalling example
-	    Member emps = (Member) jaxbUnmarshaller.unmarshal(file);
-	     
-	    for(Member emp : getMembers())
-	    {
-	    	memberList.add(emp);
-	        System.out.println(emp.getName());
-	        System.out.println(emp.getPersNum());
-	    }
+		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+
+		// We had written this file in marshalling example
+		Member emps = (Member) jaxbUnmarshaller.unmarshal(file);
+
+		for (Member emp : getMembers()) {
+			memberList.add(emp);
+			System.out.println(emp.getName());
+			System.out.println(emp.getPersNum());
+		}
 	}
 
 	// IDK what this method does yet

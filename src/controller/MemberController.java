@@ -85,15 +85,20 @@ public class MemberController {
 	public void registerMember(Scanner input) throws XMLStreamException, JAXBException, IOException {
 		boolean persNum;
 		System.out.println("Register a new member!");
-		System.out.println("enter name or input 0 to go back: ");
-		String memberName = input.next();
+		System.out.println("Enter First Name or input 0 to go back: ");
+		String temp1 = input.next();
 
-		if (memberName.equals(Integer.toString(0))) {
+		if (temp1.equals(Integer.toString(0))) {
 			
 				System.out.println("Returning back.");
 				getInputResult();
 			
 		}
+		
+		System.out.println("Please input Last Name: ");
+		String temp2 = input.next();
+		
+		String memberName = temp1 + " " + temp2;
 
 		System.out.println("Personnumer in the form YYMMDDXXXX: ");
 		String memberPersNum = input.next();
@@ -184,6 +189,11 @@ public class MemberController {
 		Boat bt = new Boat();
 
 		System.out.println("Assign boat to a member!");
+		
+		System.out.println("Please input member ID: ");
+		String id = input.next();
+		
+		Member mem = rc.memberList.get(getMemberID(id));
 
 		System.out.println("Name of boat: ");
 		String boatName = input.next();
@@ -196,6 +206,9 @@ public class MemberController {
 		System.out.println("Boat length: ");
 		String boatLength = input.next();
 		bt.setLength(boatLength);
+		
+		mem.setBoat(bt);
+		
 
 		// Boat arraylist ?
 	}

@@ -87,11 +87,12 @@ public class Member {
 	}
 	
 	 public String toString(){
-	        String temp = "Member: "  + this.name + " "
-	                + "\n\tMemberid: " + this.id + "\n"
-	                + " " + "\n\tPersonal Number: " + this.persNum
-	                + " " + "\n\tNumber of Boats: " + this.numOfBoats
-	                + "\n";
-	        return temp;
+		 String temp = 
+	             "\nMember: "  + this.name + " "
+	                 + "\nMember ID: " + this.id
+	                 + " " + "\nPersonal Number: " + this.persNum
+	                 + " " + "\nNumber of Boats: " + this.numOfBoats
+	                 +"\n";
+	         return temp;
 	}
 }
