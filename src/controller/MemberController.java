@@ -83,56 +83,62 @@ public class MemberController {
 
 	public void registerMember(Scanner input) {
 		boolean persNum;
-		System.out.println("Register a new member!");
-		System.out.println("enter name or input 0 to go back: ");
+		System.out.println("------------------------------------------");
+		System.out.println("Register a new member! (Type 0 to go back)");
+		System.out.println("");
+		System.out.print("Name of new member: ");
 		String memberName = input.next();
+		goBackOnDemand(memberName);
 
-		if (memberName.equals(Integer.toString(0))) {
-			try {
-				System.out.println("Returning back.");
-				getInputResult();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		System.out.println("Personnumer in the form YYMMDD-XXXX: ");
+		System.out.print("Personal number in the form YYMMDD-XXXX: ");
 		String memberPersNum = input.next();
-		if (memberPersNum.substring(6, 7).equals("-")) {
-			persNum = true;
+		goBackOnDemand(memberPersNum);
+
+		if (memberPersNum.length() >= 8) {
+			if (memberPersNum.substring(6, 7).equals("-") && memberPersNum.length() == 11
+					&& charIsDigit(memberPersNum)) {
+				persNum = true;
+			} else {
+				persNum = false;
+			}
+			if (persNum == true) {
+				Member mem = new Member(memberName, memberPersNum);
+				String memberID = mem.createID();
+				mem.setId(memberID);
+				rc.memberList.add(mem);
+				System.out.println(rc.memberList.toString());
+				goBack();
+
+			} else if (persNum == false) {
+				System.err.println("Incorrect personal number form, try again!");
+				goBack();
+				registerMember(input);
+			}
+
 		} else {
-			persNum = false;
-		}
-		if (persNum == true) {
-			Member mem = new Member(memberName, memberPersNum);
-			String memberID = mem.createID();
-			mem.setId(memberID);
-			System.out.println("Your member ID is " + mem.getId() + " !");
-			System.out.println("");
-			System.out.println("");
+			System.err.println("Incorrect personal number form, try again!");
 
-			rc.memberList.add(mem);
-			System.out.println(rc.memberList.toString());
 			goBack();
-
-		}
-
-		else {
-			System.err.print("Error, something went wrong. Try again");
-			System.out.println("");
-			System.out.println("");
 			registerMember(input);
 		}
 	}
 
 	public void updateMember(Scanner input) {
-		System.out.println("Please enter member ID or input 0 to go back: ");
+		System.out.println("------------------------------------------");
+		System.out.println("Update an existing member! (Type 0 to go back)");
+		System.out.println("");
+		System.out.print("Please enter existing member's ID: ");
 		String temp = input.next();
 
 		if (temp.equals(Integer.toString(0))) {
 			goBack();
 		}
-
+		if (rc.memberList.isEmpty()) {
+			System.err.println("There are no members to update, please register a member first!");
+			System.out.print("");
+			goBack();
+			registerMember(input);
+		}
 		Member mem = rc.memberList.get(getMemberID(temp));
 		System.out.println("Update an existing member!");
 
@@ -220,9 +226,40 @@ public class MemberController {
 		// No clue what this is
 	}
 
+	public boolean charIsDigit(String temp) {
+		for (int i = 0; i < 5; i++) {
+			if (!Character.isDigit(temp.charAt(i))) {
+				return false;
+			}
+		}
+
+		for (int j = 7; j < 11; j++) {
+			if (!Character.isDigit(temp.charAt(j))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public void goBackOnDemand(String name) {
+		if (name.equals(Integer.toString(0))) {
+			try {
+				System.out.println();
+				System.out.println("------------------------------------------");
+				System.out.print("Choose by typing a number between 0-11: ");
+				getInputResult();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public void goBack() {
 		try {
-			System.out.print("Select next instruction: ");
+			System.out.println();
+			System.out.println("------------------------------------------");
+			System.out.print("Choose by typing a number between 0-11: ");
 			getInputResult();
 		} catch (IOException e) {
 
