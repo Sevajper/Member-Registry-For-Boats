@@ -51,7 +51,7 @@ public class MemberController {
 			break;
 
 		case 7:
-			displaySpecific();
+			displaySpecific(input);
 			break;
 
 		case 8:
