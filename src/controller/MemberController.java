@@ -5,15 +5,30 @@ import model.Member;
 import model.Registry;
 import view.Console;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.stream.XMLInputFactory;
 
 public class MemberController {
 	Console c = new Console();
 	RegistryController rc = new RegistryController();
 	private Registry memberList = new Registry();
+	String desktop = System.getProperty("user.home");
+	File file = new File(desktop, "Member_Registry.txt");
+	XMLInputFactory inputFactory = XMLInputFactory.newFactory();
+	
 
-	public void getInputResult() throws IOException {
+	public void getInputResult() throws IOException, JAXBException {
 
 		Scanner input = new Scanner(System.in);
 
@@ -22,6 +37,10 @@ public class MemberController {
 		switch (selection) {
 
 		case 0:
+			saveToRegistry();
+			System.out.println(" ");
+			System.out.println(" ");
+			System.out.println("Exiting program! See You Next Time!");
 			System.exit(0);
 			break;
 
@@ -61,11 +80,7 @@ public class MemberController {
 			break;
 
 		case 10:
-			rc.saveToRegistry();
-			break;
-
-		case 11:
-			rc.loadFromRegistry();
+			loadFromRegistry();
 			break;
 
 		case 100:
@@ -79,7 +94,7 @@ public class MemberController {
 		}
 	}
 
-	public void appStart(view.Console view) {
+	public void appStart(view.Console view) throws JAXBException {
 		view.displayWelcome();
 		try {
 			getInputResult();
@@ -88,7 +103,7 @@ public class MemberController {
 		}
 	}
 
-	public void registerMember(Scanner input) {
+	public void registerMember(Scanner input) throws JAXBException {
 		System.out.println("------------------------------------------");
 		System.out.println("Register a new member! (Type 0 to go back)");
 		System.out.println("");
@@ -120,6 +135,7 @@ public class MemberController {
 			String memberID = mem.createID();
 			mem.setId(memberID);
 			memberList.addMember(mem);
+
 			System.out.println("");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("x Member successfully added to member registry! x");
@@ -131,11 +147,10 @@ public class MemberController {
 		} else {
 			persNumErr();
 			goBack();
-			registerMember(input);
 		}
 	}
 
-	public void updateMember(Scanner input) {
+	public void updateMember(Scanner input) throws JAXBException {
 		System.out.println("------------------------------------------");
 		System.out.println("Update an existing member! (Type 0 to go back)");
 		System.out.println("");
@@ -184,7 +199,7 @@ public class MemberController {
 			System.out.println("x Member successfully updated! x");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			goBack();
-			
+
 		} catch (Exception e) {
 			System.err.println("A member with that ID was not found, try again!");
 			System.out.flush();
@@ -194,7 +209,7 @@ public class MemberController {
 		}
 	}
 
-	public void removeMember(Scanner input) {
+	public void removeMember(Scanner input) throws JAXBException {
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members to remove, please register a member first!");
 			System.out.flush();
@@ -216,7 +231,7 @@ public class MemberController {
 		}
 		String temp = input.next();
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
-			try {
+		try {
 			Member mem = memberList.getRegistry().get(getMemberID(temp));
 			memberList.getRegistry().remove(mem);
 			System.out.println("");
@@ -324,7 +339,7 @@ public class MemberController {
 		return true;
 	}
 
-	public void goBackOnDemand(String name) {
+	public void goBackOnDemand(String name) throws JAXBException {
 		if (name.equals(Integer.toString(0))) {
 			try {
 				System.out.println();
@@ -337,7 +352,7 @@ public class MemberController {
 		}
 	}
 
-	public void goBack() {
+	public void goBack() throws JAXBException {
 		try {
 			System.out.println();
 			System.out.println("----------------------------");
@@ -348,8 +363,8 @@ public class MemberController {
 			e.printStackTrace();
 		}
 	}
-	
-	public void displayVerbose() {
+
+	public void displayVerbose() throws JAXBException {
 		System.out.println("=========== Displaying a verbose list of the members ===========");
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("The Member Registry is currently empty.");
@@ -360,22 +375,22 @@ public class MemberController {
 		}
 	}
 
-	public void displayCompact() {
+	public void displayCompact() throws JAXBException {
 		System.out.println("=========== Displaying a compact list of the members ===========");
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("The Member Registry is currently empty.");
 			goBack();
 		} else {
 			for (int i = 0; i < memberList.getRegistry().size(); i++) {
-			System.out.print("\nMember: " + memberList.getRegistry().get(i).getName() + "\nMember ID: "
-					+ memberList.getRegistry().get(i).getId() + "\nNumber of Boats: "
-					+ memberList.getRegistry().get(i).getNumOfBoats() + "\n");
+				System.out.print("\nMember: " + memberList.getRegistry().get(i).getName() + "\nMember ID: "
+						+ memberList.getRegistry().get(i).getId() + "\nNumber of Boats: "
+						+ memberList.getRegistry().get(i).getNumOfBoats() + "\n");
 			}
 			goBack();
 		}
 	}
 
-	public void displaySpecific(Scanner ID) {
+	public void displaySpecific(Scanner ID) throws JAXBException {
 		System.out.println("=================== Displaying specific member =================");
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("The Member Registry is currently empty.");
@@ -383,18 +398,69 @@ public class MemberController {
 		} else {
 			System.out.println("Please enter member ID!  (Input 0 to go back) ");
 			String temp = ID.next();
-			temp = temp.substring(0,1).toUpperCase() + temp.substring(1);
+			temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
 			goBackOnDemand(temp);
 			try {
 				Member mem = memberList.getMember(temp);
 				System.out.println(mem);
 				goBack();
-			}catch(Exception e) {
-				System.err.println("A member with that ID was not found, try again!"); 
+			} catch (Exception e) {
+				System.err.println("A member with that ID was not found, try again!");
 				System.out.println("");
 				goBack();
-			}
 			}
 		}
 	}
 
+	// Take all the members in the memberList ArrayList and put them into a file on
+	// the desktop
+	public void saveToRegistry() throws IOException, JAXBException {
+		if (memberList.getRegistry().isEmpty()) {
+			System.err.println("Sorry, you do not have any members in the Registry to Save!");
+		}
+		else {
+
+			BufferedWriter out = new BufferedWriter(new FileWriter(file));
+			JAXBContext context = JAXBContext.newInstance(Registry.class);
+			Marshaller marshaller = context.createMarshaller();
+			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+
+			marshaller.marshal(memberList, out);
+
+			System.out.print("Your members have successfully been Saved in C:\\Users\\(Your Name)");
+
+		}
+
+	}
+
+	// Take the members from the file and load them into the ArrayList registry
+	public Registry loadFromRegistry() throws FileNotFoundException {
+		
+		JAXBContext jaxbContext;
+
+		try {
+			jaxbContext = JAXBContext.newInstance(Registry.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+
+			// Read file
+			memberList = (Registry) jaxbUnmarshaller.unmarshal(file);
+			System.out.println("Your list has been loaded!");
+			goBack();
+			return memberList;
+		} catch (JAXBException e) {
+			System.out.println("Sorry! Members could not be loaded right now.");
+			e.printStackTrace();
+		}
+		
+		
+		return null;
+		
+		
+		
+	}
+
+	// IDK what this method does yet
+	public ArrayList<Member> getMembers() {
+		return memberList.getRegistry();
+	}
+}
