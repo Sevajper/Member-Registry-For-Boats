@@ -316,8 +316,8 @@ public class MemberController {
 			goBack();
 		} else {
 			for (int i = 0; i < memberList.getRegistry().size(); i++) {
-			System.out.print("\nName: " + memberList.getRegistry().get(i).getName() + "\nID: "
-					+ memberList.getRegistry().get(i).getId() + "\nNumber of boats: "
+			System.out.print("\nMember: " + memberList.getRegistry().get(i).getName() + "\nMember ID: "
+					+ memberList.getRegistry().get(i).getId() + "\nNumber of Boats: "
 					+ memberList.getRegistry().get(i).getNumOfBoats() + "\n");
 			}
 			goBack();
