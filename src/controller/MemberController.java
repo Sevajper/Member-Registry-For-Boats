@@ -16,7 +16,7 @@ public class MemberController {
 		Scanner input = new Scanner(System.in);
 
 		int selection = input.nextInt();
-		
+
 		switch (selection) {
 
 		case 0:
@@ -65,10 +65,10 @@ public class MemberController {
 		case 11:
 			rc.loadFromRegistry();
 			break;
-			
+
 		case 100:
 			appStart(c);
-			
+
 		default:
 			System.err.println("Wrong input, please choose a number between 0-11 or 100 to display menu");
 			System.out.println(" ");
@@ -93,11 +93,19 @@ public class MemberController {
 		System.out.print("First name of new member: ");
 		String temp = input.next();
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
-		
-		System.out.print("Last name of new member:");
+		goBackOnDemand(temp);
+		if (nameCheck(temp) == false) {
+			goBack();
+		}
+
+		System.out.print("Last name of new member: ");
 		String temp2 = input.next();
 		temp2 = temp2.substring(0, 1).toUpperCase() + temp2.substring(1);
-		
+		goBackOnDemand(temp2);
+		if (nameCheck(temp2) == false) {
+			goBack();
+		}
+
 		String memberName = temp + " " + temp2;
 		goBackOnDemand(memberName);
 
@@ -138,33 +146,45 @@ public class MemberController {
 			System.err.println("There are no members to update, please register a member first!");
 			System.out.println(" ");
 			goBack();
-			registerMember(input);
 		}
-		Member mem = rc.memberList.get(getMemberID(temp));
-		System.out.println("");
-		System.out.print("New member name: ");
-		String name = input.next();
-		name = name.substring(0, 1).toUpperCase() + name.substring(1);
-		goBackOnDemand(name);
-		System.out.print("New member personal number in the form YYMMDD-XXXX: ");
-		String persnum = input.next();
-		goBackOnDemand(persnum);
+		try {
+			Member mem = rc.memberList.get(getMemberID(temp));
+			System.out.println("");
 
-		if (persNumCheck(persnum)) {
-			mem.setPersNum(persnum);
-		} else {
-			persNumErr();
+			System.out.print("Update member first name: ");
+			String name = input.next();
+			name = name.substring(0, 1).toUpperCase() + name.substring(1);
+			goBackOnDemand(name);
+
+			System.out.print("Update member last name: ");
+			String name2 = input.next();
+			goBackOnDemand(name2);
+
+			String realName = name + " " + name2;
+
+			System.out.print("New member personal number in the form YYMMDD-XXXX: ");
+			String persnum = input.next();
+			goBackOnDemand(persnum);
+
+			if (persNumCheck(persnum)) {
+				mem.setPersNum(persnum);
+			} else {
+				persNumErr();
+				goBack();
+			}
+
+			mem.setName(realName);
+			System.out.println("");
+			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+			System.out.println("x Member successfully updated! x");
+			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+
 			goBack();
-			registerMember(input);
+		} catch (Exception e) {
+			System.out.println("A member with that ID was not found, try again!");
+			System.out.println("");
+			goBack();
 		}
-
-		mem.setName(name);
-		System.out.println("");
-		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-		System.out.println("x Member successfully updated! x");
-		System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-
-		goBack();
 	}
 
 	public void removeMember(Scanner input) {
@@ -172,7 +192,6 @@ public class MemberController {
 			System.err.println("There are no members to remove, please register a member first!");
 			System.out.println(" ");
 			goBack();
-			registerMember(input);
 		}
 		System.out.println("------------------------------------------");
 		System.out.println("Remove a member!");
@@ -188,7 +207,7 @@ public class MemberController {
 		}
 		String temp = input.next();
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
-			try {
+		try {
 			Member mem = rc.memberList.get(getMemberID(temp));
 			rc.memberList.remove(mem);
 			System.out.println("");
@@ -196,12 +215,12 @@ public class MemberController {
 			System.out.println("x Member successfully removed :( x");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			goBack();
-		}catch(Exception e) {
-			System.err.println("No member with that ID was found, try again!");
+		} catch (Exception e) {
+			System.err.println("A member with that ID was found, try again!");
 			System.out.println(" ");
 			goBack();
 		}
-		
+
 	}
 
 	public int getMemberID(String ID) {
@@ -249,10 +268,6 @@ public class MemberController {
 
 	}
 
-	public void updateView() {
-		// No clue what this is
-	}
-	
 	public void persNumErr() {
 		System.err.println("Incorrect personal number form, try again!");
 		System.out.println("");
@@ -262,10 +277,22 @@ public class MemberController {
 
 		if (persNum.length() >= 8) {
 			if (persNum.substring(6, 7).equals("-") && persNum.length() == 11 && charIsDigit(persNum)) {
+
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public boolean nameCheck(String name) {
+		for (int i = 0; i < name.length(); i++) {
+			if (Character.isDigit(name.charAt(i))) {
+				System.err.println("The name cannot have digits, try again!");
+				System.out.println("");
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public boolean charIsDigit(String temp) {
