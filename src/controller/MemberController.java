@@ -1,7 +1,9 @@
 package controller;
 
 import model.Boat;
+import model.CompactRegistry;
 import model.Member;
+import model.Registry;
 import view.Console;
 
 import java.io.IOException;
@@ -10,6 +12,8 @@ import java.util.Scanner;
 public class MemberController {
 	Console c = new Console();
 	RegistryController rc = new RegistryController();
+	private Registry memberList = new Registry();
+	private CompactRegistry compactList = new CompactRegistry();
 
 	public void getInputResult() throws IOException {
 
@@ -47,15 +51,15 @@ public class MemberController {
 			break;
 
 		case 7:
-			c.displaySpecific();
+			displaySpecific();
 			break;
 
 		case 8:
-			c.displayVerbose();
+			displayVerbose();
 			break;
 
 		case 9:
-			c.displayCompact();
+			displayCompact();
 			break;
 
 		case 10:
@@ -101,13 +105,14 @@ public class MemberController {
 			Member mem = new Member(memberName, memberPersNum);
 			String memberID = mem.createID();
 			mem.setId(memberID);
-			rc.memberList.add(mem);
+			compactList.addCompactMember(mem);
+			memberList.addMember(mem);
 			System.out.println("");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("x Member successfully added to member registry! x");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("");
-			System.out.println(rc.memberList.toString());
+			System.out.println(memberList.toString());
 			goBack();
 
 		} else {
@@ -126,13 +131,13 @@ public class MemberController {
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
 		goBackOnDemand(temp);
 
-		if (rc.memberList.isEmpty()) {
+		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members to update, please register a member first!");
 			System.out.print("");
 			goBack();
 			registerMember(input);
 		}
-		Member mem = rc.memberList.get(getMemberID(temp));
+		Member mem = memberList.getRegistry().get(getMemberID(temp));
 		System.out.println("");
 		System.out.print("New member name: ");
 		String name = input.next();
@@ -160,7 +165,7 @@ public class MemberController {
 	}
 
 	public void removeMember(Scanner input) {
-		if (rc.memberList.isEmpty()) {
+		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members to remove, please register a member first!");
 			System.out.print("");
 			goBack();
@@ -181,8 +186,8 @@ public class MemberController {
 		String temp = input.next();
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
 			try {
-			Member mem = rc.memberList.get(getMemberID(temp));
-			rc.memberList.remove(mem);
+			Member mem = memberList.getRegistry().get(getMemberID(temp));
+			memberList.getRegistry().remove(mem);
 			System.out.println("");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("x Member successfully removed :( x");
@@ -196,13 +201,13 @@ public class MemberController {
 		
 	}
 
-	public int getMemberID(String ID) {
-		for (int i = 0; i < rc.memberList.size(); i++) {
-			if (rc.memberList.get(i).getId().equals(ID)) {
+	public Integer getMemberID(String ID) {
+		for (int i = 0; i < memberList.getRegistry().size(); i++) {
+			if (memberList.getRegistry().get(i).getId().equals(ID)) {
 				return i;
 			}
 		}
-		return -1; // Should not be return = 0;
+		return null; // Should not be return = 0;
 	}
 
 	public void registerBoat(Scanner input) {
@@ -293,6 +298,58 @@ public class MemberController {
 		} catch (IOException e) {
 
 			e.printStackTrace();
+		}
+	}
+	
+	public void displayVerbose() {
+		System.out.println("=========== Displaying a verbose list of the members ===========");
+		if (memberList.getRegistry().isEmpty()) {
+			System.out.println("The Member Registry is currently empty.");
+			goBack();
+		} else {
+			memberList.getRegistry().stream().forEach(System.out::println);
+			goBack();
+		}
+	}
+
+	public void displayCompact() {
+		System.out.println("=========== Displaying a compact list of the members ===========");
+
+		if (compactList.getCompactRegistry().isEmpty()) {
+			System.out.println("The Member Registry is currently empty.");
+			goBack();
+		} else {
+			StringBuilder sb = new StringBuilder();
+			if (compactList.getCompactRegistry().isEmpty()) {
+				sb.append("The Member Registry is empty.");
+			} else
+				System.out.println("=========== Member =========== ID =========== Number of boats ==");
+			for (int i = 0; i < compactList.getCompactRegistry().size(); i++) {
+				System.out.print(" " + compactList.getCompactRegistry().get(i) + "\t\t\t");
+				if (compactList.getCompactRegistry().get(i) instanceof Integer) {
+					System.out.println();
+				}
+			}
+			System.out.println(sb.toString());
+		}
+	}
+
+	public void displaySpecific(Scanner ID) {
+		System.out.println("=================== Displaying specific member =================");
+		if (memberList.getRegistry().isEmpty()) {
+			System.out.println("The Member Registry is currently empty.");
+			goBack();
+		} else {
+			System.out.println("Please enter member ID or input 0 to go back: ");
+			String temp = ID.next();
+
+			if (temp.equals(Integer.toString(0))) {
+				goBack();
+			} else {
+				Member mem = memberList.getMember(temp);
+				System.out.println(mem);
+				goBack();
+			}
 		}
 	}
 }
