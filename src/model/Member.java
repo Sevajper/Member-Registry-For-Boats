@@ -11,25 +11,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-@XmlRootElement(name = "Member")
-@XmlType(propOrder = {"name", "persNum", "id", "numOfBoats", "boats", "boat"})
-@XmlAccessorType(XmlAccessType.FIELD)
+
 
 
 public class Member {
 
-	@XmlElement(name = "Name")
 	private String name;
-	@XmlElement(name = "PersonalNumber")
 	private String persNum;
-	@XmlElement(name = "IdentityNumber")
 	private String id;
-	@XmlElement(name = "NumberofBoats")
 	private int numOfBoats;
-	@XmlElement(name = "BoatInfo")
 	private ArrayList<Boat> boats = new ArrayList<Boat>();
-	
-	@XmlElement(name = "boat")
 	private Boat boat;
 	
 	

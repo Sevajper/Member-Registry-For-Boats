@@ -37,6 +37,10 @@ public class MemberController {
 		switch (selection) {
 
 		case 0:
+			saveToRegistry();
+			System.out.println(" ");
+			System.out.println(" ");
+			System.out.println("Exiting program! See You Next Time!");
 			System.exit(0);
 			break;
 
@@ -76,10 +80,6 @@ public class MemberController {
 			break;
 
 		case 10:
-			saveToRegistry();
-			break;
-
-		case 11:
 			loadFromRegistry();
 			break;
 
@@ -418,61 +418,42 @@ public class MemberController {
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("Sorry, you do not have any members in the Registry to Save!");
 		}
-
-		else if (file.exists()) {
-			BufferedWriter out = new BufferedWriter(new FileWriter(file, true));
-			JAXBContext context;
-			context = JAXBContext.newInstance(Member.class);
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-			for (int i = 0; i < memberList.getRegistry().size(); i++) {
-
-				marshaller.marshal(memberList.getRegistry().get(i), out);
-			}
-
-			System.out.print("Your members have successfully been Saved in C:\\Users");
-			goBack();
-		}
-
 		else {
 
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
-			JAXBContext context;
-			context = JAXBContext.newInstance(Member.class);
+			JAXBContext context = JAXBContext.newInstance(Registry.class);
 			Marshaller marshaller = context.createMarshaller();
 			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-			for (int i = 0; i < memberList.getRegistry().size(); i++) {
+			marshaller.marshal(memberList, out);
 
-				marshaller.marshal(memberList.getRegistry().get(i), out);
-			}
-
-			System.out.print("Your members have successfully been Saved in C:\\Users");
+			System.out.print("Your members have successfully been Saved in C:\\Users\\(Your Name)");
 
 		}
 
 	}
 
 	// Take the members from the file and load them into the ArrayList registry
-	public void loadFromRegistry() throws FileNotFoundException {
+	public Registry loadFromRegistry() throws FileNotFoundException {
+		
 		JAXBContext jaxbContext;
 
 		try {
 			jaxbContext = JAXBContext.newInstance(Registry.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
-			// We had written this file in marshaling example
+			// Read file
 			memberList = (Registry) jaxbUnmarshaller.unmarshal(file);
-		
-			
-			memberList.getRegistry().stream().forEach(System.out::println);
+			System.out.println("Your list has been loaded!");
 			goBack();
+			return memberList;
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Sorry! Members could not be loaded right now.");
 			e.printStackTrace();
 		}
 		
+		
+		return null;
 		
 		
 		
