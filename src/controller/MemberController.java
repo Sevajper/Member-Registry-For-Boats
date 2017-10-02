@@ -146,31 +146,14 @@ public class MemberController {
 
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members to update, please register a member first!");
+			System.out.flush();
+			System.err.flush();
 			System.out.print("");
 			goBack();
 			registerMember(input);
 		}
-		Member mem = memberList.getRegistry().get(getMemberID(temp));
-		System.out.println("");
-		System.out.print("New member name: ");
-		String name = input.next();
-		name = name.substring(0, 1).toUpperCase() + name.substring(1);
-		goBackOnDemand(name);
-		System.out.print("New member personal number in the form YYMMDD-XXXX: ");
-		String persnum = input.next();
-		goBackOnDemand(persnum);
-
-		if (persNumCheck(persnum)) {
-			mem.setPersNum(persnum);
-		} else {
-			System.err.println("Incorrect personal number form, try again!");
-
-			System.out.println(" ");
-
-			goBack();
-		}
 		try {
-			Member mem = rc.memberList.get(getMemberID(temp));
+			Member mem = memberList.getRegistry().get(getMemberID(temp));
 			System.out.println("");
 
 			System.out.print("Update member first name: ");
@@ -200,10 +183,12 @@ public class MemberController {
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("x Member successfully updated! x");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-
 			goBack();
+			
 		} catch (Exception e) {
-			System.out.println("A member with that ID was not found, try again!");
+			System.err.println("A member with that ID was not found, try again!");
+			System.out.flush();
+			System.err.flush();
 			System.out.println("");
 			goBack();
 		}
@@ -212,6 +197,8 @@ public class MemberController {
 	public void removeMember(Scanner input) {
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members to remove, please register a member first!");
+			System.out.flush();
+			System.err.flush();
 			System.out.println(" ");
 			goBack();
 		}
@@ -238,7 +225,9 @@ public class MemberController {
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			goBack();
 		} catch (Exception e) {
-			System.err.println("A member with that ID was found, try again!");
+			System.err.println("A member with that ID was not found, try again!");
+			System.out.flush();
+			System.err.flush();
 			System.out.println(" ");
 			goBack();
 		}
@@ -292,6 +281,8 @@ public class MemberController {
 
 	public void persNumErr() {
 		System.err.println("Incorrect personal number form, try again!");
+		System.out.flush();
+		System.err.flush();
 		System.out.println("");
 	}
 
@@ -361,7 +352,7 @@ public class MemberController {
 	public void displayVerbose() {
 		System.out.println("=========== Displaying a verbose list of the members ===========");
 		if (memberList.getRegistry().isEmpty()) {
-			System.out.println("The Member Registry is currently empty.");
+			System.err.println("The Member Registry is currently empty.");
 			goBack();
 		} else {
 			memberList.getRegistry().stream().forEach(System.out::println);
@@ -372,7 +363,7 @@ public class MemberController {
 	public void displayCompact() {
 		System.out.println("=========== Displaying a compact list of the members ===========");
 		if (memberList.getRegistry().isEmpty()) {
-			System.out.println("The Member Registry is currently empty.");
+			System.err.println("The Member Registry is currently empty.");
 			goBack();
 		} else {
 			for (int i = 0; i < memberList.getRegistry().size(); i++) {
@@ -387,19 +378,23 @@ public class MemberController {
 	public void displaySpecific(Scanner ID) {
 		System.out.println("=================== Displaying specific member =================");
 		if (memberList.getRegistry().isEmpty()) {
-			System.out.println("The Member Registry is currently empty.");
+			System.err.println("The Member Registry is currently empty.");
 			goBack();
 		} else {
-			System.out.println("Please enter member ID or input 0 to go back: ");
+			System.out.println("Please enter member ID!  (Input 0 to go back) ");
 			String temp = ID.next();
-
-			if (temp.equals(Integer.toString(0))) {
-				goBack();
-			} else {
+			temp = temp.substring(0,1).toUpperCase() + temp.substring(1);
+			goBackOnDemand(temp);
+			try {
 				Member mem = memberList.getMember(temp);
 				System.out.println(mem);
 				goBack();
+			}catch(Exception e) {
+				System.err.println("A member with that ID was not found, try again!"); 
+				System.out.println("");
+				goBack();
+			}
 			}
 		}
 	}
-}
+
