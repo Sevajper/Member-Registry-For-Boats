@@ -26,18 +26,4 @@ public class Console {
 				+ "\n"
 				+ "\nChoose by typing a number: ");
 	}
-	
-
-	public void displayCompact() {
-		
-	}
-
-	public void displayVerbose() {
-
-	}
-
-	public void displaySpecific() {
-
-	}
-
 }
