@@ -16,7 +16,7 @@ public class MemberController {
 		Scanner input = new Scanner(System.in);
 
 		int selection = input.nextInt();
-
+		
 		switch (selection) {
 
 		case 0:
@@ -68,9 +68,11 @@ public class MemberController {
 			
 		case 100:
 			appStart(c);
+			
 		default:
-			input.close();
-			break;
+			System.err.println("Wrong input, please choose a number between 0-11 or 100 to display menu");
+			System.out.println(" ");
+			goBack();
 
 		}
 	}
@@ -88,9 +90,15 @@ public class MemberController {
 		System.out.println("------------------------------------------");
 		System.out.println("Register a new member! (Type 0 to go back)");
 		System.out.println("");
-		System.out.print("Name of new member: ");
-		String memberName = input.next();
-		memberName = memberName.substring(0, 1).toUpperCase() + memberName.substring(1);
+		System.out.print("First name of new member: ");
+		String temp = input.next();
+		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
+		
+		System.out.print("Last name of new member:");
+		String temp2 = input.next();
+		temp2 = temp2.substring(0, 1).toUpperCase() + temp2.substring(1);
+		
+		String memberName = temp + " " + temp2;
 		goBackOnDemand(memberName);
 
 		System.out.print("Personal number in the form YYMMDD-XXXX: ");
@@ -111,7 +119,7 @@ public class MemberController {
 			goBack();
 
 		} else {
-			System.err.println("Incorrect personal number form, try again!");
+			persNumErr();
 			goBack();
 			registerMember(input);
 		}
@@ -128,7 +136,7 @@ public class MemberController {
 
 		if (rc.memberList.isEmpty()) {
 			System.err.println("There are no members to update, please register a member first!");
-			System.out.print("");
+			System.out.println(" ");
 			goBack();
 			registerMember(input);
 		}
@@ -145,7 +153,7 @@ public class MemberController {
 		if (persNumCheck(persnum)) {
 			mem.setPersNum(persnum);
 		} else {
-			System.err.println("Incorrect personal number form, try again!");
+			persNumErr();
 			goBack();
 			registerMember(input);
 		}
@@ -162,7 +170,7 @@ public class MemberController {
 	public void removeMember(Scanner input) {
 		if (rc.memberList.isEmpty()) {
 			System.err.println("There are no members to remove, please register a member first!");
-			System.out.print("");
+			System.out.println(" ");
 			goBack();
 			registerMember(input);
 		}
@@ -189,8 +197,8 @@ public class MemberController {
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			goBack();
 		}catch(Exception e) {
-			System.out.println("");
 			System.err.println("No member with that ID was found, try again!");
+			System.out.println(" ");
 			goBack();
 		}
 		
@@ -243,6 +251,11 @@ public class MemberController {
 
 	public void updateView() {
 		// No clue what this is
+	}
+	
+	public void persNumErr() {
+		System.err.println("Incorrect personal number form, try again!");
+		System.out.println("");
 	}
 
 	public boolean persNumCheck(String persNum) {
