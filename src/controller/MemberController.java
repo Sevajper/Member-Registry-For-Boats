@@ -251,10 +251,6 @@ public class MemberController {
 		// Gud help us
 
 	}
-
-	public void updateView() {
-		// No clue what this is
-	}
 	
 	public void saveFunction() throws IOException, JAXBException {
 		rc.saveToRegistry();
