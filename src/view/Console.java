@@ -11,7 +11,7 @@ public class Console {
 		System.out.print(	
 				  "1.  Register a new member"
 				+ "\n2.  Update an existing member"
-				+ "\n3.  Delete a member"
+				+ "\n3.  Remove a member"
 				+ "\n4.  Register a boat"
 				+ "\n5.  Update boat"
 				+ "\n6.  Remove a boat" 
@@ -22,7 +22,9 @@ public class Console {
 				+ "\n11. Load from registry"
 				+ "\n0.  Exit"
 				+ "\n"
-				+ "\nChoose by typing a number between 0-11: ");
+				+ "\n100. Display Member Registry Menu"
+				+ "\n"
+				+ "\nChoose by typing a number: ");
 	}
 	
 
