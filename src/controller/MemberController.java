@@ -2,6 +2,7 @@ package controller;
 
 import model.Boat;
 import model.Member;
+import model.Registry;
 import view.Console;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.util.Scanner;
 public class MemberController {
 	Console c = new Console();
 	RegistryController rc = new RegistryController();
+	private Registry memberList = new Registry();
 
 	public void getInputResult() throws IOException {
 
@@ -47,15 +49,15 @@ public class MemberController {
 			break;
 
 		case 7:
-			c.displaySpecific();
+			displaySpecific(input);
 			break;
 
 		case 8:
-			c.displayVerbose();
+			displayVerbose();
 			break;
 
 		case 9:
-			c.displayCompact();
+			displayCompact();
 			break;
 
 		case 10:
@@ -117,13 +119,13 @@ public class MemberController {
 			Member mem = new Member(memberName, memberPersNum);
 			String memberID = mem.createID();
 			mem.setId(memberID);
-			rc.memberList.add(mem);
+			memberList.addMember(mem);
 			System.out.println("");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("x Member successfully added to member registry! x");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("");
-			System.out.println(rc.memberList.toString());
+			System.out.println(memberList.toString());
 			goBack();
 
 		} else {
@@ -142,13 +144,16 @@ public class MemberController {
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
 		goBackOnDemand(temp);
 
-		if (rc.memberList.isEmpty()) {
+		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members to update, please register a member first!");
-			System.out.println(" ");
+			System.out.flush();
+			System.err.flush();
+			System.out.print("");
 			goBack();
+			registerMember(input);
 		}
 		try {
-			Member mem = rc.memberList.get(getMemberID(temp));
+			Member mem = memberList.getRegistry().get(getMemberID(temp));
 			System.out.println("");
 
 			System.out.print("Update member first name: ");
@@ -178,18 +183,22 @@ public class MemberController {
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("x Member successfully updated! x");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-
 			goBack();
+			
 		} catch (Exception e) {
-			System.out.println("A member with that ID was not found, try again!");
+			System.err.println("A member with that ID was not found, try again!");
+			System.out.flush();
+			System.err.flush();
 			System.out.println("");
 			goBack();
 		}
 	}
 
 	public void removeMember(Scanner input) {
-		if (rc.memberList.isEmpty()) {
+		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members to remove, please register a member first!");
+			System.out.flush();
+			System.err.flush();
 			System.out.println(" ");
 			goBack();
 		}
@@ -207,29 +216,31 @@ public class MemberController {
 		}
 		String temp = input.next();
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
-		try {
-			Member mem = rc.memberList.get(getMemberID(temp));
-			rc.memberList.remove(mem);
+			try {
+			Member mem = memberList.getRegistry().get(getMemberID(temp));
+			memberList.getRegistry().remove(mem);
 			System.out.println("");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("x Member successfully removed :( x");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			goBack();
 		} catch (Exception e) {
-			System.err.println("A member with that ID was found, try again!");
+			System.err.println("A member with that ID was not found, try again!");
+			System.out.flush();
+			System.err.flush();
 			System.out.println(" ");
 			goBack();
 		}
 
 	}
 
-	public int getMemberID(String ID) {
-		for (int i = 0; i < rc.memberList.size(); i++) {
-			if (rc.memberList.get(i).getId().equals(ID)) {
+	public Integer getMemberID(String ID) {
+		for (int i = 0; i < memberList.getRegistry().size(); i++) {
+			if (memberList.getRegistry().get(i).getId().equals(ID)) {
 				return i;
 			}
 		}
-		return -1; // Should not be return = 0;
+		return null; // Should not be return = 0;
 	}
 
 	public void registerBoat(Scanner input) {
@@ -270,6 +281,8 @@ public class MemberController {
 
 	public void persNumErr() {
 		System.err.println("Incorrect personal number form, try again!");
+		System.out.flush();
+		System.err.flush();
 		System.out.println("");
 	}
 
@@ -335,4 +348,53 @@ public class MemberController {
 			e.printStackTrace();
 		}
 	}
-}
+	
+	public void displayVerbose() {
+		System.out.println("=========== Displaying a verbose list of the members ===========");
+		if (memberList.getRegistry().isEmpty()) {
+			System.err.println("The Member Registry is currently empty.");
+			goBack();
+		} else {
+			memberList.getRegistry().stream().forEach(System.out::println);
+			goBack();
+		}
+	}
+
+	public void displayCompact() {
+		System.out.println("=========== Displaying a compact list of the members ===========");
+		if (memberList.getRegistry().isEmpty()) {
+			System.err.println("The Member Registry is currently empty.");
+			goBack();
+		} else {
+			for (int i = 0; i < memberList.getRegistry().size(); i++) {
+			System.out.print("\nMember: " + memberList.getRegistry().get(i).getName() + "\nMember ID: "
+					+ memberList.getRegistry().get(i).getId() + "\nNumber of Boats: "
+					+ memberList.getRegistry().get(i).getNumOfBoats() + "\n");
+			}
+			goBack();
+		}
+	}
+
+	public void displaySpecific(Scanner ID) {
+		System.out.println("=================== Displaying specific member =================");
+		if (memberList.getRegistry().isEmpty()) {
+			System.err.println("The Member Registry is currently empty.");
+			goBack();
+		} else {
+			System.out.println("Please enter member ID!  (Input 0 to go back) ");
+			String temp = ID.next();
+			temp = temp.substring(0,1).toUpperCase() + temp.substring(1);
+			goBackOnDemand(temp);
+			try {
+				Member mem = memberList.getMember(temp);
+				System.out.println(mem);
+				goBack();
+			}catch(Exception e) {
+				System.err.println("A member with that ID was not found, try again!"); 
+				System.out.println("");
+				goBack();
+			}
+			}
+		}
+	}
+
