@@ -99,6 +99,7 @@ public class Member {
 	                + " " + "\nPersonal Number: " + this.persNum
 	                + " " + "\nNumber of Boats: " + this.numOfBoats
 	                +"\n" + "----------------------------";
+		 
 	        return temp;
 	}
 }
