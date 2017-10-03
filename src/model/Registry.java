@@ -2,25 +2,14 @@ package model;
 
 import java.util.ArrayList;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-
-
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "memberRegistry")
 public class Registry {
-	
-	
+
+	private ArrayList<Member> memberList = new ArrayList<Member>();
 
 	public Registry() {
 
 	}
 	
-	@XmlElement(name = "memberList")
-	private ArrayList<Member> memberList = new ArrayList<Member>();
-
 	public Registry(ArrayList<Member> members) {
 		this.memberList = members;
 	}
@@ -36,7 +25,7 @@ public class Registry {
 	public void addMember(Member mem) {
 		memberList.add(mem);
 	}
-
+	
 	public Member getMember(String ID) {
 		Member mem = new Member();
 		if (memberList.isEmpty()) {
