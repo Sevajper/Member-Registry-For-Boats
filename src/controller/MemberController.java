@@ -95,20 +95,21 @@ public class MemberController {
 			System.err.println("Please check input!");
 		}
 	}
-
+	
+	//Method for registering member
 	public void registerMember(Scanner input) throws JAXBException {
 		System.out.println("------------------------------------------");
 		System.out.println("Register a new member! (Type 0 to go back)");
 		System.out.println("");
 		System.out.print("First name of new member: ");
-		String temp = input.next();
-		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
+		String temp = input.next(); // Input which user gives
+		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1); // Putting first letter to uppercase and the rest to what the user inputs.
 		goBackOnDemand(temp);
 		if (nameCheckDigit(temp) == false) {
 			goBack();
 		}
 
-		System.out.print("Last name of new member: ");
+		System.out.print("Last name of new member: "); // Getting a last name for the member too
 		String temp2 = input.next();
 		temp2 = temp2.substring(0, 1).toUpperCase() + temp2.substring(1);
 		goBackOnDemand(temp2);
@@ -116,10 +117,10 @@ public class MemberController {
 			goBack();
 		}
 
-		String memberName = temp + " " + temp2;
+		String memberName = temp + " " + temp2; // Adding the two names together to create one Full name
 		goBackOnDemand(memberName);
 
-		System.out.print("Personal number in the form YYMMDD-XXXX: ");
+		System.out.print("Personal number in the form YYMMDD-XXXX: "); // Asking for personal number.
 		String memberPersNum = input.next();
 		goBackOnDemand(memberPersNum);
 
@@ -128,7 +129,8 @@ public class MemberController {
 			String memberID = mem.createID();
 			mem.setId(memberID);
 			memberList.addMember(mem);
-
+			
+			// If successfull, this will be printed out
 			System.out.println("");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("x Member successfully added to member registry! x");
@@ -137,7 +139,7 @@ public class MemberController {
 			System.out.println(memberList.toString());
 			goBack();
 
-		} else {
+		} else { // Otherwise and error will pop out
 			persNumErr();
 			goBack();
 		}
@@ -332,7 +334,7 @@ public class MemberController {
 			System.out.print("");
 			goBack();
 		}
-		for (int i = 0; i < memberList.getRegistry().size(); i++) {
+		for (int i = 0; i < memberList.getRegistry().size(); i++) {  // Checking that boat registry for member is not empty
 			if (memberList.getRegistry().get(i).getId().equals(temp)) {
 				if(memberList.getRegistry().get(i).getBoats().isEmpty()) {
 				System.err.print("There are no boats to remove, please register a boat first!");
@@ -377,7 +379,7 @@ public class MemberController {
 							System.out.println("");
 							goBack();
 						}
-
+						//Updating Boat Length
 						System.out.print("Update boat length: ");
 						String boatLength = input.next();
 						goBackOnDemand(boatLength);
@@ -424,7 +426,7 @@ public class MemberController {
 			System.out.print("");
 			goBack();
 		}
-		for (int i = 0; i < memberList.getRegistry().size(); i++) {
+		for (int i = 0; i < memberList.getRegistry().size(); i++) { //Checking that the give Members boat registry is not empty. 
 			if (memberList.getRegistry().get(i).getId().equals(temp)) {
 				if(memberList.getRegistry().get(i).getBoats().isEmpty()) {
 				System.err.print("There are no boats to remove, please register a boat first!");
@@ -440,8 +442,8 @@ public class MemberController {
 		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1);
 		goBackOnDemand(temp);
 		for (int i = 0; i < memberList.getRegistry().size(); i++) {
-			for (int j = 0; j < memberList.getRegistry().get(i).getBoats().size(); j++) {
-				if (memberList.getRegistry().get(i).getBoats().get(j).getName().equals(eBoatName)) {
+			for (int j = 0; j < memberList.getRegistry().get(i).getBoats().size(); j++) {	
+				if (memberList.getRegistry().get(i).getBoats().get(j).getName().equals(eBoatName)) {	// Checking if the member has such a boat
 					try {
 						Member mem = memberList.getRegistry().get(getMemberID(temp));
 						System.out.println("Boat found!");
@@ -564,6 +566,7 @@ public class MemberController {
 		}
 	}
 
+	/*Method to display a verbose list of the members in the registry and their boats numbers as well as the boats descriptions */
 	private void displayVerbose() throws JAXBException {
 		System.out.println("=========== Displaying a verbose list of the members ===========");
 		if (memberList.getRegistry().isEmpty()) {
@@ -578,7 +581,7 @@ public class MemberController {
 			goBack();
 		}
 	}
-
+	/*Method to display a vcompact list of the members in the registry and their boats numbers */
 	private void displayCompact() throws JAXBException {
 		System.out.println("=========== Displaying a compact list of the members ===========");
 		if (memberList.getRegistry().isEmpty()) {
@@ -593,7 +596,7 @@ public class MemberController {
 			goBack();
 		}
 	}
-
+	/*Method to display a specific members information */
 	private void displaySpecific(Scanner ID) throws JAXBException {
 		System.out.println("=================== Displaying specific member =================");
 		if (memberList.getRegistry().isEmpty()) {
@@ -643,6 +646,9 @@ public class MemberController {
 		JAXBContext jaxbContext;
 
 		try {
+			if(!file.exists()) {
+				System.err.println("There is no file found!");
+			}
 			jaxbContext = JAXBContext.newInstance(Registry.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
@@ -652,7 +658,7 @@ public class MemberController {
 			goBack();
 			return memberList;
 		} catch (JAXBException e) {
-			System.out.println("Sorry! Members could not be loaded right now.");
+			System.err.println("Sorry! Members could not be loaded right now.");
 			e.printStackTrace();
 		}
 		
