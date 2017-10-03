@@ -641,7 +641,7 @@ public class MemberController {
 	}
 
 	// Take the members from the file and load them into the ArrayList registry
-	public Registry loadFromRegistry() throws FileNotFoundException {
+	public Registry loadFromRegistry() throws FileNotFoundException, JAXBException {
 		
 		JAXBContext jaxbContext;
 
@@ -662,7 +662,9 @@ public class MemberController {
 			return memberList;
 		} catch (JAXBException e) {
 			System.err.println("Sorry! Members could not be loaded right now.");
-			e.printStackTrace();
+			System.out.flush();
+			System.err.flush();
+			goBack();
 		}
 		
 		
