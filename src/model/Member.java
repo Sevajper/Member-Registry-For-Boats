@@ -1,7 +1,5 @@
 package model;
 
-import controller.RegistryController;
-
 import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -9,19 +7,28 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 
+@XmlRootElement(name = "Member")
+@XmlType(propOrder = {"name", "persNum", "id", "numOfBoats", "boats", "boat"})
+@XmlAccessorType(XmlAccessType.FIELD)
 
 
 public class Member {
 
+	@XmlElement(name = "Name")
 	private String name;
+	@XmlElement(name = "PersonalNumber")
 	private String persNum;
+	@XmlElement(name = "IdentityNumber")
 	private String id;
+	@XmlElement(name = "NumberofBoats")
 	private int numOfBoats;
+	@XmlElement(name = "BoatInfo")
 	private ArrayList<Boat> boats = new ArrayList<Boat>();
-	private Boat boat;
+	
+	@XmlElement(name = "boat")
+	private Boat boat = new Boat();
 	
 	
 	public Member() {}
@@ -69,7 +76,7 @@ public class Member {
 	public void setNumOfBoats(int numOfBoats) {
 		this.numOfBoats = numOfBoats;
 	}
-
+	
 	public Boat getBoat() {
 		return boat;
 	}
@@ -77,14 +84,22 @@ public class Member {
 	public void setBoat(Boat boat) {
 		this.boat = boat;
 	}
-	
+	public ArrayList<Boat> getBoats() {
+		return boats;
+	}
+	public void setBoats(Boat boat) {
+		boats.add(boat);
+	}
+
+
 	 public String toString(){
 	        String temp = 
 	        		  "\nMember: "  + this.name + " "
 	                + "\nMember ID: " + this.id
 	                + " " + "\nPersonal Number: " + this.persNum
 	                + " " + "\nNumber of Boats: " + this.numOfBoats
-	                +"\n";
+	                +"\n" + "----------------------------";
+		 
 	        return temp;
 	}
 }

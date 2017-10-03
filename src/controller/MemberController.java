@@ -21,7 +21,6 @@ import javax.xml.stream.XMLInputFactory;
 
 public class MemberController {
 	Console c = new Console();
-	RegistryController rc = new RegistryController();
 	private Registry memberList = new Registry();
 	String desktop = System.getProperty("user.home");
 	File file = new File(desktop, "Member_Registry.txt");
