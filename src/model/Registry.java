@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class Registry {
 
 	private ArrayList<Member> memberList = new ArrayList<Member>();
-	private ArrayList<Boat> boatList = new ArrayList<Boat>();
 
 	public Registry() {
 
