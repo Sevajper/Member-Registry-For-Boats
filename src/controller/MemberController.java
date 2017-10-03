@@ -648,6 +648,9 @@ public class MemberController {
 		try {
 			if(!file.exists()) {
 				System.err.println("There is no file found!");
+				System.out.flush();
+				System.err.flush();
+				goBack();
 			}
 			jaxbContext = JAXBContext.newInstance(Registry.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
