@@ -650,7 +650,7 @@ public class MemberController {
 
 			// Read file
 			memberList = (Registry) jaxbUnmarshaller.unmarshal(file);
-			
+			System.out.println("Members loaded into Registry!");
 			return memberList;
 		} catch (JAXBException e) {
 			System.err.println("Sorry! Members could not be loaded right now.");
