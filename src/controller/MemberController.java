@@ -26,10 +26,11 @@ public class MemberController {
 
 	public void getInputResult() throws IOException, JAXBException {
 
+
 		Scanner input = new Scanner(System.in);
-
+		try {
 		int selection = input.nextInt();
-
+	
 		switch (selection) {
 
 		case 0:
@@ -83,8 +84,15 @@ public class MemberController {
 			System.err.println("Wrong input, please choose a number between 0-11 or 100 to display menu");
 			System.out.println(" ");
 			goBack();
-
+		
 		}
+		
+		}catch(Exception e) {
+			System.err.println("Wrong input, please choose a number between 0-11 or 100 to display menu");
+			System.out.println(" ");
+			goBack();
+		}
+		
 	}
 
 	public void appStart(view.Console view) throws JAXBException {
