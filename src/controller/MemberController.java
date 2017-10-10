@@ -69,6 +69,9 @@ public class MemberController {
 		case 9:
 			displayCompact();
 			break;
+			
+		case 10:
+			System.exit(0);
 
 		case 100:
 			appStart(c);
@@ -566,7 +569,7 @@ public class MemberController {
 
 	private void goBack() throws JAXBException {
 		try {
-			System.out.println();
+			System.out.println(" ");
 			System.out.println("----------------------------");
 			System.out.print("Choose by typing a number: ");
 			getInputResult();
@@ -617,17 +620,18 @@ public class MemberController {
 			String temp = ID.next();
 			temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
 			goBackOnDemand(temp);
-			try {
 				Member mem = memberList.getMember(temp);
+				if (mem == null) {
+					System.err.println("A member with that ID was not found, try again!");
+					System.err.flush();
+					goBack();
+				}
+				else {
 				System.out.println(mem);
 				goBack();
-			} catch (Exception e) {
-				System.err.println("A member with that ID was not found, try again!");
-				System.out.println("");
-				goBack();
+				}
 			}
 		}
-	}
 
 	// Take all the members in the memberList ArrayList and put them into a file on
 	// the desktop

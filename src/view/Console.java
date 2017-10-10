@@ -19,6 +19,7 @@ public class Console {
 				+ "\n8.  Display verbose list" 
 				+ "\n9.  Display compact list"
 				+ "\n0.  Save and Exit"
+				+ "\n10. Exit without saving"
 				+ "\n"
 				+ "\n100. Display Member Registry Menu"
 				+ "\n"
