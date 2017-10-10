@@ -13,9 +13,10 @@ public class Registry {
 
 	@XmlElement(name = "memberList")
 	private ArrayList<Member> memberList = new ArrayList<Member>();
+	@XmlElement private int uniqueId;
 
 	public Registry() {
-
+		uniqueId = 0;
 	}
 	
 	public Registry(ArrayList<Member> members) {
@@ -31,6 +32,9 @@ public class Registry {
 	}
 
 	public void addMember(Member mem) {
+		String newId = uniqueId + mem.createID();
+		uniqueId++;
+		mem.setId(newId);
 		memberList.add(mem);
 	}
 	
@@ -42,10 +46,11 @@ public class Registry {
 			for (int i = 0; i < memberList.size(); i++) {
 				if (memberList.get(i).getId().equals(ID)) {
 					mem = memberList.get(i);
+					return mem;
 				}
 			}
 		}
-		return mem;
+		return null;
 	}
 
 	public String toString() {
