@@ -21,11 +21,9 @@ import javax.xml.bind.Unmarshaller;
 public class MemberController {
 	private Console c = new Console();
 	private Registry memberList = new Registry();
-	private String desktop = System.getProperty("user.home");
-	private File file = new File(desktop, "Member_Registry.txt");
+	private File file = new File("Member_Registry.txt");
 
 	public void getInputResult() throws IOException, JAXBException {
-
 		Scanner input = new Scanner(System.in);
 
 		int selection = input.nextInt();
@@ -71,22 +69,42 @@ public class MemberController {
 		case 9:
 			displayCompact();
 			break;
-
+			
 		case 10:
-			loadFromRegistry();
-			break;
+			System.exit(0);
 
 		case 100:
 			appStart(c);
 
 		default:
+
+			System.err.println("Wrong input, please choose a number between 0-9 or 100 to display menu");
+			System.out.println(" ");
+
 			System.err.println("Wrong input, please choose a number between 0-10 or 100 to display menu\n");
+
 			goBack();
 
 		}
 	}
 
-	public void appStart(view.Console view) throws JAXBException {
+	public void appStart(view.Console view) throws JAXBException, IOException {
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		else if (file.length() == 0) {
+			view.displayWelcome();
+			try {
+				getInputResult();
+			} catch (IOException e) {
+				System.err.println("Please check input!");
+			}
+		}
+		else {
+			loadFromRegistry();
+		}
+		
+		
 		view.displayWelcome();
 		try {
 			getInputResult();
@@ -316,7 +334,6 @@ public class MemberController {
 			System.out.println("");
 		}
 	}
-
 	public void updateBoat(Scanner input) throws JAXBException {
 		System.out.println("------------------------------------------");
 		System.out.println("Update an existing boat! (Type 0 to go back)");
@@ -566,7 +583,7 @@ public class MemberController {
 
 	private void goBack() throws JAXBException {
 		try {
-			System.out.println();
+			System.out.println(" ");
 			System.out.println("----------------------------");
 			System.out.print("Choose by typing a number: ");
 			getInputResult();
@@ -617,17 +634,18 @@ public class MemberController {
 			String temp = ID.next();
 			temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
 			goBackOnDemand(temp);
-			try {
 				Member mem = memberList.getMember(temp);
+				if (mem == null) {
+					System.err.println("A member with that ID was not found, try again!");
+					System.err.flush();
+					goBack();
+				}
+				else {
 				System.out.println(mem);
 				goBack();
-			} catch (Exception e) {
-				System.err.println("A member with that ID was not found, try again!");
-				System.out.println("");
-				goBack();
+				}
 			}
 		}
-	}
 
 	// Take all the members in the memberList ArrayList and put them into a file on
 	// the desktop
@@ -644,8 +662,6 @@ public class MemberController {
 
 			marshaller.marshal(memberList, out);
 
-			System.out.print("Your members have successfully been Saved in C:\\Users\\(Your Name)");
-
 		}
 
 	}
@@ -660,21 +676,20 @@ public class MemberController {
 				System.err.println("There is no file found!");
 				System.out.flush();
 				System.err.flush();
-				goBack();
 			}
 			jaxbContext = JAXBContext.newInstance(Registry.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
 			// Read file
 			memberList = (Registry) jaxbUnmarshaller.unmarshal(file);
-			System.out.println("Your list has been loaded!");
-			goBack();
+			System.out.println("Members loaded into Registry!");
+			
 			return memberList;
 		} catch (JAXBException e) {
 			System.err.println("Sorry! Members could not be loaded right now.");
 			System.out.flush();
 			System.err.flush();
-			goBack();
+			
 		}
 		
 		
