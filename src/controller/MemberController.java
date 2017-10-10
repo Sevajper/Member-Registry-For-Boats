@@ -25,67 +25,72 @@ public class MemberController {
 
 	public void getInputResult() throws IOException, JAXBException {
 		Scanner input = new Scanner(System.in);
+		try{
+			int selection = input.nextInt();
 
-		int selection = input.nextInt();
+			switch (selection) {
 
-		switch (selection) {
+			case 0:
+				saveToRegistry();
+				System.exit(0);
+				break;
 
-		case 0:
-			saveToRegistry();
-			System.exit(0);
-			break;
+			case 1:
+				registerMember(input);
+				break;
 
-		case 1:
-			registerMember(input);
-			break;
+			case 2:
+				updateMember(input);
+				break;
 
-		case 2:
-			updateMember(input);
-			break;
+			case 3:
+				removeMember(input);
+				break;
 
-		case 3:
-			removeMember(input);
-			break;
+			case 4:
+				registerBoat(input);
+				break;
 
-		case 4:
-			registerBoat(input);
-			break;
+			case 5:
+				updateBoat(input);
+				break;
+			case 6:
+				removeBoat(input);
+				break;
 
-		case 5:
-			updateBoat(input);
-			break;
-		case 6:
-			removeBoat(input);
-			break;
+			case 7:
+				displaySpecific(input);
+				break;
 
-		case 7:
-			displaySpecific(input);
-			break;
+			case 8:
+				displayVerbose();
+				break;
 
-		case 8:
-			displayVerbose();
-			break;
-
-		case 9:
-			displayCompact();
-			break;
+			case 9:
+				displayCompact();
+				break;
 			
-		case 10:
-			System.exit(0);
+			case 10:
+				System.exit(0);
 
-		case 100:
-			appStart(c);
+			case 100:
+				appStart(c);
 
-		default:
+			default:
 
-			System.err.println("Wrong input, please choose a number between 0-9 or 100 to display menu");
-			System.out.println(" ");
+				System.err.println("Wrong input, please choose a number between 0-9 or 100 to display menu");
+				System.out.println(" ");
 
-			System.err.println("Wrong input, please choose a number between 0-10 or 100 to display menu\n");
+				System.err.println("Wrong input, please choose a number between 0-10 or 100 to display menu\n");
 
-			goBack();
+				goBack();
 
-		}
+			}
+	 	}catch(Exception e) {
+   			System.err.println("Wrong input, please choose a number between 0-11 or 100 to display menu");
+   		System.out.println(" ");
+   		goBack();
+  		}
 	}
 
 	public void appStart(view.Console view) throws JAXBException, IOException {
