@@ -81,8 +81,22 @@ public class MemberController {
 		}
 	}
 
-	public void appStart(view.Console view) throws JAXBException, FileNotFoundException {
-		loadFromRegistry();
+	public void appStart(view.Console view) throws JAXBException, IOException {
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+		else if (file.length() == 0) {
+			view.displayWelcome();
+			try {
+				getInputResult();
+			} catch (IOException e) {
+				System.err.println("Please check input!");
+			}
+		}
+		else {
+			loadFromRegistry();
+		}
+		
 		
 		view.displayWelcome();
 		try {
@@ -651,11 +665,13 @@ public class MemberController {
 			// Read file
 			memberList = (Registry) jaxbUnmarshaller.unmarshal(file);
 			System.out.println("Members loaded into Registry!");
+			
 			return memberList;
 		} catch (JAXBException e) {
 			System.err.println("Sorry! Members could not be loaded right now.");
 			System.out.flush();
 			System.err.flush();
+			
 		}
 		
 		
