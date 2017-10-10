@@ -80,8 +80,7 @@ public class MemberController {
 			appStart(c);
 
 		default:
-			System.err.println("Wrong input, please choose a number between 0-11 or 100 to display menu");
-			System.out.println(" ");
+			System.err.println("Wrong input, please choose a number between 0-10 or 100 to display menu\n");
 			goBack();
 
 		}
@@ -98,10 +97,9 @@ public class MemberController {
 	
 	//Method for registering member
 	public void registerMember(Scanner input) throws JAXBException {
-		System.out.println("------------------------------------------");
-		System.out.println("Register a new member! (Type 0 to go back)");
-		System.out.println("");
-		System.out.print("First name of new member: ");
+		System.out.println("------------------------------------------"
+				+ "\nRegister a new member! (Type 0 to go back) \n"
+				+ "\nFirst name of new member: ");
 		String temp = input.next(); // Input which user gives
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1); // Putting first letter to uppercase and the rest to what the user inputs.
 		goBackOnDemand(temp);
@@ -153,7 +151,6 @@ public class MemberController {
 		String temp = input.next();
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
 		goBackOnDemand(temp);
-
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members to update, please register a member first!");
 			System.out.flush();
@@ -169,7 +166,9 @@ public class MemberController {
 			String name = input.next();
 			name = name.substring(0, 1).toUpperCase() + name.substring(1);
 			goBackOnDemand(name);
-
+			if (nameCheckDigit(name) == false) {
+				goBack();
+			}
 			System.out.print("Update member last name: ");
 			String name2 = input.next();
 			goBackOnDemand(name2);
@@ -288,7 +287,7 @@ public class MemberController {
 				goBack();
 			}
 
-			System.out.print("Boat length: ");
+			System.out.print("Boat length (in metres): ");
 			String boatLength = input.next();
 			goBackOnDemand(boatLength);
 			if (nameCheckLetter(boatLength) == false) {
@@ -502,6 +501,17 @@ public class MemberController {
 		}
 		return false;
 	}
+	
+	private boolean checkBoatSize(String name) {
+		for (int i = 0; i < name.length(); i++) {
+			if (Character.isDigit(name.charAt(i)) ) {
+				System.err.println("The length cannot be negative, try again!");
+				System.out.println("");
+				return false;
+			}
+		}
+		return true;
+	}
 
 	private boolean nameCheckLetter(String name) {
 		for (int i = 0; i < name.length(); i++) {
@@ -516,7 +526,7 @@ public class MemberController {
 
 	private boolean nameCheckDigit(String name) {
 		for (int i = 0; i < name.length(); i++) {
-			if (Character.isDigit(name.charAt(i))) {
+			if (Character.isDigit(name.charAt(i)) || name.contains("/*!@#$%^&*()\"{}_[]|\\?/<>,. -")) {
 				System.err.println("The name cannot have digits, try again!");
 				System.out.println("");
 				return false;
