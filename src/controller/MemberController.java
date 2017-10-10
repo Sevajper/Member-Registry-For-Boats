@@ -21,11 +21,9 @@ import javax.xml.bind.Unmarshaller;
 public class MemberController {
 	private Console c = new Console();
 	private Registry memberList = new Registry();
-	private String desktop = System.getProperty("user.home");
-	private File file = new File(desktop, "Member_Registry.txt");
+	private File file = new File("Member_Registry.txt");
 
 	public void getInputResult() throws IOException, JAXBException {
-
 		Scanner input = new Scanner(System.in);
 
 		int selection = input.nextInt();
@@ -72,10 +70,6 @@ public class MemberController {
 			displayCompact();
 			break;
 
-		case 10:
-			loadFromRegistry();
-			break;
-
 		case 100:
 			appStart(c);
 
@@ -87,7 +81,9 @@ public class MemberController {
 		}
 	}
 
-	public void appStart(view.Console view) throws JAXBException {
+	public void appStart(view.Console view) throws JAXBException, FileNotFoundException {
+		loadFromRegistry();
+		
 		view.displayWelcome();
 		try {
 			getInputResult();
@@ -634,8 +630,6 @@ public class MemberController {
 
 			marshaller.marshal(memberList, out);
 
-			System.out.print("Your members have successfully been Saved in C:\\Users\\(Your Name)");
-
 		}
 
 	}
@@ -650,21 +644,18 @@ public class MemberController {
 				System.err.println("There is no file found!");
 				System.out.flush();
 				System.err.flush();
-				goBack();
 			}
 			jaxbContext = JAXBContext.newInstance(Registry.class);
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 
 			// Read file
 			memberList = (Registry) jaxbUnmarshaller.unmarshal(file);
-			System.out.println("Your list has been loaded!");
-			goBack();
+			
 			return memberList;
 		} catch (JAXBException e) {
 			System.err.println("Sorry! Members could not be loaded right now.");
 			System.out.flush();
 			System.err.flush();
-			goBack();
 		}
 		
 		

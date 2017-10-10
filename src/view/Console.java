@@ -18,7 +18,6 @@ public class Console {
 				+ "\n7.  Display specific member"
 				+ "\n8.  Display verbose list" 
 				+ "\n9.  Display compact list"
-				+ "\n10. Load from registry"
 				+ "\n0.  Save and Exit"
 				+ "\n"
 				+ "\n100. Display Member Registry Menu"

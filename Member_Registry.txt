@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<memberRegistry>
+    <memberList>
+        <Name>Member One</Name>
+        <PersonalNumber>123456-7890</PersonalNumber>
+        <IdentityNumber>M890</IdentityNumber>
+        <NumberofBoats>0</NumberofBoats>
+        <boat/>
+    </memberList>
+    <memberList>
+        <Name>Member Two</Name>
+        <PersonalNumber>112233-6666</PersonalNumber>
+        <IdentityNumber>M666</IdentityNumber>
+        <NumberofBoats>0</NumberofBoats>
+        <boat/>
+    </memberList>
+</memberRegistry>
