@@ -74,7 +74,7 @@ public class MemberController {
 			appStart(c);
 
 		default:
-			System.err.println("Wrong input, please choose a number between 0-11 or 100 to display menu");
+			System.err.println("Wrong input, please choose a number between 0-9 or 100 to display menu");
 			System.out.println(" ");
 			goBack();
 
