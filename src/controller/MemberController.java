@@ -548,8 +548,8 @@ public class MemberController {
 
 	private boolean nameCheckDigit(String name) {
 		for (int i = 0; i < name.length(); i++) {
-			if (Character.isDigit(name.charAt(i)) || name.contains("/*!@#$%^&*()\"{}_[]|\\?/<>,. -")) {
-				System.err.println("The name cannot have digits, try again!");
+			if (!Character.isLetter(name.charAt(i))) {
+				System.err.println("The name can only contain letters, try again!");
 				System.out.println("");
 				return false;
 			}

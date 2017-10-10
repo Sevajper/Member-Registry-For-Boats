@@ -2,36 +2,19 @@ package model;
 
 import java.util.ArrayList;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-
-
-@XmlRootElement(name = "Member")
-@XmlType(propOrder = {"name", "persNum", "id", "numOfBoats", "boats", "boat"})
-@XmlAccessorType(XmlAccessType.FIELD)
-
-
 public class Member {
 
-	@XmlElement(name = "Name")
 	private String name;
-	@XmlElement(name = "PersonalNumber")
 	private String persNum;
-	@XmlElement(name = "IdentityNumber")
 	private String id;
-	@XmlElement(name = "NumberofBoats")
 	private int numOfBoats;
-	@XmlElement(name = "BoatInfo")
 	private ArrayList<Boat> boats = new ArrayList<Boat>();
-	
-	@XmlElement(name = "boat")
 	private Boat boat = new Boat();
 	
 	
-	public Member() {}
+	public Member() {
+		
+	}
 	
 	public Member(String memberName, String memberPersNum) {
 		this.name = memberName;
@@ -39,6 +22,7 @@ public class Member {
 	}
 	//Member ID is the first letter of the name plus the last three numbers of their personal number.
 	public String createID() {
+		
 		id = getName().substring(0, 1).toUpperCase() + getPersNum().substring(8, 11); //needs a dash when making the personal number
 		
 		
