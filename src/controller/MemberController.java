@@ -78,16 +78,12 @@ public class MemberController {
 
 			default:
 
-				System.err.println("Wrong input, please choose a number between 0-9 or 100 to display menu");
-				System.out.println(" ");
-
-				System.err.println("Wrong input, please choose a number between 0-10 or 100 to display menu\n");
-
+				System.err.println("Wrong input, please choose a number between 0-10 or 100 to display menu \n");
 				goBack();
 
 			}
 	 	}catch(Exception e) {
-   			System.err.println("Wrong input, please choose a number between 0-11 or 100 to display menu");
+   			System.err.println("Wrong input, please choose a number between 0-10 or 100 to display menu");
    		System.out.println(" ");
    		goBack();
   		}
@@ -535,7 +531,7 @@ public class MemberController {
 	
 	private boolean checkBoatSize(String name) {
 		for (int i = 0; i < name.length(); i++) {
-			if ((!Character.isDigit(name.charAt(i))) || !Character.isLetter(name.charAt(i))) {
+			if (!Character.isDigit(name.charAt(i))) {
 				System.err.println("The length can only be a positive integer, try again!\n");
 				return false;
 			}
