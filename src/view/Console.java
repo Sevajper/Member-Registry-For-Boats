@@ -18,11 +18,11 @@ public class Console {
 				+ "\n7.  Display specific member"
 				+ "\n8.  Display verbose list" 
 				+ "\n9.  Display compact list"
-				+ "\n0.  Save and Exit"
 				+ "\n10. Exit without saving"
+				+ "\n0.  Save and Exit"
 				+ "\n"
 				+ "\n100. Display Member Registry Menu"
 				+ "\n"
-				+ "\nChoose by typing a number: ");
+				+ "\nChoose from menu by typing a number: ");
 	}
 }
