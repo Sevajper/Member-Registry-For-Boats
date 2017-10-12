@@ -5,23 +5,20 @@ import model.Member;
 import model.Registry;
 import view.Console;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.xml.bind.JAXBContext;
+
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+
 
 public class MemberController {
 	private Console c = new Console();
 	private Registry memberList = new Registry();
 	private File file = new File("Member_Registry.txt");
+	private RegistryController rc = new RegistryController();
 
 	public void getInputResult() throws IOException, JAXBException {
 		Scanner input = new Scanner(System.in);
@@ -31,7 +28,7 @@ public class MemberController {
 			switch (selection) {
 
 			case 0:
-				saveToRegistry();
+				rc.saveToRegistry(memberList, file);
 				System.exit(0);
 				break;
 
@@ -92,6 +89,7 @@ public class MemberController {
 	public void appStart(view.Console view) throws JAXBException, IOException {
 		if (!file.exists()) {
 			file.createNewFile();
+			System.out.println("New File Created!");
 		}
 		else if (file.length() == 0) {
 			view.displayWelcome();
@@ -102,7 +100,8 @@ public class MemberController {
 			}
 		}
 		else {
-			loadFromRegistry();
+			System.out.println(file.length());
+			memberList = rc.loadFromRegistry(memberList, file);
 		}
 		
 		
@@ -667,55 +666,6 @@ public class MemberController {
 				}
 			}
 		}
-
-	// Take all the members in the memberList ArrayList and put them into a file on
-	// the desktop
-	public void saveToRegistry() throws IOException, JAXBException {
-		if (memberList.getRegistry().isEmpty()) {
-			System.err.println("Sorry, you do not have any members in the Registry to Save!");
-		}
-		else {
-
-			BufferedWriter out = new BufferedWriter(new FileWriter(file));
-			JAXBContext context = JAXBContext.newInstance(Registry.class);
-			Marshaller marshaller = context.createMarshaller();
-			marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-			marshaller.marshal(memberList, out);
-
-		}
-
-	}
-
-	// Take the members from the file and load them into the ArrayList registry
-	public Registry loadFromRegistry() throws FileNotFoundException, JAXBException {
-		
-		JAXBContext jaxbContext;
-
-		try {
-			if(!file.exists()) {
-				System.err.println("There is no file found!");
-				System.out.flush();
-				System.err.flush();
-			}
-			jaxbContext = JAXBContext.newInstance(Registry.class);
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-
-			// Read file
-			memberList = (Registry) jaxbUnmarshaller.unmarshal(file);
-			System.out.println("Members loaded into Registry!");
-			
-			return memberList;
-		} catch (JAXBException e) {
-			System.err.println("Sorry! Members could not be loaded right now.");
-			System.out.flush();
-			System.err.flush();
-			
-		}
-		
-		
-		return null;		
-	}
 
 	// IDK what this method does yet
 	public ArrayList<Member> getMembers() {
