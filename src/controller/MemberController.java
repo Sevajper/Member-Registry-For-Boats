@@ -292,7 +292,18 @@ public class MemberController {
 			String boatName = input.next();
 			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);
 			goBackOnDemand(boatName);
-
+			for(int j=0; j < memberList.getRegistry().size(); j++) {
+				for (int i = 0; i < memberList.getRegistry().get(j).getBoats().size(); i++) { //Checking that the give Members boat registry is not empty. 
+					if(memberList.getRegistry().get(j).getBoats().isEmpty()) {
+						continue;
+					}
+					else if (memberList.getRegistry().get(j).getBoats().get(i).getName().equals(boatName)) {				
+						System.err.print("Boat name is taken! Please choose another name.");
+						goBack();
+					}
+				}
+			}
+			
 			System.out.println("Please choose a boat type:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
 					+ "\n4.Other" + "\n");
 			System.out.print("Input: ");
@@ -338,7 +349,7 @@ public class MemberController {
 			goBack();
 		} catch (Exception e) {
 			System.err.println("Input error, try again!");
-			System.out.println("");
+			goBack();
 		}
 	}
 	public void updateBoat(Scanner input) throws JAXBException {
