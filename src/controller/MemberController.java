@@ -313,10 +313,9 @@ public class MemberController {
 			System.out.print("Boat length (in metres): ");
 			String boatLength = input.next();
 			goBackOnDemand(boatLength);
-			if (nameCheckLetter(boatLength) == false) {
+			if (checkBoatSize(boatLength) == false) {
 				goBack();
 			}
-
 			bt.setLength(boatLength);
 			bt.setType(boatType);
 			bt.setName(boatName);
@@ -404,6 +403,9 @@ public class MemberController {
 						System.out.print("Update boat length: ");
 						String boatLength = input.next();
 						goBackOnDemand(boatLength);
+						if (checkBoatSize(boatLength) == false) {
+							goBack();
+						}
 						memberList.getRegistry().get(i).getBoats().get(j).setName(boatName);
 						memberList.getRegistry().get(i).getBoats().get(j).setType(boatType);
 						memberList.getRegistry().get(i).getBoats().get(j).setLength(boatLength);
@@ -526,25 +528,13 @@ public class MemberController {
 	
 	private boolean checkBoatSize(String name) {
 		for (int i = 0; i < name.length(); i++) {
-			if (Character.isDigit(name.charAt(i)) ) {
-				System.err.println("The length cannot be negative, try again!");
-				System.out.println("");
+			if ((!Character.isDigit(name.charAt(i))) || !Character.isLetter(name.charAt(i))) {
+				System.err.println("The length can only be a positive integer, try again!\n");
 				return false;
 			}
 		}
 		return true;
-	}
-
-	private boolean nameCheckLetter(String name) {
-		for (int i = 0; i < name.length(); i++) {
-			if (Character.isLetter(name.charAt(i))) {
-				System.err.println("The length cannot have letters, try again!");
-				System.out.println("");
-				return false;
-			}
-		}
-		return true;
-	}
+	}	
 
 	private boolean nameCheckDigit(String name) {
 		for (int i = 0; i < name.length(); i++) {
