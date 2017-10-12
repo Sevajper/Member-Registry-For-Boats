@@ -628,7 +628,7 @@ public class MemberController {
 			goBack();
 		}
 	}
-	/*Method to display a vcompact list of the members in the registry and their boats numbers */
+	/*Method to display a compact list of the members in the registry and their boats numbers */
 	private void displayCompact() throws JAXBException {
 		System.out.println("=========== Displaying a compact list of the members ===========");
 		if (memberList.getRegistry().isEmpty()) {
@@ -652,8 +652,8 @@ public class MemberController {
 		} else {
 			System.out.println("Please enter member ID!  (Input 0 to go back) ");
 			String temp = ID.next();
-			temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
 			goBackOnDemand(temp);
+			temp = temp.substring(0,1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
 				Member mem = memberList.getMember(temp);
 				if (mem == null) {
 					System.err.println("A member with that ID was not found, try again!");
@@ -667,7 +667,6 @@ public class MemberController {
 			}
 		}
 
-	// IDK what this method does yet
 	public ArrayList<Member> getMembers() {
 		return memberList.getRegistry();
 	}
