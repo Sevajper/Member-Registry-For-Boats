@@ -120,10 +120,11 @@ public class MemberController {
 	
 	//Method for registering member
 	public void registerMember(Scanner input) throws JAXBException {
-		System.out.println("------------------------------------------"
+		System.out.print("------------------------------------------"
 				+ "\nRegister a new member! (Type 0 to go back) \n"
 				+ "\nFirst name of new member: ");
 		String temp = input.next(); // Input which user gives
+		temp += input.nextLine();
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1); // Putting first letter to uppercase and the rest to what the user inputs.
 		goBackOnDemand(temp);
 		if (nameCheckDigit(temp) == false) {
@@ -132,6 +133,7 @@ public class MemberController {
 
 		System.out.print("Last name of new member: "); // Getting a last name for the member too
 		String temp2 = input.next();
+		temp2 += input.nextLine();
 		temp2 = temp2.substring(0, 1).toUpperCase() + temp2.substring(1);
 		goBackOnDemand(temp2);
 		if (nameCheckDigit(temp2) == false) {
@@ -187,6 +189,7 @@ public class MemberController {
 
 			System.out.print("Update member first name: ");
 			String name = input.next();
+			name += input.nextLine();
 			name = name.substring(0, 1).toUpperCase() + name.substring(1);
 			goBackOnDemand(name);
 			if (nameCheckDigit(name) == false) {
@@ -194,7 +197,11 @@ public class MemberController {
 			}
 			System.out.print("Update member last name: ");
 			String name2 = input.next();
+			name2 += input.nextLine();
 			goBackOnDemand(name2);
+			if (nameCheckDigit(name2) == false) {
+				goBack();
+			}
 
 			String realName = name + " " + name2;
 
@@ -537,11 +544,22 @@ public class MemberController {
 	}	
 
 	private boolean nameCheckDigit(String name) {
+		
 		for (int i = 0; i < name.length(); i++) {
 			if (!Character.isLetter(name.charAt(i))) {
+				char temp = name.charAt(i);
+				if(temp == ' ') {
+					String nameTemp = "\" \" ---> Whitespace";
+					System.err.println("You used the character " + nameTemp);
+					System.err.println("The name can only contain letters, try again!");
+					System.out.println("");
+					return false;
+				}else {
+				System.err.println("You used the character " + "\""+ name.charAt(i) + "\"");
 				System.err.println("The name can only contain letters, try again!");
 				System.out.println("");
 				return false;
+				}
 			}
 		}
 		return true;
@@ -568,7 +586,8 @@ public class MemberController {
 			try {
 				System.out.println();
 				System.out.println("----------------------------");
-				System.out.print("Choose by typing a number: ");
+				System.out.println("Type \"100\" to display menu!");
+				System.out.print("Choose from menu by typing a number: ");
 				getInputResult();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -580,7 +599,8 @@ public class MemberController {
 		try {
 			System.out.println(" ");
 			System.out.println("----------------------------");
-			System.out.print("Choose by typing a number: ");
+			System.out.println("Type \"100\" to display menu!");
+			System.out.print("Choose from menu by typing a number: ");
 			getInputResult();
 		} catch (IOException e) {
 
