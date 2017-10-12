@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 import javax.xml.bind.JAXBException;
-
 
 public class MemberController {
 	private Console c = new Console();
@@ -22,7 +20,7 @@ public class MemberController {
 
 	public void getInputResult() throws IOException, JAXBException {
 		Scanner input = new Scanner(System.in);
-		try{
+		try {
 			int selection = input.nextInt();
 
 			switch (selection) {
@@ -66,7 +64,7 @@ public class MemberController {
 			case 9:
 				displayCompact();
 				break;
-			
+
 			case 10:
 				System.exit(0);
 
@@ -79,32 +77,29 @@ public class MemberController {
 				goBack();
 
 			}
-	 	}catch(Exception e) {
-   			System.err.println("Wrong input, please choose a number between 0-10 or 100 to display menu");
-   		System.out.println(" ");
-   		goBack();
-  		}
+		} catch (Exception e) {
+			System.err.println("Wrong input, please choose a number between 0-10 or 100 to display menu");
+			System.out.println(" ");
+			goBack();
+		}
 	}
 
 	public void appStart(view.Console view) throws JAXBException, IOException {
 		if (!file.exists()) {
 			file.createNewFile();
 			System.out.println("New File Created!");
-		}
-		else if (file.length() == 0) {
+		} else if (file.length() == 0) {
 			view.displayWelcome();
 			try {
 				getInputResult();
 			} catch (IOException e) {
 				System.err.println("Please check input!");
 			}
-		}
-		else {
+		} else {
 			System.out.println(file.length());
 			memberList = rc.loadFromRegistry(memberList, file);
 		}
-		
-		
+
 		view.displayWelcome();
 		try {
 			getInputResult();
@@ -112,15 +107,15 @@ public class MemberController {
 			System.err.println("Please check input!");
 		}
 	}
-	
-	//Method for registering member
+
+	// Method for registering member
 	public void registerMember(Scanner input) throws JAXBException {
 		System.out.print("------------------------------------------"
-				+ "\nRegister a new member! (Type 0 to go back) \n"
-				+ "\nFirst name of new member: ");
+				+ "\nRegister a new member! (Type 0 to go back) \n" + "\nFirst name of new member: ");
 		String temp = input.next(); // Input which user gives
 		temp += input.nextLine();
-		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1); // Putting first letter to uppercase and the rest to what the user inputs.
+		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1); // Putting first letter to uppercase and the rest
+																		// to what the user inputs.
 		goBackOnDemand(temp);
 		if (nameCheckDigit(temp) == false) {
 			goBack();
@@ -147,8 +142,8 @@ public class MemberController {
 			String memberID = mem.createID();
 			mem.setId(memberID);
 			memberList.addMember(mem);
-			
-			// If successfull, this will be printed out
+
+			// If successful, this will be printed out
 			System.out.println("");
 			System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 			System.out.println("x Member successfully added to member registry! x");
@@ -170,7 +165,7 @@ public class MemberController {
 		System.out.print("Please enter existing member's ID: ");
 		String temp = input.next();
 		goBackOnDemand(temp);
-		temp = temp.substring(0,1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
+		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members to update, please register a member first!");
 			System.out.flush();
@@ -248,7 +243,7 @@ public class MemberController {
 			System.out.print("Please enter member's ID to remove member: ");
 		}
 		String temp = input.next();
-		temp = temp.substring(0,1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
+		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
 		try {
 			Member mem = memberList.getRegistry().get(getMemberID(temp));
 			memberList.getRegistry().remove(mem);
@@ -272,7 +267,7 @@ public class MemberController {
 		System.out.println("Please input member ID: ");
 		String id = input.next();
 		goBackOnDemand(id);
-		id = id.substring(0,1) + id.substring(1, 2).toUpperCase() + id.substring(2);
+		id = id.substring(0, 1) + id.substring(1, 2).toUpperCase() + id.substring(2);
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.println("There are no members in the registry, please register a member first!");
 			System.out.println(" ");
@@ -336,6 +331,7 @@ public class MemberController {
 			goBack();
 		}
 	}
+
 	public void updateBoat(Scanner input) throws JAXBException {
 		System.out.println("------------------------------------------");
 		System.out.println("Update an existing boat! (Type 0 to go back)");
@@ -352,14 +348,15 @@ public class MemberController {
 			System.out.print("");
 			goBack();
 		}
-		for (int i = 0; i < memberList.getRegistry().size(); i++) {  // Checking that boat registry for member is not empty
+		for (int i = 0; i < memberList.getRegistry().size(); i++) { // Checking that boat registry for member is not
+																	// empty
 			if (memberList.getRegistry().get(i).getId().equals(temp)) {
-				if(memberList.getRegistry().get(i).getBoats().isEmpty()) {
-				System.err.print("There are no boats to remove, please register a boat first!");
-				System.out.flush();
-				System.err.flush();
-				System.out.print("");
-				goBack();
+				if (memberList.getRegistry().get(i).getBoats().isEmpty()) {
+					System.err.print("There are no boats to remove, please register a boat first!");
+					System.out.flush();
+					System.err.flush();
+					System.out.print("");
+					goBack();
 				}
 			}
 		}
@@ -397,7 +394,7 @@ public class MemberController {
 							System.out.println("");
 							goBack();
 						}
-						//Updating Boat Length
+						// Updating Boat Length
 						System.out.print("Update boat length: ");
 						String boatLength = input.next();
 						goBackOnDemand(boatLength);
@@ -438,7 +435,7 @@ public class MemberController {
 		System.out.print("Please enter existing member's ID: ");
 		String temp = input.next();
 		goBackOnDemand(temp);
-		temp = temp.substring(0,1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
+		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
 
 		if (memberList.getRegistry().isEmpty()) {
 			System.err.print("There are no members, please register a member first!");
@@ -447,54 +444,40 @@ public class MemberController {
 			System.out.print("");
 			goBack();
 		}
-		for (int i = 0; i < memberList.getRegistry().size(); i++) { //Checking that the give Members boat registry is not empty. 
-			if (memberList.getRegistry().get(i).getId().equals(temp)) {
-				if(memberList.getRegistry().get(i).getBoats().isEmpty()) {
-				System.err.print("There are no boats to remove, please register a boat first!");
-				System.out.flush();
-				System.err.flush();
-				System.out.print("");
-				goBack();
-				}
-			}
+		Member mem = memberList.getRegistry().get(getMemberID(temp));
+
+		if (mem.getBoats().isEmpty()) {
+			System.err.println("This member has no boats! Please register a boat to this member first!");
+			goBack();
 		}
 		System.out.print("Please enter existing boat's name: ");
 		String eBoatName = input.next();
 		goBackOnDemand(temp);
 		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1);
-		for (int i = 0; i < memberList.getRegistry().size(); i++) {
-			for (int j = 0; j < memberList.getRegistry().get(i).getBoats().size(); j++) {	
-				if (memberList.getRegistry().get(i).getBoats().get(j).getName().equals(eBoatName)) {	// Checking if the member has such a boat
-					try {
-						Member mem = memberList.getRegistry().get(getMemberID(temp));
-						System.out.println("Boat found!");
-						memberList.getRegistry().get(i).getBoats().remove(j);
-						
-						int q = mem.getNumOfBoats();
-						q--;
-						mem.setNumOfBoats(q);
-						
-						System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-						System.out.println("x Boat successfully removed! x");
-						System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-
-						goBack();
-					} catch (Exception e) {
-						System.err.println("Wrong input, try again!");
-						System.out.flush();
-						System.err.flush();
-						System.out.println("");
-						goBack();
-					}
+		for (int i = 0; i < mem.getBoats().size(); i++) {
+			try {
+				if (mem.getBoats().get(i).getName().equals(eBoatName)) {
+					System.out.println("Boat found!");
+					mem.getBoats().remove(i);
+					int q = mem.getNumOfBoats();
+					q--;
+					mem.setNumOfBoats(q);
+					System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+					System.out.println("x Boat successfully removed! x");
+					System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+					goBack();
+				} else {
+					System.err.println("Sorry, no such boat found!");
+					goBack();
 				}
+			} catch (Exception e) {
+				System.err.println("Wrong input, try again!");
+				System.out.flush();
+				System.err.flush();
+				System.out.println("");
+				goBack();
 			}
 		}
-		System.err.println("Something went wrong, try again!");
-		System.out.flush();
-		System.err.flush();
-		System.out.println("");
-		goBack();
-
 	}
 
 	private Integer getMemberID(String ID) {
@@ -523,7 +506,7 @@ public class MemberController {
 		}
 		return false;
 	}
-	
+
 	private boolean checkBoatSize(String name) {
 		for (int i = 0; i < name.length(); i++) {
 			if (!Character.isDigit(name.charAt(i))) {
@@ -532,44 +515,45 @@ public class MemberController {
 			}
 		}
 		return true;
-	}	
+	}
 
 	private boolean nameCheckDigit(String name) {
-		
+
 		for (int i = 0; i < name.length(); i++) {
 			if (!Character.isLetter(name.charAt(i))) {
 				char temp = name.charAt(i);
-				if(temp == ' ') {
+				if (temp == ' ') {
 					String nameTemp = "\" \" ---> Whitespace";
 					System.err.println("You used the character " + nameTemp);
 					System.err.println("The name can only contain letters, try again!");
 					System.out.println("");
 					return false;
-				}else {
-				System.err.println("You used the character " + "\""+ name.charAt(i) + "\"");
-				System.err.println("The name can only contain letters, try again!");
-				System.out.println("");
-				return false;
+				} else {
+					System.err.println("You used the character " + "\"" + name.charAt(i) + "\"");
+					System.err.println("The name can only contain letters, try again!");
+					System.out.println("");
+					return false;
 				}
 			}
 		}
 		return true;
 	}
-	
+
 	private void checkBoatName(String name) throws JAXBException {
-		for(int j=0; j < memberList.getRegistry().size(); j++) {
-			for (int i = 0; i < memberList.getRegistry().get(j).getBoats().size(); i++) { //Checking that the give Members boat registry is not empty. 
-				if(memberList.getRegistry().get(j).getBoats().isEmpty()) {
+		for (int j = 0; j < memberList.getRegistry().size(); j++) {
+			for (int i = 0; i < memberList.getRegistry().get(j).getBoats().size(); i++) { // Checking that the give
+																							// Members boat registry is
+																							// not empty.
+				if (memberList.getRegistry().get(j).getBoats().isEmpty()) {
 					continue;
-				}
-				else if (memberList.getRegistry().get(j).getBoats().get(i).getName().equals(name)) {				
+				} else if (memberList.getRegistry().get(j).getBoats().get(i).getName().equals(name)) {
 					System.err.print("Boat name is taken! Please choose another name.");
 					goBack();
 				}
 			}
 		}
 	}
-	
+
 	private boolean charIsDigit(String temp) {
 		for (int i = 0; i < 6; i++) {
 			if (!Character.isDigit(temp.charAt(i))) {
@@ -613,7 +597,10 @@ public class MemberController {
 		}
 	}
 
-	/*Method to display a verbose list of the members in the registry and their boats numbers as well as the boats descriptions */
+	/*
+	 * Method to display a verbose list of the members in the registry and their
+	 * boats numbers as well as the boats descriptions
+	 */
 	private void displayVerbose() throws JAXBException {
 		System.out.println("=========== Displaying a verbose list of the members ===========");
 		if (memberList.getRegistry().isEmpty()) {
@@ -622,13 +609,17 @@ public class MemberController {
 		} else {
 			for (int i = 0; i < memberList.getRegistry().size(); i++) {
 				System.out.println(memberList.getRegistry().get(i));
-				System.out.println(memberList.getRegistry().get(i).getBoats()+ "\n");
+				System.out.println(memberList.getRegistry().get(i).getBoats() + "\n");
 				System.out.println(" ");
 			}
 			goBack();
 		}
 	}
-	/*Method to display a compact list of the members in the registry and their boats numbers */
+
+	/*
+	 * Method to display a compact list of the members in the registry and their
+	 * boats numbers
+	 */
 	private void displayCompact() throws JAXBException {
 		System.out.println("=========== Displaying a compact list of the members ===========");
 		if (memberList.getRegistry().isEmpty()) {
@@ -643,7 +634,8 @@ public class MemberController {
 			goBack();
 		}
 	}
-	/*Method to display a specific members information */
+
+	/* Method to display a specific members information */
 	private void displaySpecific(Scanner ID) throws JAXBException {
 		System.out.println("=================== Displaying specific member =================");
 		if (memberList.getRegistry().isEmpty()) {
@@ -653,19 +645,18 @@ public class MemberController {
 			System.out.println("Please enter member ID!  (Input 0 to go back) ");
 			String temp = ID.next();
 			goBackOnDemand(temp);
-			temp = temp.substring(0,1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
-				Member mem = memberList.getMember(temp);
-				if (mem == null) {
-					System.err.println("A member with that ID was not found, try again!");
-					System.err.flush();
-					goBack();
-				}
-				else {
+			temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
+			Member mem = memberList.getMember(temp);
+			if (mem == null) {
+				System.err.println("A member with that ID was not found, try again!");
+				System.err.flush();
+				goBack();
+			} else {
 				System.out.println(mem);
 				goBack();
-				}
 			}
 		}
+	}
 
 	public ArrayList<Member> getMembers() {
 		return memberList.getRegistry();
