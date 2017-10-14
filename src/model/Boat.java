@@ -51,15 +51,4 @@ public class Boat {
 	public void setLength(String length) {
 		this.length = length;
 	}
-	
-	//Boat description
-	public String toString() {
-		StringBuilder description = new StringBuilder();
-		description.append(
-				"\nBoat description: " 
-				+ "\nName: " + this.name
-				+ "\nBoat type: " + this.type
-				+ "\nBoat length: " + this.length);
-		return description.toString();
-	}
 }

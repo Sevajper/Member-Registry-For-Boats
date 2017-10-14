@@ -90,16 +90,4 @@ public class Member {
 	public void setBoats(Boat boat) {
 		boats.add(boat);
 	}
-
-
-	 public String toString(){
-	        String temp = 
-	        		  "\nMember: "  + this.name + " "
-	                + "\nMember ID: " + this.id
-	                + " " + "\nPersonal Number: " + this.persNum
-	                + " " + "\nNumber of Boats: " + this.numOfBoats
-	                +"\n" + "----------------------------";
-		 
-	        return temp;
-	}
 }
