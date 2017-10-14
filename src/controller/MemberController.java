@@ -125,7 +125,7 @@ public class MemberController {
 		}
 	}
 
-	//Update a member > get ID > change info 333333(same data/error handling as registerMember()) > replace in registry 
+	//Update a member > get ID > change info (same data/error handling as registerMember()) > replace in registry 
 	public void updateMember(Scanner input) {
 		System.out.println("----------------------------------------------"
 				+ "\nUpdate an existing member! (Type 0 to go back)\n");
