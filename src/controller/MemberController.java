@@ -25,57 +25,45 @@ public class MemberController {
 			int selection = input.nextInt();
 
 			switch (selection) {
-
 			case 0:
 				rc.saveToRegistry(memberList, file);
+				System.out.println("Saved successfully!");
 				System.exit(0);
 				break;
-
 			case 1:
 				registerMember(input);
 				break;
-
 			case 2:
 				updateMember(input);
 				break;
-
 			case 3:
 				removeMember(input);
 				break;
-
 			case 4:
 				registerBoat(input);
 				break;
-
 			case 5:
 				updateBoat(input);
 				break;
 			case 6:
 				removeBoat(input);
 				break;
-
 			case 7:
 				displaySpecific(input);
 				break;
-
 			case 8:
 				displayVerbose();
 				break;
-
 			case 9:
 				displayCompact();
 				break;
-
 			case 10:
 				System.exit(0); //Exit application
-
 			case 100:
 				appStart(c); //Display instructions
-
 			default:
 				c.inputError(); //Handle wrong input
 				goBack();
-
 			}
 		} catch (Exception e) { //Catch any unexpected errors
 			c.inputError();
@@ -83,7 +71,6 @@ public class MemberController {
 		}
 	}
 
-	
 	// Application start > check for existing saved file > (if not) create new file > display menu > get input 
 	public void appStart(view.Console view) throws JAXBException, FileNotFoundException{
 		if (!file.exists()) {
@@ -99,12 +86,10 @@ public class MemberController {
 			getInputResult();
 			
 		} else {
-			System.out.println(file.length());
 			memberList = rc.loadFromRegistry(memberList, file);
 		}
 		view.displayWelcome();
 		getInputResult();
-		
 	}
 
 	// Method for registering a member > get first and last name > set ID > assign default boat number 0 > add to registry
@@ -264,9 +249,6 @@ public class MemberController {
 			bt.setName(boatName);
 			mem.setBoat(bt);
 			mem.setBoats(bt);
-			System.out.println("\tBoat(s) description: \n");
-			c.printBoatArray(mem.getBoats());
-
 			int numberOfBoats = mem.getNumOfBoats();
 			numberOfBoats++;
 			mem.setNumOfBoats(numberOfBoats);
@@ -393,9 +375,10 @@ public class MemberController {
 			System.out.println("\n=========== Displaying a verbose list of the members ===========");
 			ifEmptyGoBack();
 			for (int i = 0; i < getMembers().size(); i++) {
-				System.out.println(c.printMember(getMembers().get(i)) 
-					+ "\n\tBoat(s) description: \n" 
-					+ c.printBoatArray(getMembers().get(i).getBoats()));
+				System.out.println(c.printMember(getMembers().get(i)));
+				if(!getMembers().get(i).getBoats().isEmpty()) {
+					System.out.println( "Boat(s) description:\n" + c.printBoatArray(getMembers().get(i).getBoats()));
+				}		
 			}
 			goBack();
 		}

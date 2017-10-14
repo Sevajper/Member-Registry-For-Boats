@@ -22,7 +22,8 @@ public class Console {
 				+ "\n8.  Display verbose list" 
 				+ "\n9.  Display compact list"
 				+ "\n10. Exit without saving" 
-				+ "\n0.  Save and Exit" + "\n" + "\n100. Display Member Registry Menu"
+				+ "\n0.  Save and Exit" + "\n" 
+				+ "\n100. Display Member Registry Menu"
 				+ "\n\nChoose from menu by typing a number: ");
 	}
 
@@ -101,7 +102,8 @@ public class Console {
 	
 	public String printMember(Member member) {
 		StringBuilder list = new StringBuilder();
-		list.append("\nMember: "  + member.getName() + " "
+		list.append("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+				+"\nMember: "  + member.getName() + " "
 				+ "\nMember ID: " + member.getId()
 	            + " " + "\nPersonal Number: " + member.getPersNum()
 	            + " " + "\nNumber of Boats: " + member.getNumOfBoats()
