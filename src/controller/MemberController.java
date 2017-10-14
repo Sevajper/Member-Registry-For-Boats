@@ -116,18 +116,14 @@ public class MemberController {
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1); // Putting first letter to uppercase and the rest
 																		// to what the user inputs.
 		goBackOnDemand(temp);
-		if (nameCheckDigit(temp) == false) {
-			goBack();
-		}
+		nameCheckDigit(temp);
 
 		System.out.print("Last name of new member: "); // Getting a last name for the member too
 		String temp2 = input.next();
 		temp2 += input.nextLine();
 		temp2 = temp2.substring(0, 1).toUpperCase() + temp2.substring(1);
 		goBackOnDemand(temp2);
-		if (nameCheckDigit(temp2) == false) {
-			goBack();
-		}
+		nameCheckDigit(temp2);
 
 		String memberName = temp + " " + temp2; // Adding the two names together to create one Full name
 		goBackOnDemand(memberName);
@@ -154,8 +150,8 @@ public class MemberController {
 	}
 
 	public void updateMember(Scanner input) {
-		System.out.println("------------------------------------------");
-		System.out.println("Update an existing member! (Type 0 to go back)\n");
+		System.out.println("----------------------------------------------"
+				+ "\nUpdate an existing member! (Type 0 to go back)\n");
 		System.out.print("Please enter existing member's ID: ");
 		String temp = input.next();
 		goBackOnDemand(temp);
@@ -170,17 +166,12 @@ public class MemberController {
 			name += input.nextLine();
 			name = name.substring(0, 1).toUpperCase() + name.substring(1);
 			goBackOnDemand(name);
-			if (nameCheckDigit(name) == false) {
-				goBack();
-			}
+			nameCheckDigit(name);
 			System.out.print("Update member last name: ");
 			String name2 = input.next();
 			name2 += input.nextLine();
 			goBackOnDemand(name2);
-			if (nameCheckDigit(name2) == false) {
-				goBack();
-			}
-
+			nameCheckDigit(name2);
 			String realName = name + " " + name2;
 
 			System.out.print("New member personal number in the form YYMMDD-XXXX: ");
@@ -206,9 +197,9 @@ public class MemberController {
 
 	public void removeMember(Scanner input) {
 		ifEmptyGoBack();
-		System.out.println("------------------------------------------");
-		System.out.println("Remove a member! \n" + "\nAre you sure you want to remove a member?");
-		System.out.println("No = 0 , Yes = 1" + "\nInput: ");
+		System.out.println("-------------------------------------------------------------------"
+				+ "\nRemove a member! \n" + "\nAre you sure you want to remove a member?\n");
+		System.out.print("No = 0 , Yes = 1" + "\nInput: ");
 		int text = input.nextInt();
 		if (text == 0) {
 			goBack();
@@ -230,18 +221,17 @@ public class MemberController {
 	}
 
 	public void registerBoat(Scanner input) {
-		Boat bt = new Boat();
-
-		System.out.println("Register a boat to a member! (Type 0 to go back!)");
-
-		System.out.println("Please input member ID: ");
+		
+		System.out.print("\nRegister a boat to a member! (Type 0 to go back!)"
+				+ "\nPlease input member ID: ");
 		String id = input.next();
 		goBackOnDemand(id);
 		id = id.substring(0, 1) + id.substring(1, 2).toUpperCase() + id.substring(2);
 		ifEmptyGoBack();
 		try {
+			Boat bt = new Boat();
 			Member mem = getMembers().get(getMemberID(id));
-			System.out.println("\n\t\t*** One word name allowed! ***");
+			System.out.println("\n\t\t*** One word name allowed! ***\n");
 			System.out.print("Name of boat: ");
 			String boatName = input.next();
 			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);
@@ -269,9 +259,7 @@ public class MemberController {
 			System.out.print("Boat length (in metres): ");
 			String boatLength = input.next();
 			goBackOnDemand(boatLength);
-			if (checkBoatSize(boatLength) == false) {
-				goBack();
-			}
+			checkBoatSize(boatLength);
 			bt.setLength(boatLength);
 			bt.setType(boatType);
 			bt.setName(boatName);
@@ -291,8 +279,8 @@ public class MemberController {
 	}
 
 	public void updateBoat(Scanner input) {
-		System.out.println("------------------------------------------");
-		System.out.println("Update an existing boat! (Type 0 to go back)\n");
+		System.out.println("--------------------------------------------"
+				+ "\nUpdate an existing boat! (Type 0 to go back)\n");
 		System.out.print("Please enter existing member's ID: ");
 		String temp = input.next();
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
@@ -315,8 +303,8 @@ public class MemberController {
 			for (int j = 0; j < getMembers().get(i).getBoats().size(); j++) {
 				if (getMembers().get(i).getBoats().get(j).getName().equals(eBoatName)) {
 					try {
-						System.out.println("Boat found!\n");
-						System.out.print("Update boat name: ");
+						System.out.print("\nBoat found!"
+								+ "\nUpdate boat name: ");
 						String boatName = input.next();
 						goBackOnDemand(boatName);
 						checkBoatName(boatName);
@@ -339,12 +327,10 @@ public class MemberController {
 							goBack();
 						}
 						// Updating Boat Length
-						System.out.print("Update boat length: ");
+						System.out.print("Update boat length (in metres): ");
 						String boatLength = input.next();
 						goBackOnDemand(boatLength);
-						if (checkBoatSize(boatLength) == false) {
-							goBack();
-						}
+						checkBoatSize(boatLength);
 						getMembers().get(i).getBoats().get(j).setName(boatName);
 						getMembers().get(i).getBoats().get(j).setType(boatType);
 						getMembers().get(i).getBoats().get(j).setLength(boatLength);
@@ -364,16 +350,14 @@ public class MemberController {
 
 	public void removeBoat(Scanner input) {
 
-		System.out.println("------------------------------------------");
-		System.out.println("Delete an existing boat! (Type 0 to go back)");
-		System.out.println("");
+		System.out.println("--------------------------------------------"
+				+ "\nDelete an existing boat! (Type 0 to go back)\n");
 		System.out.print("Please enter existing member's ID: ");
 		String temp = input.next();
 		goBackOnDemand(temp);
 		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
 		ifEmptyGoBack();
 		Member mem = getMembers().get(getMemberID(temp));
-
 		if (mem.getBoats().isEmpty()) {
 			System.out.println("\n\t\t*** This member has no boats! Please register a boat to this member first! ***");
 			goBack();
@@ -387,9 +371,9 @@ public class MemberController {
 				if (mem.getBoats().get(i).getName().equals(eBoatName)) {
 					System.out.println("Boat found!");
 					mem.getBoats().remove(i);
-					int q = mem.getNumOfBoats();
-					q--;
-					mem.setNumOfBoats(q);
+					int numOfBoats = mem.getNumOfBoats();
+					numOfBoats--;
+					mem.setNumOfBoats(numOfBoats);
 					c.boatRemoved();
 					goBack();
 				} else {
@@ -409,53 +393,48 @@ public class MemberController {
 				return i;
 			}
 		}
-		return null; // Should not be return = 0;
+		return null; 
 	}
 
 	private boolean persNumCheck(String persNum) {
 		if (persNum.length() >= 8) {
 			if (persNum.substring(6, 7).equals("-") && persNum.length() == 11 && charIsDigit(persNum)) {
-
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean checkBoatSize(String name) {
+	private void checkBoatSize(String name) {
 		for (int i = 0; i < name.length(); i++) {
 			if (!Character.isDigit(name.charAt(i))) {
 				System.out.println("\n\t\t*** The length can only be a positive integer, try again! ***\n");
-				return false;
+				goBack();
 			}
 		}
-		return true;
 	}
 
-	private boolean nameCheckDigit(String name) {
+	private void nameCheckDigit(String name) {
 		for (int i = 0; i < name.length(); i++) {
 			if (!Character.isLetter(name.charAt(i))) {
 				char temp = name.charAt(i);
 				if (temp == ' ') {
 					String nameTemp = "\" \" ---> Whitespace";
-					System.err.println("You used the character " + nameTemp);
-					System.err.println("The name can only contain letters, try again! \n");
-					return false;
+					System.out.println("\n\t\t*** You used the character " + nameTemp + " ***"
+							+ "\n\t\t*** The name can only contain letters, try again! ***\n");
+					goBack();
 				} else {
-					System.err.println("You used the character " + "\"" + name.charAt(i) + "\"");
-					System.err.println("The name can only contain letters, try again! \n");
-					return false;
+					System.out.println("\n\t\t*** You used the character " + "\"" + name.charAt(i) + "\"" + " ***"
+							+ "\n\t\t*** The name can only contain letters, try again! ***\n");
+					goBack();
 				}
 			}
 		}
-		return true;
 	}
 
 	private void checkBoatName(String name) {
 		for (int j = 0; j < getMembers().size(); j++) {
-			for (int i = 0; i < getMembers().get(j).getBoats().size(); i++) { // Checking that the give
-																							// Members boat registry is
-																							// not empty.
+			for (int i = 0; i < getMembers().get(j).getBoats().size(); i++) { 
 				if (getMembers().get(j).getBoats().isEmpty()) {
 					continue;
 				} else if (getMembers().get(j).getBoats().get(i).getName().equals(name)) {

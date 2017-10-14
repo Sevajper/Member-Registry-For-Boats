@@ -71,9 +71,9 @@ public class Console {
 	}
 	
 	public void goBackError() {
-		System.out.println("\n----------------------------"
+		System.out.print("\n----------------------------"
 				+ "\nType \"100\" to display menu! "
-				+ "Choose from menu by typing a number: ");
+				+ "\nChoose from menu by typing a number: ");
 	}
 	
 	public String printMemberArray(Registry memberList) {
