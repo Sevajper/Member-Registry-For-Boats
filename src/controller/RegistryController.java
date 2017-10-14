@@ -23,7 +23,8 @@ public class RegistryController {
 	// the desktop
 	public void saveToRegistry(Registry reg, File file) throws IOException, JAXBException {
 		if (reg.getRegistry().isEmpty()) {
-			System.out.println("\n\t\t*** Sorry, you do not have any members in the registry to save! Exiting. . . ***");
+			System.out.println("\n\t\t*** Sorry, you do not have any members in the registry to save! Exiting! ***");
+			System.exit(0);
 		} else {
 
 			BufferedWriter out = new BufferedWriter(new FileWriter(file));
@@ -49,5 +50,4 @@ public class RegistryController {
 
 		return reg;
 	}
-
 }

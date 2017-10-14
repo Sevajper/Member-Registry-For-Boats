@@ -33,38 +33,38 @@ public class Console {				//Print out methods
 
 	public void memberAdded() {
 		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-				+ "\nx Member successfully added to member registry! x"
-				+ "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+						 + "\nx Member successfully added to member registry! x"
+						 + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 
 	public void memberUpdated() {
 		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
-				+ "\nx Member successfully updated! x"
-				+ "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+						 + "\nx Member successfully updated! x"
+						 + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 
 	public void memberRemoved() {
 		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
-				+ "\nx Member successfully removed :( x"
-				+ "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+				         + "\nx Member successfully removed :( x"
+				         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 
 	public void boatAdded() {
 		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
-				+ "\nx Boat successfully registered! x"
-				+ "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+				         + "\nx Boat successfully registered! x"
+				         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 	
 	public void boatUpdated() {
 		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-				+ "\nx Boat successfully updated! x"
-				+ "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+				         + "\nx Boat successfully updated! x"
+				         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 	
 	public void boatRemoved() {
 		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-				+ "\nx Boat successfully removed! x"
-				+ "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+				         + "\nx Boat successfully removed! x"
+				         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 	
 	public void persNumErr() {
@@ -73,8 +73,8 @@ public class Console {				//Print out methods
 	
 	public void goBackError() {
 		System.out.print("\n----------------------------"
-				+ "\nType \"100\" to display menu! "
-				+ "\nChoose from menu by typing a number: ");
+				       + "\nType \"100\" to display menu! "
+				       + "\nChoose from menu by typing a number: ");
 	}
 	
 	public String printMemberArray(Registry memberList) {

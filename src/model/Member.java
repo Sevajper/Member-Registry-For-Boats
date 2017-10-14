@@ -27,7 +27,6 @@ public class Member {
 	@XmlElement(name = "boat")
 	private Boat boat = new Boat();
 	
-	
 	public Member() {
 		
 	}
@@ -36,12 +35,16 @@ public class Member {
 		this.name = memberName;
 		this.persNum = memberPersNum;
 	}
-	//Member ID is the first letter of the name plus the last three numbers of their personal number.
+	/*
+	 * Member ID is a unique number starting from 0,
+	 * that increases by 1 after each member registration, 
+	 * plus the first letter of the name,
+	 * plus the last three numbers of their personal number.
+	 */
 	public String createID() {
 		
-		id = getName().substring(0, 1).toUpperCase() + getPersNum().substring(8, 11); //needs a dash when making the personal number
-		
-		
+		id = getName().substring(0, 1).toUpperCase() 
+			 + getPersNum().substring(8, 11); //Needs a dash when making the personal number
 		return id;
 	}
 	
