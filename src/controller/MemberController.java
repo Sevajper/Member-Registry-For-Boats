@@ -264,6 +264,7 @@ public class MemberController {
 			bt.setName(boatName);
 			mem.setBoat(bt);
 			mem.setBoats(bt);
+			System.out.println("\tBoat(s) description: \n");
 			c.printBoatArray(mem.getBoats());
 
 			int numberOfBoats = mem.getNumOfBoats();
@@ -388,20 +389,20 @@ public class MemberController {
 	}
 	
 	// Method to display a detailed list of the members in the registry 
-		private void displayVerbose() {
-			System.out.println("=========== Displaying a verbose list of the members ===========");
+	private void displayVerbose() {
+			System.out.println("\n=========== Displaying a verbose list of the members ===========");
 			ifEmptyGoBack();
 			for (int i = 0; i < getMembers().size(); i++) {
-				System.out.println(c.printMember(getMembers().get(i)) +
-					c.printBoatArray(getMembers().get(i).getBoats()));
+				System.out.println(c.printMember(getMembers().get(i)) 
+					+ "\n\tBoat(s) description: \n" 
+					+ c.printBoatArray(getMembers().get(i).getBoats()));
 			}
 			goBack();
 		}
-
 		
-		// Method to display a compact list of the members in the registry 
-		private void displayCompact() {
-			System.out.println("=========== Displaying a compact list of the members ===========");
+	// Method to display a compact list of the members in the registry 
+	private void displayCompact() {
+			System.out.println("\n=========== Displaying a compact list of the members ===========");
 			ifEmptyGoBack();
 			for (int i = 0; i < getMembers().size(); i++) {
 				System.out.print("\nMember: " + getMembers().get(i).getName() + "\nMember ID: "
@@ -411,11 +412,11 @@ public class MemberController {
 			goBack();
 		}
 
-		// Method to display a specific members information 
-		private void displaySpecific(Scanner ID) {
-			System.out.println("=================== Displaying specific member =================");
+	// Method to display a specific members information 
+	private void displaySpecific(Scanner ID) {
+			System.out.println("\n=================== Displaying specific member =================");
 			ifEmptyGoBack();
-			System.out.println("Please enter member ID!  (Input 0 to go back) ");
+			System.out.print("\nPlease enter member ID (Input 0 to go back): ");
 			String temp = ID.next();
 			goBackOnDemand(temp);
 			temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
@@ -424,8 +425,9 @@ public class MemberController {
 				System.out.println("\n\t\t*** A member with that ID was not found, try again! ***");
 				goBack();
 			} else {
-				System.out.println(c.printMember(mem) +
-						c.printBoatArray(mem.getBoats()));
+				System.out.println(c.printMember(mem) 
+						+ "\n\tBoat(s) description: \n"
+						+ c.printBoatArray(mem.getBoats()));
 				goBack();
 			}
 		}

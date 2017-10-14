@@ -91,8 +91,7 @@ public class Console {
 	public String printBoatArray(ArrayList<Boat> boatList) {
 		StringBuilder list = new StringBuilder();
 		for(int i=0; i < boatList.size(); i++) {
-			list.append("\nBoat description: " 
-					+ "\nName: " + boatList.get(i).getName()
+			list.append("\nName: " + boatList.get(i).getName()
 					+ "\nBoat type: " + boatList.get(i).getType()
 					+ "\nBoat length (metres): " + boatList.get(i).getLength()
 	                +"\n" + "----------------------------");
