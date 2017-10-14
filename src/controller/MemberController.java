@@ -4,13 +4,11 @@ import model.Boat;
 import model.Member;
 import model.Registry;
 import view.Console;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import javax.xml.bind.JAXBException;
 
 public class MemberController {
@@ -84,7 +82,6 @@ public class MemberController {
 		} else if (file.length() == 0) {
 			view.displayWelcome();
 			getInputResult();
-			
 		} else {
 			memberList = rc.loadFromRegistry(memberList, file);
 		}
@@ -108,7 +105,6 @@ public class MemberController {
 		temp2 = temp2.substring(0, 1).toUpperCase() + temp2.substring(1); //Set first letter to uppercase
 		goBackOnDemand(temp2);
 		nameCheckDigit(temp2);
-
 		String memberName = temp + " " + temp2; // Adding the two names together to create one full name
 		goBackOnDemand(memberName);
 
@@ -116,15 +112,13 @@ public class MemberController {
 		String memberPersNum = input.next();
 		goBackOnDemand(memberPersNum);
 
-		if (persNumCheck(memberPersNum)) { // If pers num has correct form set member and add to registry
+		if (persNumCheck(memberPersNum)) { // If personal number has correct form set member and add to registry
 			Member mem = new Member(memberName, memberPersNum);
 			String memberID = mem.createID();
 			mem.setId(memberID);
 			memberList.addMember(mem);
 			c.memberAdded();
-			//System.out.println(c.printMemberArray(memberList)); // Print out member list
 			goBack();
-
 		} else { // Otherwise an error will pop out
 			c.persNumErr();
 			goBack();

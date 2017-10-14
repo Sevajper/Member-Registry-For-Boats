@@ -6,8 +6,8 @@ import model.Boat;
 import model.Member;
 import model.Registry;
 
-public class Console {
-
+public class Console {				//Print out methods
+									
 	public void displayWelcome() {
 		System.out.println("----------------------------------------");
 		System.out.println(" Hello! Welcome to the Member Registry!");
@@ -27,7 +27,7 @@ public class Console {
 				+ "\n\nChoose from menu by typing a number: ");
 	}
 
-	public void inputError() {
+	public void inputError() {	
 		System.out.println("\n\t\t*** Wrong input, please choose a number between 0-10 or 100 to display menu ***");
 	}
 
@@ -94,7 +94,7 @@ public class Console {
 		for(int i=0; i < boatList.size(); i++) {
 			list.append("\nName: " + boatList.get(i).getName()
 					+ "\nBoat type: " + boatList.get(i).getType()
-					+ "\nBoat length (metres): " + boatList.get(i).getLength()
+					+ "\nBoat length (meters): " + boatList.get(i).getLength()
 	                +"\n" + "----------------------------");
 		}	
 		return list.toString();
