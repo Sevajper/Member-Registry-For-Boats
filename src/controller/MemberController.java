@@ -112,7 +112,7 @@ public class MemberController {
 		String memberPersNum = input.next();
 		goBackOnDemand(memberPersNum);
 
-		if (persNumCheck(memberPersNum)) { // If personal number has correct form set member and add to registry
+		if (persNumCheck(memberPersNum) && persNumVerify(memberPersNum)) { // If personal number has correct form set member and add to registry
 			Member mem = new Member(memberName, memberPersNum);
 			String memberID = mem.createID();
 			mem.setId(memberID);
@@ -419,6 +419,15 @@ public class MemberController {
 			}
 		}
 		return null; 
+	}
+	
+	private boolean persNumVerify(String persNum) {
+		for (int i = 0; i < memberList.getRegistry().size(); i++) {
+			if (persNum.equals(memberList.getRegistry().get(i).getPersNum())) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private boolean persNumCheck(String persNum) { // Check form of personal number > accepted form "YYMMDD-XXXX"
