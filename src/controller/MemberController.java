@@ -157,7 +157,7 @@ public class MemberController {
 			String persnum = input.next();
 			goBackOnDemand(persnum);
 
-			if (persNumCheck(persnum)) {		// Checking that the personal number is in the correct format and that there is no other personal number like that
+			if (persNumCheck(persnum)) {		// Checking that the personal number is in the correct format
 				mem.setPersNum(persnum);
 			} else {
 				c.persNumErr();
