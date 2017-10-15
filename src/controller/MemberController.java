@@ -17,7 +17,8 @@ public class MemberController {
 	private File file = new File("Member_Registry.txt");
 	private RegistryController rc = new RegistryController();
 
-	public void getInputResult() { //Take input from user
+	//Take the input from the user and compare it with switch cases.
+	public void getInputResult() { 
 		Scanner input = new Scanner(System.in);
 		try {
 			int selection = input.nextInt();
@@ -132,8 +133,8 @@ public class MemberController {
 		System.out.print("Please enter existing member's ID: ");
 		String temp = input.next();
 		goBackOnDemand(temp);
-		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
-		ifEmptyGoBack();
+		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);	//Making the first Letter of the persons first name to be uppercase.
+		ifEmptyGoBack();	//If the registry is empty, there are no members to update, it will print an error message and go back to the main menu.
 		try {
 			Member mem = getMembers().get(getMemberID(temp));
 			System.out.println("");
@@ -141,12 +142,13 @@ public class MemberController {
 			System.out.print("Update member first name: ");
 			String name = input.next();
 			name += input.nextLine();
-			name = name.substring(0, 1).toUpperCase() + name.substring(1);
-			goBackOnDemand(name);
-			nameCheckDigit(name);
+			name = name.substring(0, 1).toUpperCase() + name.substring(1);	//set first letter to uppercase
+			goBackOnDemand(name);	//If the input is a 0, then it will go back to the main menu
+			nameCheckDigit(name);		//Checks that the name does not contain anything but letters
 			System.out.print("Update member last name: ");
-			String name2 = input.next();
+			String name2 = input.next();		//Checking and doing the same stuff with the first name to the last name.
 			name2 += input.nextLine();
+			name2 = name2.substring(0, 1) + name2.substring(1);
 			goBackOnDemand(name2);
 			nameCheckDigit(name2);
 			String realName = name + " " + name2;
@@ -155,7 +157,7 @@ public class MemberController {
 			String persnum = input.next();
 			goBackOnDemand(persnum);
 
-			if (persNumCheck(persnum)) {
+			if (persNumCheck(persnum) && persNumVerify(persnum)) {		//Checking that the personal number is in the correct format and that there is no other personal number like that.
 				mem.setPersNum(persnum);
 			} else {
 				c.persNumErr();
@@ -174,25 +176,25 @@ public class MemberController {
 	
 	// Remove member > check if user really wants to remove > check if empty > remove from registry
 	public void removeMember(Scanner input) {
-		ifEmptyGoBack();
+		ifEmptyGoBack();		//Can't remove any members if there are no members right?
 		System.out.println("-------------------------------------------------------------------"
 				+ "\nRemove a member! \n" + "\nAre you sure you want to remove a member?\n");
 		System.out.print("No = 0 , Yes = 1" + "\nInput: ");
-		int text = input.nextInt();
+		int text = input.nextInt();		//Checking what the user input to see if they want to really remove a member or not.
 		if (text == 0) {
 			goBack();
 		} else if (text == 1) {
 			System.out.print("Please enter member's ID to remove member: ");
 		}
 		String temp = input.next();
-		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
+		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2); //Formatting the Members ID to allow leisure of writing for the user.
 		try {
-			Member mem = getMembers().get(getMemberID(temp));
-			getMembers().remove(mem);
-			c.memberRemoved();
+			Member mem = getMembers().get(getMemberID(temp));		//Getting a member with the ID value that was input.
+			getMembers().remove(mem);								//Removing said member from the registry.
+			c.memberRemoved();										//Giving confirmation that the Member has been removed.
 			goBack();
 		} catch (Exception e) {
-			System.out.println("\n\t\t*** A member with that ID was not found, try again! ***");
+			System.out.println("\n\t\t*** A member with that ID was not found, try again! ***");		//If a wrong ID was input, this error will show
 			goBack();
 		}
 
@@ -204,24 +206,24 @@ public class MemberController {
 				+ "\nPlease input member ID: ");
 		String id = input.next();
 		goBackOnDemand(id);
-		id = id.substring(0, 1) + id.substring(1, 2).toUpperCase() + id.substring(2);
-		ifEmptyGoBack();
+		id = id.substring(0, 1) + id.substring(1, 2).toUpperCase() + id.substring(2); //The Member ID is taken because the boat must be connected to a certain member
+		ifEmptyGoBack();		//If the registry is empty, then this will error message will show.
 		try {
-			Boat bt = new Boat();
+			Boat bt = new Boat();		// Create a new boat to have its details set and registered to a member.
 			Member mem = getMembers().get(getMemberID(id));
 			System.out.println("\n\t\t*** One word name allowed! ***\n");
 			System.out.print("Name of boat: ");
-			String boatName = input.next();
-			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);
-			goBackOnDemand(boatName);
-			checkBoatName(boatName);
+			String boatName = input.next();	
+			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);		//The boats name will be first uppercase and lowercase after that.
+			goBackOnDemand(boatName);		
+			checkBoatName(boatName);		
 			System.out.println("Please choose a boat type:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
 					+ "\n4.Other" + "\n");
 			System.out.print("Input: ");
-			String boatType = input.next();
-			goBackOnDemand(boatType);
+			String boatType = input.next();		//Getting the input for type of boat the user is wishing to register.
+			goBackOnDemand(boatType);	
 
-			if (boatType.equals("1")) {
+			if (boatType.equals("1")) {			//Different kinds of boat types.
 				boatType = "Sailboat";
 			} else if (boatType.equals("2")) {
 				boatType = "Motorsailer";
@@ -234,18 +236,17 @@ public class MemberController {
 				goBack();
 			}
 
-			System.out.print("Boat length (in metres): ");
-			String boatLength = input.next();
-			goBackOnDemand(boatLength);
-			checkBoatSize(boatLength);
-			bt.setLength(boatLength);
+			System.out.print("Boat length (in metres): ");		
+			String boatLength = input.next();					
+			checkBoatSize(boatLength);							//Checking that the size is a positive integer and not negative or letters
+			bt.setLength(boatLength);							//Setting the values of the boat to the created boat object.
 			bt.setType(boatType);
 			bt.setName(boatName);
-			mem.setBoat(bt);
-			mem.setBoats(bt);
+			mem.setBoat(bt);									//Setting the current boat of the member to the one registered.
+			mem.setBoats(bt);									//Adding the boat to the members collection.
 			int numberOfBoats = mem.getNumOfBoats();
 			numberOfBoats++;
-			mem.setNumOfBoats(numberOfBoats);
+			mem.setNumOfBoats(numberOfBoats);					//Increment the number of boats of the person.
 			c.boatAdded();
 			goBack();
 		} catch (Exception e) {
@@ -259,10 +260,10 @@ public class MemberController {
 		System.out.println("--------------------------------------------"
 				+ "\nUpdate an existing boat! (Type 0 to go back)\n");
 		System.out.print("Please enter existing member's ID: ");
-		String temp = input.next();
-		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);
+		String temp = input.next();		//Takes a string input for member ID
+		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);	//Formats the ID so that the Letter is uppercase.
 		goBackOnDemand(temp);
-		ifEmptyGoBack();
+		ifEmptyGoBack();		//If the members registry is empty, goes back to main menu.
 		for (int i = 0; i < getMembers().size(); i++) { 
 			if (getMembers().get(i).getId().equals(temp)) {
 				if (getMembers().get(i).getBoats().isEmpty()) {
@@ -273,21 +274,21 @@ public class MemberController {
 		}
 		System.out.print("Please enter existing boat's name: ");
 		String eBoatName = input.next();
-		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1); // Change first letter to capital letter
+		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1); 
 		goBackOnDemand(temp);
-		for (int i = 0; i < getMembers().size(); i++) {
+		for (int i = 0; i < getMembers().size(); i++) {		//Nested for loop to go through each member and look through their boat collection to find the boat.
 			for (int j = 0; j < getMembers().get(i).getBoats().size(); j++) {
-				if (getMembers().get(i).getBoats().get(j).getName().equals(eBoatName)) {
+				if (getMembers().get(i).getBoats().get(j).getName().equals(eBoatName)) {		//Checking to see if the boat name is already applied to another boat in the members collection
 					try {
 						System.out.print("\nBoat found!"
 								+ "\nUpdate boat name: ");
 						String boatName = input.next();
 						goBackOnDemand(boatName);
-						checkBoatName(boatName);
+						checkBoatName(boatName);		//input boat name
 						System.out.print("Please choose a new boat type:" + "\n1.Sailboat" + "\n2.Motorsailer"
 								+ "\n3.Kayak\\Canoe" + "\n4.Other" + "\n");
 						System.out.print("Input: ");
-						String boatType = input.next();
+						String boatType = input.next();		//Input boat type
 						goBackOnDemand(boatType);
 
 						if (boatType.equals("1")) {
@@ -304,13 +305,13 @@ public class MemberController {
 						}
 						
 						System.out.print("Update boat length (in metres): ");
-						String boatLength = input.next();
+						String boatLength = input.next();		//Input boat length
 						goBackOnDemand(boatLength);
 						checkBoatSize(boatLength);
 						getMembers().get(i).getBoats().get(j).setName(boatName);
 						getMembers().get(i).getBoats().get(j).setType(boatType);
 						getMembers().get(i).getBoats().get(j).setLength(boatLength);
-						c.boatUpdated();
+						c.boatUpdated();		//Message to show boat has been updated
 						goBack();
 					} catch (Exception e) {
 						System.out.println("\n\t\t*** Input error, try again! ***");
@@ -330,28 +331,28 @@ public class MemberController {
 		System.out.println("--------------------------------------------"
 				+ "\nDelete an existing boat! (Type 0 to go back)\n");
 		System.out.print("Please enter existing member's ID: ");
-		String temp = input.next();
+		String temp = input.next();			//Input for getting member ID, and for checking what member it is.
 		goBackOnDemand(temp);
 		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
-		ifEmptyGoBack();
+		ifEmptyGoBack();		//If registry is empty, go back.
 		Member mem = getMembers().get(getMemberID(temp));
 		if (mem.getBoats().isEmpty()) {
 			System.out.println("\n\t\t*** This member has no boats! Please register a boat to this member first! ***");
 			goBack();
 		}
 		System.out.print("Please enter existing boat's name: ");
-		String eBoatName = input.next();
+		String eBoatName = input.next();		//Input for boat name.
 		goBackOnDemand(temp);
 		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1);
 		for (int i = 0; i < mem.getBoats().size(); i++) {
 			try {
 				if (mem.getBoats().get(i).getName().equals(eBoatName)) {
 					System.out.println("Boat found!");
-					mem.getBoats().remove(i);
+					mem.getBoats().remove(i);			//Remove boat from member collection.
 					int numOfBoats = mem.getNumOfBoats();
 					numOfBoats--;
 					mem.setNumOfBoats(numOfBoats);
-					c.boatRemoved();
+					c.boatRemoved();					//Confirmation message that boat has been removed.
 					goBack();
 				} else {
 					System.out.println("\n\t\t*** Sorry, no such boat found! ***");

@@ -7,10 +7,14 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+//The XML root Element which will start off and show what is contained in the xml file
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "memberRegistry")
 public class Registry {
-
+	
+	/*The Element in this case is the memberList and the unique ID, these will be loaded and saved,
+	 *  and because the member class has elements as well, the members in the registry list will all be subdivied
+	 *  into their own category.*/
 	@XmlElement(name = "memberList")
 	private ArrayList<Member> memberList = new ArrayList<Member>();
 	@XmlElement private int uniqueId;
@@ -30,7 +34,7 @@ public class Registry {
 	public ArrayList<Member> getRegistry() {
 		return memberList;
 	}
-
+	
 	public void addMember(Member mem) {
 		String newId = uniqueId + mem.createID();
 		uniqueId++;
