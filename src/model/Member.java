@@ -8,14 +8,14 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-//XML variables to put as Header for the file.
+// XML variables to put as Header for the file.
 @XmlRootElement(name = "Member")
 @XmlType(propOrder = {"name", "persNum", "id", "numOfBoats", "boats", "boat"})
 @XmlAccessorType(XmlAccessType.FIELD)
 
 public class Member {
 	
-	//The XMLElement is the name which is going to be shown so that the file is neat and organized.
+	// The XMLElement is the name which is going to be shown so that the file is neat and organized.
 	@XmlElement(name = "Name")
 	private String name;
 	@XmlElement(name = "PersonalNumber")
@@ -46,7 +46,7 @@ public class Member {
 	public String createID() {
 		
 		id = getName().substring(0, 1).toUpperCase() 
-			 + getPersNum().substring(8, 11); //Needs a dash when making the personal number
+			 + getPersNum().substring(8, 11); // Needs a dash when making the personal number
 		return id;
 	}
 	
