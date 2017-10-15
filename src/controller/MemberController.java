@@ -366,7 +366,7 @@ public class MemberController {
 	}
 	
 	// Method to display a detailed list of the members in the registry 
-	private void displayVerbose() {
+	public void displayVerbose() {
 			System.out.println("\n=========== Displaying a verbose list of the members ===========");
 			ifEmptyGoBack();
 			for (int i = 0; i < getMembers().size(); i++) {
@@ -379,7 +379,7 @@ public class MemberController {
 		}
 		
 	// Method to display a compact list of the members in the registry 
-	private void displayCompact() {
+	public void displayCompact() {
 			System.out.println("\n=========== Displaying a compact list of the members ===========");
 			ifEmptyGoBack();
 			for (int i = 0; i < getMembers().size(); i++) {
@@ -391,7 +391,7 @@ public class MemberController {
 		}
 
 	// Method to display a specific members information 
-	private void displaySpecific(Scanner ID) {
+	public void displaySpecific(Scanner ID) {
 			System.out.println("\n=================== Displaying specific member =================");
 			ifEmptyGoBack();
 			System.out.print("\nPlease enter member ID (Input 0 to go back): ");
