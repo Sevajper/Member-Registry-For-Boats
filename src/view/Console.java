@@ -68,7 +68,7 @@ public class Console {				//Print out methods
 	}
 	
 	public void persNumErr() {
-		System.out.println("\n\t\t*** Incorrect personal number form or such member already exists, try again! ***");
+		System.out.println("\n\t\t*** Incorrect personal number form or a member with the last 4 digits of the personal number already exists, try again! ***");
 	}
 	
 	public void goBackError() {
