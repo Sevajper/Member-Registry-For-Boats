@@ -2,4 +2,4 @@ Hello!
 
 To run the MemberRegistry application please open the "MemberRegistry.bat". Download both the .jar file and the .bat file and make sure they are in the same folder. Also, check that you have Java Runtime Environment (JRE) installed. 
 
-Note >>> application only available on Windows at the moment. Other platforms coming soon.
+Note >>> for instructions on how to run on macOS please visit this video: https://www.youtube.com/watch?v=WkTt70O6SwI 
