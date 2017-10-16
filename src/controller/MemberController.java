@@ -370,9 +370,9 @@ public class MemberController {
 			System.out.println("\n=========== Displaying a verbose list of the members ===========");
 			ifEmptyGoBack();
 			for (int i = 0; i < getMembers().size(); i++) {
-				System.out.println(c.printMember(getMembers().get(i)));
+				System.out.println(rc.printMember(getMembers().get(i)));
 				if(!getMembers().get(i).getBoats().isEmpty()) {
-					System.out.println( "Boat(s) description:\n" + c.printBoatArray(getMembers().get(i).getBoats()));
+					System.out.println( "Boat(s) description:\n" + rc.printBoatArray(getMembers().get(i).getBoats()));
 				}		
 			}
 			goBack();
@@ -403,9 +403,9 @@ public class MemberController {
 				System.out.println("\n\t\t*** A member with that ID was not found, try again! ***");
 				goBack();
 			} else {
-				System.out.println(c.printMember(mem) 
-						+ "\n\tBoat(s) description: \n"
-						+ c.printBoatArray(mem.getBoats()));
+				System.out.println(rc.printMember(mem) 
+						+ "\nBoat(s) description: \n"
+						+ rc.printBoatArray(mem.getBoats()));
 				goBack();
 			}
 		}

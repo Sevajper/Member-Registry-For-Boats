@@ -1,11 +1,5 @@
 package view;
 
-import java.util.ArrayList;
-
-import model.Boat;
-import model.Member;
-import model.Registry;
-
 public class Console {				//Print out methods
 									
 	public void displayWelcome() {
@@ -75,39 +69,5 @@ public class Console {				//Print out methods
 		System.out.print("\n----------------------------"
 				       + "\nType \"100\" to display menu! "
 				       + "\nChoose from menu by typing a number: ");
-	}
-	
-	public String printMemberArray(Registry memberList) {
-		StringBuilder list = new StringBuilder();
-		for(int i=0; i < memberList.getRegistry().size(); i++) {
-			list.append("\nMember: "  + memberList.getRegistry().get(i).getName() + " "
-	                + "\nMember ID: " + memberList.getRegistry().get(i).getId()
-	                + " " + "\nPersonal Number: " + memberList.getRegistry().get(i).getPersNum()
-	                + " " + "\nNumber of Boats: " + memberList.getRegistry().get(i).getNumOfBoats()
-	                +"\n" + "----------------------------");
-		}	
-		return list.toString();
-	}
-	
-	public String printBoatArray(ArrayList<Boat> boatList) {
-		StringBuilder list = new StringBuilder();
-		for(int i=0; i < boatList.size(); i++) {
-			list.append("\nName: " + boatList.get(i).getName()
-					+ "\nBoat type: " + boatList.get(i).getType()
-					+ "\nBoat length (meters): " + boatList.get(i).getLength()
-	                +"\n" + "----------------------------");
-		}	
-		return list.toString();
-	}
-	
-	public String printMember(Member member) {
-		StringBuilder list = new StringBuilder();
-		list.append("\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-				+"\nMember: "  + member.getName() + " "
-				+ "\nMember ID: " + member.getId()
-	            + " " + "\nPersonal Number: " + member.getPersNum()
-	            + " " + "\nNumber of Boats: " + member.getNumOfBoats()
-	            + "\n" + "----------------------------");	
-		return list.toString();
 	}
 }
