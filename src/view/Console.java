@@ -42,24 +42,6 @@ public class Console {				//Print out methods
 				         + "\nx Member successfully removed :( x"
 				         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
-
-	public void boatAdded() {
-		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
-				         + "\nx Boat successfully registered! x"
-				         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-	}
-	
-	public void boatUpdated() {
-		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-				         + "\nx Boat successfully updated! x"
-				         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-	}
-	
-	public void boatRemoved() {
-		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-				         + "\nx Boat successfully removed! x"
-				         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-	}
 	
 	public void persNumErr() {
 		System.out.println("\n\t\t*** Incorrect personal number form or a member with the last 4 digits of the personal number already exists, try again! ***");

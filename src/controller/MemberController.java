@@ -4,6 +4,7 @@ import model.Boat;
 import model.Boat.BoatType;
 import model.Member;
 import model.Registry;
+import view.BoatView;
 import view.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -14,6 +15,7 @@ import javax.xml.bind.JAXBException;
 
 public class MemberController {
 	private Console c = new Console();
+	private BoatView bv = new BoatView();
 	private Registry memberList = new Registry();
 	private File file = new File("Member_Registry.txt");
 	private RegistryController rc = new RegistryController();
@@ -208,51 +210,33 @@ public class MemberController {
 		String id = input.next();
 		goBackOnDemand(id);
 		id = id.substring(0, 1) + id.substring(1, 2).toUpperCase() + id.substring(2); // The Member ID is taken because the boat must be connected to a certain member
-		ifEmptyGoBack();		// If the registry is empty, then this will error message will show
+		ifEmptyGoBack(); // If the registry is empty, then this will error message will show
 		try {
 			Boat bt = new Boat();		// Create a new boat to have its details set and registered to a member
 			Member mem = getMembers().get(getMemberID(id));
-			System.out.println("\n\t\t*** One word name allowed! ***\n");
-			System.out.print("Name of boat: ");
-			String boatName = input.next();	
-			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);		// The boats name will be first uppercase and lowercase after that
-			goBackOnDemand(boatName);		
-			checkBoatName(boatName);		
-			System.out.println("Please choose a boat type:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
-					+ "\n4.Other" + "\n");
-			System.out.print("Input: ");
-			String selectBoat = input.next();		// Getting the input for boatType of boat the user is wishing to register
-			BoatType boatType = null;
-			goBackOnDemand(selectBoat);	
-
-			if (selectBoat.equals("1")) {			// Different kinds of boat boatTypes
-				boatType = BoatType.Sailboat;
-			} else if (selectBoat.equals("2")) {
-				boatType = BoatType.Motorsailer;
-			} else if (selectBoat.equals("3")) {
-				boatType = BoatType.Canoe;
-			} else if (selectBoat.equals("4")) {
-				boatType = BoatType.Other;
-			} else {
-				System.out.println("\n\t\t*** Input error, try again! ***");
-				goBack();
-			}
-
-			System.out.print("Boat length (in metres): ");		
-			int boatLength = input.nextInt();	
-			if(boatLength>0) {
-			bt.setLength(boatLength);							// Setting the values of the boat to the created boat object
-			bt.setType(boatType);
-			bt.setName(boatName);
+			bv.oneWordWarning();
+			bv.boatNameRegistration();
+			goBackOnDemand(bv.getBoatName());		
+			checkBoatName(bv.getBoatName());		
+			
+			bv.boatTypeRegistration();
+			goBackOnDemand(bv.getBoatTypeInput());	
+	
+			bv.boatLengthRegistration();
+			goBackOnDemand(Integer.toString(bv.getBoatLength()));	
+			
+			bt.setLength(bv.getBoatLength());							// Setting the values of the boat to the created boat object
+			bt.setType(bv.getBoatType());
+			bt.setName(bv.getBoatName());
 			mem.setBoat(bt);									// Setting the current boat of the member to the one registered
 			mem.setBoats(bt);									// Adding the boat to the members collection
+		
 			int numberOfBoats = mem.getNumOfBoats();
 			numberOfBoats++;
 			mem.setNumOfBoats(numberOfBoats);					// Increment the number of boats of the person
-			c.boatAdded();
+			bv.boatAdded();
 			goBack();
-			}
-			throw new Exception ("Go to exception");
+			
 		} catch (Exception e) {
 			System.out.println("\n\t\t*** Input error, try again! ***");
 			goBack();
@@ -316,7 +300,7 @@ public class MemberController {
 						getMembers().get(i).getBoats().get(j).setName(boatName);
 						getMembers().get(i).getBoats().get(j).setType(boatType);
 						getMembers().get(i).getBoats().get(j).setLength(boatLength);
-						c.boatUpdated();		// Message to show boat has been updated
+						bv.boatUpdated();		// Message to show boat has been updated
 						goBack();
 						}
 						throw new Exception ("Go to exception");
@@ -359,7 +343,7 @@ public class MemberController {
 					int numOfBoats = mem.getNumOfBoats();
 					numOfBoats--;
 					mem.setNumOfBoats(numOfBoats);
-					c.boatRemoved();					// Confirmation message that boat has been removed
+					bv.boatRemoved();					// Confirmation message that boat has been removed
 					goBack();
 				} else {
 					System.out.println("\n\t\t*** Sorry, no such boat found! ***");
