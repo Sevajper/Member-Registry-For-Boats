@@ -239,8 +239,8 @@ public class MemberController {
 			}
 
 			System.out.print("Boat length (in metres): ");		
-			String boatLength = input.next();					
-			checkBoatSize(boatLength);							// Checking that the size is a positive integer and not negative or letters
+			int boatLength = input.nextInt();	
+			if(boatLength>0) {
 			bt.setLength(boatLength);							// Setting the values of the boat to the created boat object
 			bt.setType(boatType);
 			bt.setName(boatName);
@@ -251,6 +251,8 @@ public class MemberController {
 			mem.setNumOfBoats(numberOfBoats);					// Increment the number of boats of the person
 			c.boatAdded();
 			goBack();
+			}
+			throw new Exception ("Go to exception");
 		} catch (Exception e) {
 			System.out.println("\n\t\t*** Input error, try again! ***");
 			goBack();
@@ -308,14 +310,16 @@ public class MemberController {
 						}
 						
 						System.out.print("Update boat length (in metres): ");
-						String boatLength = input.next();		// Input boat length
-						goBackOnDemand(boatLength);
-						checkBoatSize(boatLength);
+						int boatLength = input.nextInt();		// Input boat length
+						if(boatLength>0) {
+						goBackOnDemand(Integer.toString(boatLength));
 						getMembers().get(i).getBoats().get(j).setName(boatName);
 						getMembers().get(i).getBoats().get(j).setType(boatType);
 						getMembers().get(i).getBoats().get(j).setLength(boatLength);
 						c.boatUpdated();		// Message to show boat has been updated
 						goBack();
+						}
+						throw new Exception ("Go to exception");
 					} catch (Exception e) {
 						System.out.println("\n\t\t*** Input error, try again! ***");
 						goBack();
@@ -441,15 +445,6 @@ public class MemberController {
 			}
 		}
 		return false;
-	}
-
-	private void checkBoatSize(String length) { // Check that the boat length is a positive integer; 0 will return user to menu 
-		for (int i = 0; i < length.length(); i++) {
-			if (!Character.isDigit(length.charAt(i))) {
-				System.out.println("\n\t\t*** The length can only be a positive integer, try again! ***\n");
-				goBack();
-			}
-		}
 	}
 
 	private void nameCheckDigit(String name) { // Check that member name is written without special characters
