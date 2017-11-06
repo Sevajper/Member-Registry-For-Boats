@@ -57,7 +57,7 @@ public class Member {
 	public void setName(String name) {
 		try {
 			this.name = name;
-			if(validateName(name))
+			if(!validateName(name))
 			{
 				throw new IllegalArgumentException();
 			}
@@ -115,10 +115,10 @@ public class Member {
 	//data validation helper methods
 	private boolean validateName(String name) {
 		String regx = "^[\\p{L} .'-]+$";
-		if(!name.matches(regx)) {
-			return false;
+		if(name.matches(regx)) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	private boolean validatePersNum(String perNum) {

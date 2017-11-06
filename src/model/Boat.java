@@ -50,7 +50,7 @@ public class Boat {
 	public void setType(BoatType boatType) {	
 		try {
 			this.type = boatType;
-			if(validateType(boatType))
+			if(!validateType(boatType))
 			{
 				throw new IllegalArgumentException();
 			}
@@ -67,7 +67,7 @@ public class Boat {
 		
 		try {
 			this.length = boatLength;
-			if(validateLength(boatLength))
+			if(!validateLength(boatLength))
 			{
 				throw new IllegalArgumentException();
 			}
