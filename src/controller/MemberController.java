@@ -218,7 +218,7 @@ public class MemberController {
 			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);		// The boats name will be first uppercase and lowercase after that
 			goBackOnDemand(boatName);		
 			checkBoatName(boatName);		
-			System.out.println("Please choose a boat boatType:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
+			System.out.println("Please choose a boat type:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
 					+ "\n4.Other" + "\n");
 			System.out.print("Input: ");
 			String selectBoat = input.next();		// Getting the input for boatType of boat the user is wishing to register
@@ -287,7 +287,7 @@ public class MemberController {
 						String boatName = input.next();
 						goBackOnDemand(boatName);
 						checkBoatName(boatName);		// input boat name
-						System.out.print("Please choose a new boat boatType:" + "\n1.Sailboat" + "\n2.Motorsailer"
+						System.out.print("Please choose a new boat type:" + "\n1.Sailboat" + "\n2.Motorsailer"
 								+ "\n3.Kayak\\Canoe" + "\n4.Other" + "\n");
 						System.out.print("Input: ");
 						String selectBoat = input.next();		// Getting the input for boatType of boat 
