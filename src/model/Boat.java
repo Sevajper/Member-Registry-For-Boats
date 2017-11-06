@@ -11,14 +11,14 @@ public class Boat {
 
 	private String name;
 	private BoatType type;
-	private String length; 
+	private int length; 
 	/*
 	 * A boat is measured from tip of the bow to the center of the stern
 	 * (from tip to tail)
 	*/
 
 	//constructor to create a boat
-	public Boat(String boatName, BoatType boatType, String boatSize) {
+	public Boat(String boatName, BoatType boatType, int boatSize) {
 		this.name = boatName;
 		this.type = boatType;
 		this.length = boatSize;
@@ -51,11 +51,11 @@ public class Boat {
 		this.type = type;
 	}
 
-	public String getLength() {
+	public int getLength() {
 		return length;
 	}
 
-	public void setLength(String length) {
+	public void setLength(int length) {
 		this.length = length;
 	}
 }
