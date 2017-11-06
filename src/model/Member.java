@@ -55,7 +55,15 @@ public class Member {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		try {
+			this.name = name;
+			if(validateName(name))
+			{
+				throw new IllegalArgumentException();
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getPersNum() {
@@ -63,7 +71,15 @@ public class Member {
 	}
 
 	public void setPersNum(String persNum) {
-		this.persNum = persNum;
+		try {
+			this.persNum = persNum;
+			if(!validatePersNum(persNum))
+			{
+				throw new IllegalArgumentException();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public String getId() {
@@ -89,10 +105,29 @@ public class Member {
 	public void setBoat(Boat boat) {
 		this.boat = boat;
 	}
-	public ArrayList<Boat> getBoats() {
+	public ArrayList<Boat> getBoats() { //change to iterable
 		return boats;
 	}
 	public void setBoats(Boat boat) {
 		boats.add(boat);
+	}
+	
+	//data validation helper methods
+	private boolean validateName(String name) {
+		String regx = "^[\\p{L} .'-]+$";
+		if(!name.matches(regx)) {
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean validatePersNum(String perNum) {
+		String regx = "^[0-9]+(-[0-9]+)";
+		if (persNum.length() >= 8) {
+			if (persNum.substring(6, 7).equals("-") && persNum.length() == 11 && persNum.matches(regx)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
