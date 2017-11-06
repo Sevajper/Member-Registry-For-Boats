@@ -1,9 +1,16 @@
 package model;
 
 public class Boat {
+	
+	public enum BoatType {
+		Canoe,
+		Motorsailer,
+		Sailboat,
+		Other
+	}
 
 	private String name;
-	private String type;
+	private BoatType type;
 	private String length; 
 	/*
 	 * A boat is measured from tip of the bow to the center of the stern
@@ -11,7 +18,7 @@ public class Boat {
 	*/
 
 	//constructor to create a boat
-	public Boat(String boatName, String boatType, String boatSize) {
+	public Boat(String boatName, BoatType boatType, String boatSize) {
 		this.name = boatName;
 		this.type = boatType;
 		this.length = boatSize;
@@ -36,11 +43,11 @@ public class Boat {
 		this.name = name;
 	}
 
-	public String getType() {
+	public BoatType getType() {
 		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(BoatType type) {
 		this.type = type;
 	}
 
