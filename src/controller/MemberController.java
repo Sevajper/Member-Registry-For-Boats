@@ -1,6 +1,7 @@
 package controller;
 
 import model.Boat;
+import model.Boat.BoatType;
 import model.Member;
 import model.Registry;
 import view.Console;
@@ -220,17 +221,18 @@ public class MemberController {
 			System.out.println("Please choose a boat type:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
 					+ "\n4.Other" + "\n");
 			System.out.print("Input: ");
-			String boatType = input.next();		// Getting the input for type of boat the user is wishing to register
-			goBackOnDemand(boatType);	
+			String selectBoat = input.next();		// Getting the input for boatType of boat the user is wishing to register
+			BoatType boatType = null;
+			goBackOnDemand(selectBoat);	
 
-			if (boatType.equals("1")) {			// Different kinds of boat types
-				boatType = "Sailboat";
-			} else if (boatType.equals("2")) {
-				boatType = "Motorsailer";
-			} else if (boatType.equals("3")) {
-				boatType = "Kayak\\Canoe";
-			} else if (boatType.equals("4")) {
-				boatType = "Other";
+			if (selectBoat.equals("1")) {			// Different kinds of boat boatTypes
+				boatType = BoatType.Sailboat;
+			} else if (selectBoat.equals("2")) {
+				boatType = BoatType.Motorsailer;
+			} else if (selectBoat.equals("3")) {
+				boatType = BoatType.Canoe;
+			} else if (selectBoat.equals("4")) {
+				boatType = BoatType.Other;
 			} else {
 				System.out.println("\n\t\t*** Input error, try again! ***");
 				goBack();
@@ -288,17 +290,18 @@ public class MemberController {
 						System.out.print("Please choose a new boat type:" + "\n1.Sailboat" + "\n2.Motorsailer"
 								+ "\n3.Kayak\\Canoe" + "\n4.Other" + "\n");
 						System.out.print("Input: ");
-						String boatType = input.next();		// Input boat type
-						goBackOnDemand(boatType);
+						String selectBoat = input.next();		// Getting the input for boatType of boat 
+						BoatType boatType = null;
+						goBackOnDemand(selectBoat);	
 
-						if (boatType.equals("1")) {
-							boatType = "Sailboat";
-						} else if (boatType.equals("2")) {
-							boatType = "Motorsailer";
-						} else if (boatType.equals("3")) {
-							boatType = "Kayak\\Canoe";
-						} else if (boatType.equals("4")) {
-							boatType = "Other";
+						if (selectBoat.equals("1")) {			// Different kinds of boat boatTypes
+							boatType = BoatType.Sailboat;
+						} else if (selectBoat.equals("2")) {
+							boatType = BoatType.Motorsailer;
+						} else if (selectBoat.equals("3")) {
+							boatType = BoatType.Canoe;
+						} else if (selectBoat.equals("4")) {
+							boatType = BoatType.Other;
 						} else {
 							System.out.println("\n\t\t*** Input error, try again! ***");
 							goBack();
