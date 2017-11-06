@@ -47,15 +47,48 @@ public class Boat {
 		return type;
 	}
 
-	public void setType(BoatType type) {
-		this.type = type;
+	public void setType(BoatType boatType) {	
+		try {
+			this.type = boatType;
+			if(validateType(boatType))
+			{
+				throw new IllegalArgumentException();
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public int getLength() {
 		return length;
 	}
 
-	public void setLength(int length) {
-		this.length = length;
+	public void setLength(int boatLength) {
+		
+		try {
+			this.length = boatLength;
+			if(validateLength(boatLength))
+			{
+				throw new IllegalArgumentException();
+			}
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		}
 	}
+	
+	//data validation helper methods
+	private boolean validateLength(int length) {
+		return (length > 0);
+	}
+	
+	private boolean validateType(BoatType type) {
+		for(BoatType validType : BoatType.values()) {
+			if(validType != type) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 }
