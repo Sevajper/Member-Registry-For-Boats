@@ -6,6 +6,8 @@ import model.Member;
 import model.Registry;
 import view.BoatView;
 import view.Console;
+import view.IView;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,6 +21,7 @@ public class MemberController {
 	private Registry memberList = new Registry();
 	private File file = new File("Member_Registry.txt");
 	private RegistryController rc = new RegistryController();
+	
 
 	// Take the input from the user and compare it with switch cases
 	public void getInputResult() { 
@@ -29,17 +32,17 @@ public class MemberController {
 			switch (selection) {
 			case 0:
 				rc.saveToRegistry(memberList, file);
-				System.out.println("Saved successfully!");
+				c.savedSuccessfully();
 				System.exit(0);
 				break;
 			case 1:
-				registerMember(input);
+				registerMember(c);
 				break;
 			case 2:
-				updateMember(input);
+				updateMember(c);
 				break;
 			case 3:
-				removeMember(input);
+				removeMember(c);
 				break;
 			case 4:
 				registerBoat(input);
@@ -94,26 +97,23 @@ public class MemberController {
 	}
 
 	// Method for registering a member > get first and last name > set ID > assign default boat number 0 > add to registry
-	public void registerMember(Scanner input) {
-		System.out.print("------------------------------------------"
-				+ "\nRegister a new member! (Type 0 to go back) \n" + "\nFirst name of new member: ");
-		String temp = input.next(); // Take input from user
-		temp += input.nextLine();
-		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1); // Set first letter to uppercase
-		goBackOnDemand(temp);
-		nameCheckDigit(temp);
+	public void registerMember(IView view) { //!!!!!!!!!add registry as paramenter - avoid global var !!!!!!!!!!!!
+		view.displayAddMember();
+		String firstName = view.getNameInput(); // Take input from user
+		firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1); // Set first letter to uppercase
+		goBackOnDemand(firstName);
+		nameCheckDigit(firstName);
 
-		System.out.print("Last name of new member: "); 
-		String temp2 = input.next();
-		temp2 += input.nextLine();
-		temp2 = temp2.substring(0, 1).toUpperCase() + temp2.substring(1); // Set first letter to uppercase
-		goBackOnDemand(temp2);
-		nameCheckDigit(temp2);
-		String memberName = temp + " " + temp2; // Adding the two names together to create one full name
+		view.displayLastName();
+		String lastName = view.getNameInput();
+		lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1); // Set first letter to uppercase
+		goBackOnDemand(lastName);
+		nameCheckDigit(lastName);
+		String memberName = firstName + " " + lastName; // Adding the two names together to create one full name
 		goBackOnDemand(memberName);
 
-		System.out.print("Personal number in the form YYMMDD-XXXX: "); 
-		String memberPersNum = input.next();
+		view.displayPersNum();
+		String memberPersNum = view.getStringInput();
 		goBackOnDemand(memberPersNum);
 
 		if (persNumCheck(memberPersNum) && persNumVerify(memberPersNum)) { // If personal number has correct form set member and add to registry
@@ -121,83 +121,73 @@ public class MemberController {
 			String memberID = mem.createID();
 			mem.setId(memberID);
 			memberList.addMember(mem);
-			c.memberAdded();
+			view.memberAdded();
 			goBack();
 		} else { // Otherwise an error will pop out
-			c.persNumErr();
+			view.persNumErr();
 			goBack();
 		}
 	}
 
 	// Update a member > get ID > change info (same data/error handling as registerMember()) > replace in registry 
-	public void updateMember(Scanner input) {
-		System.out.println("----------------------------------------------"
-				+ "\nUpdate an existing member! (Type 0 to go back)\n");
-		System.out.print("Please enter existing member's ID: ");
-		String temp = input.next();
+	public void updateMember(IView view) {
+		String temp = view.getStringInput();
 		goBackOnDemand(temp);
 		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);	// Making the first Letter of the persons first name to be uppercase
 		ifEmptyGoBack();	// If the registry is empty, there are no members to update, it will print an error message and go back to the main menu
 		try {
 			Member mem = getMembers().get(getMemberID(temp));
-			System.out.println("");
-
-			System.out.print("Update member first name: ");
-			String name = input.next();
-			name += input.nextLine();
-			name = name.substring(0, 1).toUpperCase() + name.substring(1);	// Set first letter to uppercase
-			goBackOnDemand(name);	// If the input is a 0, then it will go back to the main menu
-			nameCheckDigit(name);		// Checks that the name does not contain anything but letters
-			System.out.print("Update member last name: ");
-			String name2 = input.next();		// Check that last name does not contain anything but letters
-			name2 += input.nextLine();
-			name2 = name2.substring(0, 1) + name2.substring(1);
-			goBackOnDemand(name2);
-			nameCheckDigit(name2);
-			String realName = name + " " + name2;
-
-			System.out.print("New member personal number in the form YYMMDD-XXXX: ");
-			String persnum = input.next();
+			view.updateFirstName();
+			String firstName = view.getNameInput();
+			firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);	// Set first letter to uppercase
+			goBackOnDemand(firstName);	// If the input is a 0, then it will go back to the main menu
+			nameCheckDigit(firstName);		// Checks that the name does not contain anything but letters
+			view.updateLastName();
+			String lastName = view.getNameInput();		// Check that last name does not contain anything but letters
+			lastName = lastName.substring(0, 1) + lastName.substring(1);
+			goBackOnDemand(lastName);
+			nameCheckDigit(lastName);
+			String memberName = lastName + " " + lastName;
+			view.updatePersNum();
+			String persnum = view.getStringInput();
 			goBackOnDemand(persnum);
 
 			if (persNumCheck(persnum)) {		// Checking that the personal number is in the correct format
 				mem.setPersNum(persnum);
 			} else {
-				c.persNumErr();
+				view.persNumErr();
 				goBack();
 			}
 
-			mem.setName(realName);
-			c.memberUpdated();
+			mem.setName(memberName);
+			view.memberUpdated();
 			goBack();
 
 		} catch (Exception e) {
-			System.out.println("\n\t\t*** A member with that ID was not found, try again! ***");
+			view.IDNotFoundError();
 			goBack();
 		}
 	}
 	
 	// Remove member > check if user really wants to remove > check if empty > remove from registry
-	public void removeMember(Scanner input) {
+	public void removeMember(IView view) {
 		ifEmptyGoBack();		// Can't remove any members if there are no members right?
-		System.out.println("-------------------------------------------------------------------"
-				+ "\nRemove a member! \n" + "\nAre you sure you want to remove a member?\n");
-		System.out.print("No = 0 , Yes = 1" + "\nInput: ");
-		int text = input.nextInt();		// Checking what the user input to see if they want to really remove a member or not
+		view.displayRemoveMember();
+		int text = view.getIntInput();		// Checking what the user input to see if they want to really remove a member or not
 		if (text == 0) {
 			goBack();
 		} else if (text == 1) {
-			System.out.print("Please enter member's ID to remove member: ");
+			view.displayMembersID();
 		}
-		String temp = input.next();
+		String temp = view.getStringInput();
 		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2); // Formatting the Members ID to allow leisure of writing for the user
 		try {
 			Member mem = getMembers().get(getMemberID(temp));		// Getting a member with the ID value that was input
 			getMembers().remove(mem);								// Removing said member from the registry
-			c.memberRemoved();										// Giving confirmation that the Member has been removed
+			view.memberRemoved();										// Giving confirmation that the Member has been removed
 			goBack();
 		} catch (Exception e) {
-			System.out.println("\n\t\t*** A member with that ID was not found, try again! ***");		// If a wrong ID was input, this error will show
+			view.IDNotFoundError();
 			goBack();
 		}
 
