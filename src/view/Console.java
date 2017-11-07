@@ -171,20 +171,23 @@ public class Console implements IView{
 	
 	@Override
 	public void boatAdded() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
+		         + "\nx Boat successfully registered! x"
+		         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 
 	@Override
 	public void boatUpdated() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+		         + "\nx Boat successfully updated! x"
+		         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 
 	@Override
 	public void boatRemoved() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+		         + "\nx Boat successfully removed! x"
+		         + "\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 	}
 	
 	@Override

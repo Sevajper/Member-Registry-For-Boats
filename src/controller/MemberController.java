@@ -4,7 +4,6 @@ import model.Boat;
 import model.Boat.BoatType;
 import model.Member;
 import model.Registry;
-import view.BoatView;
 import view.Console;
 import view.IView;
 
@@ -17,7 +16,6 @@ import javax.xml.bind.JAXBException;
 
 public class MemberController {
 	private Console c = new Console();
-	private BoatView bv = new BoatView();
 	private Registry memberList = new Registry();
 	private File file = new File("Member_Registry.txt");
 	private RegistryController rc = new RegistryController();
@@ -242,7 +240,7 @@ public class MemberController {
 			int numberOfBoats = mem.getNumOfBoats();
 			numberOfBoats++;
 			mem.setNumOfBoats(numberOfBoats);					// Increment the number of boats of the person
-			bv.boatAdded();
+			c.boatAdded(); 
 			goBack();
 			
 		} catch (Exception e) {
@@ -307,7 +305,7 @@ public class MemberController {
 						getMembers().get(i).getBoats().get(j).setName(boatName);
 						getMembers().get(i).getBoats().get(j).setType(boatType);
 						getMembers().get(i).getBoats().get(j).setLength(boatLength);
-						bv.boatUpdated();		// Message to show boat has been updated
+						c.boatUpdated();		// Message to show boat has been updated
 						goBack();
 					} catch (Exception e) {
 						System.out.println("\n\t\t*** Input error, try again! ***");
@@ -348,7 +346,7 @@ public class MemberController {
 					int numOfBoats = mem.getNumOfBoats();
 					numOfBoats--;
 					mem.setNumOfBoats(numOfBoats);
-					bv.boatRemoved();					// Confirmation message that boat has been removed
+					c.boatRemoved();					
 					goBack();
 				} else {
 					System.out.println("\n\t\t*** Sorry, no such boat found! ***");
