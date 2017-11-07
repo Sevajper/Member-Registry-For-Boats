@@ -19,6 +19,7 @@ public class MemberController {
 	private Registry memberList = new Registry();
 	private File file = new File("Member_Registry.txt");
 	private RegistryController rc = new RegistryController();
+	ArrayList<Member> registryList = new ArrayList<Member>();
 	
 
 	// Take the input from the user and compare it with switch cases
@@ -417,8 +418,8 @@ public class MemberController {
 	}
 	
 	private boolean persNumVerify(String persNum) {
-		for (int i = 0; i < memberList.getRegistry().size(); i++) {
-			if (persNum.equals(memberList.getRegistry().get(i).getPersNum())) {
+		for (Member m : memberList.returnMemberList()) {
+			if (persNum.equals(m.getPersNum())) {
 				return false;
 			}
 		}
@@ -499,6 +500,9 @@ public class MemberController {
 	}
 
 	private ArrayList<Member> getMembers() { // Shortcut for getting the ArrayList from the Registry
-		return memberList.getRegistry();
+		for(Member m : memberList.returnMemberList()) {
+			registryList.add(m);
+		}
+		return registryList;
 	}
 }

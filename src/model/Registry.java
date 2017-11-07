@@ -31,7 +31,11 @@ public class Registry {
 		this.memberList = members;
 	}
 
-	public ArrayList<Member> getRegistry() {
+	public boolean checkIfEmpty() {
+		return memberList.isEmpty();
+	}
+	
+	public Iterable<Member> returnMemberList() {
 		return memberList;
 	}
 	
