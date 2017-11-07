@@ -214,6 +214,7 @@ public class MemberController {
 		try {
 			Boat bt = new Boat();		// Create a new boat to have its details set and registered to a member
 			Member mem = getMembers().get(getMemberID(id));
+<<<<<<< HEAD
 			bv.oneWordWarning();
 			bv.boatNameRegistration();
 			goBackOnDemand(bv.getBoatName());		
@@ -228,6 +229,40 @@ public class MemberController {
 			bt.setLength(bv.getBoatLength());							// Setting the values of the boat to the created boat object
 			bt.setType(bv.getBoatType());
 			bt.setName(bv.getBoatName());
+=======
+			System.out.println("\n\t\t*** One word name allowed! ***\n");
+			System.out.print("Name of boat: ");
+			String boatName = input.next();	
+			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);		// The boats name will be first uppercase and lowercase after that
+			goBackOnDemand(boatName);		
+			checkBoatName(boatName);		
+			System.out.println("Please choose a boat type:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
+					+ "\n4.Other" + "\n");
+			System.out.print("Input: ");
+			String selectBoat = input.next();		// Getting the input for boatType of boat the user is wishing to register
+			BoatType boatType = null;
+			goBackOnDemand(selectBoat);	
+
+			if (selectBoat.equals("1")) {			// Different kinds of boat boatTypes
+				boatType = BoatType.Sailboat;
+			} else if (selectBoat.equals("2")) {
+				boatType = BoatType.Motorsailer;
+			} else if (selectBoat.equals("3")) {
+				boatType = BoatType.Canoe;
+			} else if (selectBoat.equals("4")) {
+				boatType = BoatType.Other;
+			} else {
+				System.out.println("\n\t\t*** Input error, try again! ***");
+				goBack();
+			}
+
+			System.out.print("Boat length (in metres): ");		
+			String boatLength = input.next();					
+			checkBoatSize(boatLength);							// Checking that the size is a positive integer and not negative or letters
+			bt.setLength(boatLength);							// Setting the values of the boat to the created boat object
+			bt.setType(boatType);
+			bt.setName(boatName);
+>>>>>>> parent of 6a01dae... Gele Update
 			mem.setBoat(bt);									// Setting the current boat of the member to the one registered
 			mem.setBoats(bt);									// Adding the boat to the members collection
 		
@@ -236,7 +271,10 @@ public class MemberController {
 			mem.setNumOfBoats(numberOfBoats);					// Increment the number of boats of the person
 			bv.boatAdded();
 			goBack();
+<<<<<<< HEAD
 			
+=======
+>>>>>>> parent of 6a01dae... Gele Update
 		} catch (Exception e) {
 			System.out.println("\n\t\t*** Input error, try again! ***");
 			goBack();
@@ -294,16 +332,14 @@ public class MemberController {
 						}
 						
 						System.out.print("Update boat length (in metres): ");
-						int boatLength = input.nextInt();		// Input boat length
-						if(boatLength>0) {
-						goBackOnDemand(Integer.toString(boatLength));
+						String boatLength = input.next();		// Input boat length
+						goBackOnDemand(boatLength);
+						checkBoatSize(boatLength);
 						getMembers().get(i).getBoats().get(j).setName(boatName);
 						getMembers().get(i).getBoats().get(j).setType(boatType);
 						getMembers().get(i).getBoats().get(j).setLength(boatLength);
 						bv.boatUpdated();		// Message to show boat has been updated
 						goBack();
-						}
-						throw new Exception ("Go to exception");
 					} catch (Exception e) {
 						System.out.println("\n\t\t*** Input error, try again! ***");
 						goBack();
@@ -429,6 +465,15 @@ public class MemberController {
 			}
 		}
 		return false;
+	}
+
+	private void checkBoatSize(String length) { // Check that the boat length is a positive integer; 0 will return user to menu 
+		for (int i = 0; i < length.length(); i++) {
+			if (!Character.isDigit(length.charAt(i))) {
+				System.out.println("\n\t\t*** The length can only be a positive integer, try again! ***\n");
+				goBack();
+			}
+		}
 	}
 
 	private void nameCheckDigit(String name) { // Check that member name is written without special characters

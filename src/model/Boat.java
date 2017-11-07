@@ -11,14 +11,14 @@ public class Boat {
 
 	private String name;
 	private BoatType type;
-	private int length; 
+	private String length; 
 	/*
 	 * A boat is measured from tip of the bow to the center of the stern
 	 * (from tip to tail)
 	*/
 
 	//constructor to create a boat
-	public Boat(String boatName, BoatType boatType, int boatSize) {
+	public Boat(String boatName, BoatType boatType, String boatSize) {
 		this.name = boatName;
 		this.type = boatType;
 		this.length = boatSize;
@@ -59,10 +59,11 @@ public class Boat {
 		}
 	}
 
-	public int getLength() {
+	public String getLength() {
 		return length;
 	}
 
+<<<<<<< HEAD
 	public void setLength(int boatLength) {
 		
 		try {
@@ -74,6 +75,10 @@ public class Boat {
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
+=======
+	public void setLength(String length) {
+		this.length = length;
+>>>>>>> parent of 6a01dae... Gele Update
 	}
 	
 	//data validation helper methods
