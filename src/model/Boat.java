@@ -63,19 +63,21 @@ public class Boat {
 		return length;
 	}
 
-	public void setLength(int boatLength) {
+
+	public void setLength(int boatLength) throws Exception {
 		
 		try {
 			this.length = boatLength;
 			if(!validateLength(boatLength))
 			{
-				throw new IllegalArgumentException();
+				throw new Exception();
 			}
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+
 	//data validation helper methods
 	private boolean validateLength(int length) {
 		return (length >= 0);
