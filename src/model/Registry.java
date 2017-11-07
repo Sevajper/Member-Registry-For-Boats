@@ -46,6 +46,10 @@ public class Registry {
 		memberList.add(mem);
 	}
 	
+	public void removeMember(Member mem) {
+		memberList.remove(mem);
+	}
+	
 	public Member getMember(String ID) {
 		Member mem = new Member();
 		for (int i = 0; i < memberList.size(); i++) {

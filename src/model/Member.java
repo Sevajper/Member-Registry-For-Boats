@@ -105,10 +105,16 @@ public class Member {
 	public void setBoat(Boat boat) {
 		this.boat = boat;
 	}
-	public ArrayList<Boat> getBoats() { //change to iterable
+	public Iterable<Boat> getBoats() { //change to iterable
 		return boats;
 	}
-	public void setBoats(Boat boat) {
+	public void removeBoat(Boat boat) {
+		boats.remove(boat);
+	}
+	public boolean checkIfBoatsEmpty() {
+		return boats.isEmpty();
+	}
+	public void addBoat(Boat boat) {
 		boats.add(boat);
 	}
 	
