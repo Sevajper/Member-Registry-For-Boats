@@ -204,20 +204,38 @@ public class MemberController {
 		try {
 			Boat bt = new Boat();		// Create a new boat to have its details set and registered to a member
 			Member mem = getMembers().get(getMemberID(id));
-			bv.oneWordWarning();
-			bv.boatNameRegistration();
-			goBackOnDemand(bv.getBoatName());		
-			checkBoatName(bv.getBoatName());		
-			
-			bv.boatTypeRegistration();
-			goBackOnDemand(bv.getBoatTypeInput());	
-	
-			bv.boatLengthRegistration();
-			goBackOnDemand(Integer.toString(bv.getBoatLength()));	
-			
-			bt.setLength(bv.getBoatLength());							// Setting the values of the boat to the created boat object
-			bt.setType(bv.getBoatType());
-			bt.setName(bv.getBoatName());
+			System.out.println("\n\t\t*** One word name allowed! ***\n");
+			System.out.print("Name of boat: ");
+			String boatName = input.next();	
+			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);		// The boats name will be first uppercase and lowercase after that
+			goBackOnDemand(boatName);		
+			checkBoatName(boatName);		
+			System.out.println("Please choose a boat type:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
+					+ "\n4.Other" + "\n");
+			System.out.print("Input: ");
+			String selectBoat = input.next();		// Getting the input for boatType of boat the user is wishing to register
+			BoatType boatType = null;
+			goBackOnDemand(selectBoat);	
+
+			if (selectBoat.equals("1")) {			// Different kinds of boat boatTypes
+				boatType = BoatType.Sailboat;
+			} else if (selectBoat.equals("2")) {
+				boatType = BoatType.Motorsailer;
+			} else if (selectBoat.equals("3")) {
+				boatType = BoatType.Canoe;
+			} else if (selectBoat.equals("4")) {
+				boatType = BoatType.Other;
+			} else {
+				System.out.println("\n\t\t*** Input error, try again! ***");
+				goBack();
+			}
+
+			System.out.print("Boat length (in metres): ");		
+			int boatLength = input.nextInt();
+			goBackOnDemand(Integer.toString(boatLength));
+			bt.setLength(boatLength);							// Setting the values of the boat to the created boat object
+			bt.setType(boatType);
+			bt.setName(boatName);
 			mem.setBoat(bt);									// Setting the current boat of the member to the one registered
 			mem.setBoats(bt);									// Adding the boat to the members collection
 		
@@ -283,17 +301,14 @@ public class MemberController {
 							goBack();
 						}
 						
-						System.out.print("Update boat length (in metres): ");
+						System.out.print("Update boat length (in meters): ");
 						int boatLength = input.nextInt();		// Input boat length
-						if(boatLength>0) {
-						goBackOnDemand(Integer.toString(boatLength));
+						goBackOnDemand(Integer.toString(boatLength));                           
 						getMembers().get(i).getBoats().get(j).setName(boatName);
 						getMembers().get(i).getBoats().get(j).setType(boatType);
 						getMembers().get(i).getBoats().get(j).setLength(boatLength);
 						bv.boatUpdated();		// Message to show boat has been updated
 						goBack();
-						}
-						throw new Exception ("Go to exception");
 					} catch (Exception e) {
 						System.out.println("\n\t\t*** Input error, try again! ***");
 						goBack();
