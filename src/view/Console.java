@@ -55,20 +55,22 @@ public class Console implements IView{
 	
 	@Override
 	public void displayAddBoat() {
-		// TODO Auto-generated method stub
-		
+		System.out.print("\nRegister a boat to a member! (Type 0 to go back!)"
+				+ "\nPlease input member ID: ");
 	}
 
 	@Override
 	public void displayUpdateBoat() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("--------------------------------------------"
+				+ "\nUpdate an existing boat! (Type 0 to go back)\n");
+		System.out.print("Please enter existing member's ID: ");
 	}
 
 	@Override
 	public void displayRemoveBoat() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("--------------------------------------------"
+				+ "\nDelete an existing boat! (Type 0 to go back)\n");
+		System.out.print("Please enter existing member's ID: ");
 	}
 
 	@Override
@@ -101,13 +103,12 @@ public class Console implements IView{
 		int i = 0;
 		try
 		{
-		  System.out.println("");
+		  System.out.print("");
 		  i = scan.nextInt();
 		}
 		catch(IllegalArgumentException exception)
 		{
-
-		  System.err.println("");
+		  System.err.println(exception);
 		}
 		return i;
 	}
@@ -131,6 +132,29 @@ public class Console implements IView{
 	}
 	
 	@Override
+	public void displayMembersID() {
+		System.out.print("Please enter member's ID to remove member: ");
+	}
+
+	@Override
+	public void displayBoatName() {
+		System.out.println("\n\t\t*** One word name allowed! ***\n");
+		System.out.print("Name of boat: ");
+	}
+
+	@Override
+	public void displayBoatType() {
+		System.out.println("Please choose a boat type:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
+				+ "\n4.Other" + "\n");
+		System.out.print("Input: ");
+	}
+	
+	@Override
+	public void displayBoatLength() {
+		System.out.print("Boat length (in metres): ");		
+	}
+	
+	@Override
 	public void updateFirstName() {
 		System.out.print("\nUpdate member first name: ");
 		
@@ -146,6 +170,23 @@ public class Console implements IView{
 	public void updatePersNum() {
 		System.out.print("New member personal number in the form YYMMDD-XXXX: ");
 		
+	}
+	
+	@Override
+	public void displayBoatFound() {
+		System.out.print("\nBoat found!"
+				+ "\nUpdate boat name: ");
+	}
+	
+	@Override
+	public void findBoat() {
+		System.out.print("Please enter existing boat's name: ");
+	}
+	
+	
+	@Override
+	public void update() {
+		System.out.print("Update > > > ");
 	}
 	
 	/*
@@ -213,8 +254,6 @@ public class Console implements IView{
 				       + "\nChoose from menu by typing a number: ");
 	}
 
-	
-
 	@Override
 	public void IDNotFoundError() {
 		System.out.println("\n\t\t*** A member with that ID was not found, try again! ***");
@@ -222,9 +261,13 @@ public class Console implements IView{
 	}
 
 	@Override
-	public void displayMembersID() {
-		System.out.print("Please enter member's ID to remove member: ");
+	public void boatsNotFoundError() {
+		System.out.print("\n\t\t*** There are no boats to remove, please register a boat first! ***");
 	}
+
+	
+
+	
 
 	
 	

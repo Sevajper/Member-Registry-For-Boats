@@ -43,13 +43,13 @@ public class MemberController {
 				removeMember(c);
 				break;
 			case 4:
-				registerBoat(input);
+				registerBoat(c);
 				break;
 			case 5:
-				updateBoat(input);
+				updateBoat(c);
 				break;
 			case 6:
-				removeBoat(input);
+				removeBoat(c);
 				break;
 			case 7:
 				displaySpecific(input);
@@ -129,6 +129,7 @@ public class MemberController {
 
 	// Update a member > get ID > change info (same data/error handling as registerMember()) > replace in registry 
 	public void updateMember(IView view) {
+		view.displayUpdateMember();
 		String temp = view.getStringInput();
 		goBackOnDemand(temp);
 		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);	// Making the first Letter of the persons first name to be uppercase
@@ -192,44 +193,29 @@ public class MemberController {
 	}
 
 	// Register a boat > get member ID > find member > set boat info > add boat to Member
-	public void registerBoat(Scanner input) {
-		System.out.print("\nRegister a boat to a member! (Type 0 to go back!)"
-				+ "\nPlease input member ID: ");
-		String id = input.next();
+	public void registerBoat(IView view) {
+		view.displayAddBoat();
+		String id = view.getStringInput();
 		goBackOnDemand(id);
 		id = id.substring(0, 1) + id.substring(1, 2).toUpperCase() + id.substring(2); // The Member ID is taken because the boat must be connected to a certain member
 		ifEmptyGoBack(); // If the registry is empty, then this will error message will show
 		try {
 			Boat bt = new Boat();		// Create a new boat to have its details set and registered to a member
 			Member mem = getMembers().get(getMemberID(id));
-			System.out.println("\n\t\t*** One word name allowed! ***\n");
-			System.out.print("Name of boat: ");
-			String boatName = input.next();	
+			view.displayBoatName();
+			String boatName = view.getStringInput();	
 			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);		// The boats name will be first uppercase and lowercase after that
 			goBackOnDemand(boatName);		
 			checkBoatName(boatName);		
-			System.out.println("Please choose a boat type:" + "\n1.Sailboat" + "\n2.Motorsailer" + "\n3.Kayak\\Canoe"
-					+ "\n4.Other" + "\n");
-			System.out.print("Input: ");
-			String selectBoat = input.next();		// Getting the input for boatType of boat the user is wishing to register
-			BoatType boatType = null;
+			view.displayBoatType();
+			String selectBoat = view.getStringInput();		// Getting the input for boatType of boat the user is wishing to register
+			
 			goBackOnDemand(selectBoat);	
-
-			if (selectBoat.equals("1")) {			// Different kinds of boat boatTypes
-				boatType = BoatType.Sailboat;
-			} else if (selectBoat.equals("2")) {
-				boatType = BoatType.Motorsailer;
-			} else if (selectBoat.equals("3")) {
-				boatType = BoatType.Canoe;
-			} else if (selectBoat.equals("4")) {
-				boatType = BoatType.Other;
-			} else {
-				System.out.println("\n\t\t*** Input error, try again! ***");
-				goBack();
-			}
-
-			System.out.print("Boat length (in metres): ");		
-			int boatLength = input.nextInt();
+			BoatType boatType = BoatType.Other; //Default boat type is Other
+			boatType = setBoatType(selectBoat, boatType, view);;
+			
+			view.displayBoatLength();
+			int boatLength = view.getIntInput();
 			goBackOnDemand(Integer.toString(boatLength));
 			bt.setLength(boatLength);							// Setting the values of the boat to the created boat object
 			bt.setType(boatType);
@@ -240,120 +226,100 @@ public class MemberController {
 			int numberOfBoats = mem.getNumOfBoats();
 			numberOfBoats++;
 			mem.setNumOfBoats(numberOfBoats);					// Increment the number of boats of the person
-			c.boatAdded(); 
+			view.boatAdded(); 
 			goBack();
 			
 		} catch (Exception e) {
-			System.out.println("\n\t\t*** Input error, try again! ***");
+			view.inputError();
 			goBack();
 		}
-	}
+	}	
 
 	// Update a boat > get member by ID > check if boat exists (if boat registry is empty) > update info 
-	public void updateBoat(Scanner input) {
-		System.out.println("--------------------------------------------"
-				+ "\nUpdate an existing boat! (Type 0 to go back)\n");
-		System.out.print("Please enter existing member's ID: ");
-		String temp = input.next();		// Takes a string input for member ID
+	public void updateBoat(IView view) {
+		view.displayUpdateBoat();
+		String temp = view.getStringInput();		// Takes a string input for member ID
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);	// Formats the ID so that the Letter is uppercase
 		goBackOnDemand(temp);
 		ifEmptyGoBack();		// If the members registry is empty, goes back to main menu
 		for (int i = 0; i < getMembers().size(); i++) { 
 			if (getMembers().get(i).getId().equals(temp)) {
 				if (getMembers().get(i).getBoats().isEmpty()) {
-					System.out.print("\n\t\t*** There are no boats to remove, please register a boat first! ***");
+					view.boatsNotFoundError();
 					goBack();
 				}
 			}
 		}
-		System.out.print("Please enter existing boat's name: ");
-		String eBoatName = input.next();
+		view.findBoat();
+		String eBoatName = view.getStringInput();
 		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1); 
 		goBackOnDemand(temp);
 		for (int i = 0; i < getMembers().size(); i++) {		// Nested for loop to go through each member and look through their boat collection to find the boat
 			for (int j = 0; j < getMembers().get(i).getBoats().size(); j++) {
 				if (getMembers().get(i).getBoats().get(j).getName().equals(eBoatName)) {		// Checking to see if the boat name is already applied to another boat in the members collection
 					try {
-						System.out.print("\nBoat found!"
-								+ "\nUpdate boat name: ");
-						String boatName = input.next();
+						view.displayBoatFound();
+						String boatName = view.getStringInput();
 						goBackOnDemand(boatName);
-						checkBoatName(boatName);		// input boat name
-						System.out.print("Please choose a new boat type:" + "\n1.Sailboat" + "\n2.Motorsailer"
-								+ "\n3.Kayak\\Canoe" + "\n4.Other" + "\n");
-						System.out.print("Input: ");
-						String selectBoat = input.next();		// Getting the input for boatType of boat 
-						BoatType boatType = null;
+						checkBoatName(boatName);
+						view.update(); 
+						view.displayBoatType();
+						String selectBoat = view.getStringInput();		// Getting the input for boatType of boat 
 						goBackOnDemand(selectBoat);	
-
-						if (selectBoat.equals("1")) {			// Different kinds of boat boatTypes
-							boatType = BoatType.Sailboat;
-						} else if (selectBoat.equals("2")) {
-							boatType = BoatType.Motorsailer;
-						} else if (selectBoat.equals("3")) {
-							boatType = BoatType.Canoe;
-						} else if (selectBoat.equals("4")) {
-							boatType = BoatType.Other;
-						} else {
-							System.out.println("\n\t\t*** Input error, try again! ***");
-							goBack();
-						}
-						
-						System.out.print("Update boat length (in meters): ");
-						int boatLength = input.nextInt();		// Input boat length
+						BoatType boatType = BoatType.Other;
+						boatType = setBoatType(selectBoat, boatType, view);
+						view.update();
+						view.displayBoatLength();
+						int boatLength = view.getIntInput();		// Input boat length
 						goBackOnDemand(Integer.toString(boatLength));                           
 						getMembers().get(i).getBoats().get(j).setName(boatName);
 						getMembers().get(i).getBoats().get(j).setType(boatType);
 						getMembers().get(i).getBoats().get(j).setLength(boatLength);
-						c.boatUpdated();		// Message to show boat has been updated
+						view.boatUpdated();		// Message to show boat has been updated
 						goBack();
 					} catch (Exception e) {
-						System.out.println("\n\t\t*** Input error, try again! ***");
+						view.inputError();
 						goBack();
 					}
 				}
 			}
 		}
-		System.out.println("\n\t\t*** Something went wrong, try again! ***");
+		view.inputError();
 		goBack();
 
 	}
 
 	// Remove boat > get member by ID > check if boat exists > remove from registry
-	public void removeBoat(Scanner input) {
-
-		System.out.println("--------------------------------------------"
-				+ "\nDelete an existing boat! (Type 0 to go back)\n");
-		System.out.print("Please enter existing member's ID: ");
-		String temp = input.next();			// Input for getting member ID, and for checking what member it is
+	public void removeBoat(IView view) {
+		view.displayRemoveBoat();
+		String temp = view.getStringInput();			// Input for getting member ID, and for checking what member it is
 		goBackOnDemand(temp);
 		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
 		ifEmptyGoBack();		// If registry is empty, go back
 		Member mem = getMembers().get(getMemberID(temp));
 		if (mem.getBoats().isEmpty()) {
-			System.out.println("\n\t\t*** This member has no boats! Please register a boat to this member first! ***");
+			view.boatsNotFoundError();
 			goBack();
 		}
-		System.out.print("Please enter existing boat's name: ");
-		String eBoatName = input.next();		// Input for boat name
+		view.findBoat();
+		String eBoatName = view.getStringInput();		// Input for boat name
 		goBackOnDemand(temp);
 		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1);
 		for (int i = 0; i < mem.getBoats().size(); i++) {
 			try {
 				if (mem.getBoats().get(i).getName().equals(eBoatName)) {
-					System.out.println("Boat found!");
 					mem.getBoats().remove(i);			// Remove boat from member collection
 					int numOfBoats = mem.getNumOfBoats();
 					numOfBoats--;
 					mem.setNumOfBoats(numOfBoats);
-					c.boatRemoved();					
+					view.boatRemoved();					
 					goBack();
 				} else {
-					System.out.println("\n\t\t*** Sorry, no such boat found! ***");
+					view.inputError();
 					goBack();
 				}
 			} catch (Exception e) {
-				System.out.println("\n\t\t*** Input error, try again! ***");
+				view.inputError();
 				goBack();
 			}
 		}
@@ -500,5 +466,21 @@ public class MemberController {
 
 	private ArrayList<Member> getMembers() { // Shortcut for getting the ArrayList from the Registry
 		return memberList.getRegistry();
+	}
+	
+	private BoatType setBoatType(String input, BoatType boat, IView view) {
+		if (input.equals("1")) {			// Different kinds of boat boatTypes
+			boat = BoatType.Sailboat;
+		} else if (input.equals("2")) {
+			boat = BoatType.Motorsailer;
+		} else if (input.equals("3")) {
+			boat = BoatType.Canoe;
+		} else if (input.equals("4")) {
+			boat = BoatType.Other;
+		} else {
+			view.inputError();
+			goBack();
+		}
+		return boat;
 	}
 }

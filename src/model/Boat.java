@@ -50,7 +50,7 @@ public class Boat {
 	public void setType(BoatType boatType) {	
 		try {
 			this.type = boatType;
-			if(!validateType(boatType))
+			if(validateType(boatType) == false)
 			{
 				throw new IllegalArgumentException();
 			}
@@ -64,13 +64,13 @@ public class Boat {
 	}
 
 
-	public void setLength(int boatLength) throws Exception {
+	public void setLength(int boatLength) {
 		
 		try {
 			this.length = boatLength;
-			if(!validateLength(boatLength))
+			if(validateLength(boatLength) == false)
 			{
-				throw new Exception();
+				throw new IllegalArgumentException();
 			}
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -80,16 +80,19 @@ public class Boat {
 
 	//data validation helper methods
 	private boolean validateLength(int length) {
-		return (length >= 0);
+		if(length >= 0) {
+			return true;
+		}
+		return false;
 	}
 	
-	private boolean validateType(BoatType type) {
+	private boolean validateType(BoatType bType) {
 		for(BoatType validType : BoatType.values()) {
-			if(validType != type) {
-				return false;
+			if(validType == bType) {
+				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	
