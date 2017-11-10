@@ -1,7 +1,7 @@
 package view;
 
+import model.Boat;
 import model.Member;
-import model.Registry;
 
 public interface IView {
 	
@@ -16,9 +16,13 @@ public interface IView {
 	void displayUpdateBoat();
 	void displayRemoveBoat();
 	
-	void displayCompact(Member mem);
-	void displayVerbose(Registry reg);
-	void displaySpecific(Registry reg);
+	void displayCompactTitle();
+	void displayVerboseTitle();
+	void displaySpecificTitle();
+	
+	void printBoatArray(Iterable<Boat> boatList);
+	void printMember(Member mem);
+	void printCompactMember(Member mem);
 	
 	//input specific
 	String getStringInput();
@@ -29,11 +33,18 @@ public interface IView {
 	void displayPersNum();
 	void displayMembersID();
 	
+	void displayBoatName();
+	void displayBoatType();
+	void displayBoatLength();
+	
 	void updateFirstName();
 	void updateLastName();
 	void updatePersNum();
 	
-
+	void displayBoatFound();
+	void findBoat();
+	void update();
+	void enterID();
 	
 	//successful operations
 	void memberAdded();
@@ -43,11 +54,21 @@ public interface IView {
 	void boatAdded();
 	void boatUpdated();
 	void boatRemoved();
-	
 	void savedSuccessfully();
+	void fileCreated();
+	void membersLoaded();
 	
 	//errors
+	void inputError(); 
 	void persNumErr();
 	void goBackError();
 	void IDNotFoundError();
+	void boatsNotFoundError();
+	void emptyRegistry();
+	void boatTaken();
+	void whitespaceUsed();
+	void otherCharUsed(String name, int position);
+	void fileNotFound();
+	void exitOnEmpty();
+	
 }
