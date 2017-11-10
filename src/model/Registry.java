@@ -31,7 +31,11 @@ public class Registry {
 		this.memberList = members;
 	}
 
-	public ArrayList<Member> getRegistry() {
+	public boolean checkIfEmpty() {
+		return memberList.isEmpty();
+	}
+	
+	public Iterable<Member> returnMemberList() {
 		return memberList;
 	}
 	
@@ -40,6 +44,10 @@ public class Registry {
 		uniqueId++;
 		mem.setId(newId);
 		memberList.add(mem);
+	}
+	
+	public void removeMember(Member mem) {
+		memberList.remove(mem);
 	}
 	
 	public Member getMember(String ID) {
