@@ -25,7 +25,7 @@ public class RegistryController {
 	// Take all the members in the memberList ArrayList and put them into a file on
 	// the desktop
 	public void saveToRegistry(Registry reg, File file) throws IOException, JAXBException {
-		if (reg.getRegistry().isEmpty()) {			// If Registry is empty, prints out following message.
+		if (reg.checkIfEmpty()) {			// If Registry is empty, prints out following message.
 			System.out.println("\n\t\t*** Sorry, you do not have any members in the registry to save! Exiting! ***");
 			System.exit(0);
 		} else {
@@ -56,22 +56,22 @@ public class RegistryController {
 	
 	public String printMemberArray(Registry memberList) {
 		StringBuilder list = new StringBuilder();
-		for(int i=0; i < memberList.getRegistry().size(); i++) {
-			list.append("\nMember: "  + memberList.getRegistry().get(i).getName() + " "
-	                + "\nMember ID: " + memberList.getRegistry().get(i).getId()
-	                + " " + "\nPersonal Number: " + memberList.getRegistry().get(i).getPersNum()
-	                + " " + "\nNumber of Boats: " + memberList.getRegistry().get(i).getNumOfBoats()
+		for(Member m : memberList.returnMemberList()) {
+			list.append("\nMember: "  + m.getName() + " "
+	                + "\nMember ID: " + m.getId()
+	                + " " + "\nPersonal Number: " + m.getPersNum()
+	                + " " + "\nNumber of Boats: " + m.getNumOfBoats()
 	                +"\n" + "----------------------------");
 		}	
 		return list.toString();
 	}
 	
-	public String printBoatArray(ArrayList<Boat> boatList) {
+	public String printBoatArray(Iterable<Boat> boatList) {
 		StringBuilder list = new StringBuilder();
-		for(int i=0; i < boatList.size(); i++) {
-			list.append("\nName: " + boatList.get(i).getName()
-					+ "\nBoat type: " + boatList.get(i).getType()
-					+ "\nBoat length (meters): " + boatList.get(i).getLength()
+		for(Boat b : boatList) {
+			list.append("\nName: " + b.getName()
+					+ "\nBoat type: " + b.getType()
+					+ "\nBoat length (meters): " + b.getLength()
 	                +"\n" + "----------------------------");
 		}	
 		return list.toString();
