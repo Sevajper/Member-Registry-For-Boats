@@ -35,29 +35,44 @@ public class Registry {
 		return memberList.isEmpty();
 	}
 	
+	/*
+	 * Return the member list
+	 */
 	public Iterable<Member> returnMemberList() {
 		return memberList;
 	}
 	
+	/*
+	 * Add a member to the list
+	 */
 	public void addMember(Member mem) {
 		String newId = uniqueId + mem.createID();
 		uniqueId++;
 		mem.setId(newId);
 		memberList.add(mem);
 	}
-	
+	/*
+	 * Remove a member from the list
+	 */
 	public void removeMember(Member mem) {
 		memberList.remove(mem);
 	}
 	
+	/*
+	 * Return a specific member from the list based on ID
+	 */
 	public Member getMember(String ID) {
 		Member mem = new Member();
-		for (int i = 0; i < memberList.size(); i++) {
+		try {
+			for (int i = 0; i < memberList.size(); i++) {
 				if (memberList.get(i).getId().equals(ID)) {
 					mem = memberList.get(i);
-					return mem;
 				}
 			}
-		return null;
+		}
+		catch(Exception e) {
+			return null;
+		}
+		return mem;
 	}
 }
