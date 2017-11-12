@@ -67,12 +67,13 @@ public class Registry {
 			for (int i = 0; i < memberList.size(); i++) {
 				if (memberList.get(i).getId().equals(ID)) {
 					mem = memberList.get(i);
+					return mem;
 				}
 			}
 		}
 		catch(Exception e) {
-			return null;
+			e.printStackTrace();
 		}
-		return mem;
+		return null;
 	}
 }

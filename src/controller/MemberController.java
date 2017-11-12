@@ -136,6 +136,7 @@ public class MemberController {
 		ifEmptyGoBack();	// If the registry is empty, there are no members to update, it will print an error message and go back to the main menu
 		try {
 			Member mem = memberList.getMember(temp);
+			checkID(mem);
 			view.updateFirstName();
 			String firstName = view.getNameInput();
 			firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);	// Set first letter to uppercase
@@ -182,6 +183,7 @@ public class MemberController {
 		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2); // Formatting the Members ID to allow leisure of writing for the user
 		try {
 			Member mem = memberList.getMember(temp);		// Getting a member with the ID value that was input
+			checkID(mem);
 			memberList.removeMember(mem);								// Removing said member from the registry
 			view.memberRemoved();										// Giving confirmation that the Member has been removed
 			goBack();
@@ -202,6 +204,8 @@ public class MemberController {
 		try {
 			Boat bt = new Boat();		// Create a new boat to have its details set and registered to a member
 			Member mem = memberList.getMember(id);
+			checkID(mem);
+			
 			view.displayBoatName();
 			String boatName = view.getStringInput();	
 			boatName = boatName.substring(0, 1).toUpperCase() + boatName.substring(1);		// The boats name will be first uppercase and lowercase after that
@@ -215,6 +219,7 @@ public class MemberController {
 			
 			view.displayBoatLength();
 			int boatLength = view.getIntInput();
+
 			goBackOnDemand(Integer.toString(boatLength));
 			bt.setLength(boatLength);							// Setting the values of the boat to the created boat object
 			bt.setType(boatType);
@@ -241,51 +246,44 @@ public class MemberController {
 		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);	// Formats the ID so that the Letter is uppercase
 		goBackOnDemand(temp);
 		ifEmptyGoBack();		// If the members registry is empty, goes back to main menu
-		for (Member m : memberList.returnMemberList()) { 
-			if (m.getId().equals(temp)) {
-				if (m.checkIfBoatsEmpty()) {
-					view.boatsNotFoundError();
+		
+		Member mem = memberList.getMember(temp);
+		checkID(mem);
+		
+		view.enterBoatName();
+		String eBoatName = view.getStringInput();
+		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1); 
+		goBackOnDemand(temp);
+		for (Boat b : mem.getBoats()) {
+			if (b.getName().equals(eBoatName)) {		// Checking to see if the boat name is already applied to another boat in the members collection
+				try {
+					view.displayBoatFound();
+					String boatName = view.getStringInput();
+					goBackOnDemand(boatName);
+					checkBoatName(boatName);		// input boat name
+					view.update(); 
+					view.displayBoatType();
+					String selectBoat = view.getStringInput();		// Getting the input for boatType of boat 
+					goBackOnDemand(selectBoat);	
+					BoatType boatType = BoatType.Other;
+					boatType = setBoatType(selectBoat, boatType, view);
+					view.update();
+					view.displayBoatLength();
+					int boatLength = view.getIntInput();		// Input boat length
+					goBackOnDemand(Integer.toString(boatLength));                           
+					b.setName(boatName);
+					b.setType(boatType);
+					b.setLength(boatLength);
+					view.boatUpdated();		// Message to show boat has been updated
+					goBack();
+				} catch (Exception e) {
+					view.inputError();
 					goBack();
 				}
 			}
 		}
-		view.findBoat();
-		String eBoatName = view.getStringInput();
-		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1); 
-		goBackOnDemand(temp);
-		for (Member m : memberList.returnMemberList()) {		// Nested for loop to go through each member and look through their boat collection to find the boat
-			for (Boat b : m.getBoats()) {
-				if (b.getName().equals(eBoatName)) {		// Checking to see if the boat name is already applied to another boat in the members collection
-					try {
-						view.displayBoatFound();
-						String boatName = view.getStringInput();
-						goBackOnDemand(boatName);
-						checkBoatName(boatName);		// input boat name
-						view.update(); 
-						view.displayBoatType();
-						String selectBoat = view.getStringInput();		// Getting the input for boatType of boat 
-						goBackOnDemand(selectBoat);	
-						BoatType boatType = BoatType.Other;
-						boatType = setBoatType(selectBoat, boatType, view);
-						view.update();
-						view.displayBoatLength();
-						int boatLength = view.getIntInput();		// Input boat length
-						goBackOnDemand(Integer.toString(boatLength));                           
-						m.getBoat().setName(boatName);
-						m.getBoat().setType(boatType);
-						m.getBoat().setLength(boatLength);
-						view.boatUpdated();		// Message to show boat has been updated
-						goBack();
-					} catch (Exception e) {
-						view.inputError();
-						goBack();
-					}
-				}
-			}
-		}
-		view.inputError();
+		view.boatNotFound();
 		goBack();
-
 	}
 
 	// Remove boat > get member by ID > check if boat exists > remove from registry
@@ -296,11 +294,12 @@ public class MemberController {
 		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
 		ifEmptyGoBack();		// If registry is empty, go back
 		Member mem = memberList.getMember(temp);
+		checkID(mem);
 		if (mem.checkIfBoatsEmpty()) {
 			view.boatsNotFoundError();
 			goBack();
 		}
-		view.findBoat();
+		view.enterBoatName();
 		String eBoatName = view.getStringInput();		// Input for boat name
 		goBackOnDemand(eBoatName); 
 		eBoatName = eBoatName.substring(0, 1).toUpperCase() + eBoatName.substring(1);
@@ -414,6 +413,13 @@ public class MemberController {
 			}
 		}
 	}
+	
+	private void checkID(Member mem) {
+		if(mem == null) {
+			mainView.IDNotFoundError();
+			goBack();
+		}
+	}
 
 	private boolean charIsDigit(String temp) { // Helper method for nameCheckDigit() - checks that input is integers
 		for (int i = 0; i < 6; i++) {
@@ -463,4 +469,5 @@ public class MemberController {
 		}
 		return boat;
 	}
+	
 }

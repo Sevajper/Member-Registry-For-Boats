@@ -132,19 +132,23 @@ public class Console implements IView{
 	}
 	
 	public int getIntInput() {
-		int i = 0;
-		try
-		{
-		  System.out.print("");
-		  i = scan.nextInt();
-		}
-		catch(IllegalArgumentException exception)
-		{
-		  System.err.println(exception);
-		}
+		int i = 100;
+		do {
+		    while (!scan.hasNextInt()) {
+		    	inputError();
+		    	input();
+		        scan.next(); 
+		    }
+		    i = scan.nextInt();
+		} while (i < 0);
 		return i;
 	}
 	
+	@Override
+	public void input() {
+		System.out.print("Input: ");
+	}
+
 	@Override
 	public String getNameInput() {
 		String temp = scan.next();
@@ -207,7 +211,7 @@ public class Console implements IView{
 	}
 	
 	@Override
-	public void findBoat() {
+	public void enterBoatName() {
 		System.out.print("Please enter existing boat's name: ");
 	}
 	
@@ -339,4 +343,13 @@ public class Console implements IView{
 		System.out.println("\n\t\t*** Sorry, you do not have any members in the registry to save! Exiting! ***");
 	}
 	
+	@Override
+	public void boatNotFound() {
+		System.out.println("\n\t\t*** Sorry, there is no boat with that name! ***");
+	}
+	
+	@Override
+	public void invalidBoatLength() {
+		System.out.println("\n\t\t*** Length must be a positive integer! ***");
+	}
 }
