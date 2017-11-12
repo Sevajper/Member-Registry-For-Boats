@@ -31,7 +31,7 @@ public class Registry {
 		this.memberList = members;
 	}
 
-	public boolean checkIfEmpty() {
+	public boolean checkIfListEmpty() {
 		return memberList.isEmpty();
 	}
 	
