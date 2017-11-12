@@ -127,24 +127,41 @@ public class Console implements IView{
 	/*
 	 * Input specific 
 	 */
+	@Override
 	public String getStringInput() {
 		return scan.next();
 	}
 	
+	@Override
 	public int getIntInput() {
-		int i = 0;
-		try
-		{
-		  System.out.print("");
-		  i = scan.nextInt();
-		}
-		catch(IllegalArgumentException exception)
-		{
-		  System.err.println(exception);
-		}
+		int i = 1000;
+		do {
+		    while (!scan.hasNextInt()) {
+		        scan.next(); 
+		        input();
+		    }
+		    i = scan.nextInt();
+		} while (i < 0);
 		return i;
 	}
 	
+	@Override
+	public int getBoatLength(){
+		 String character = scan.next();
+		 for(int i = 0; i < character.length();i++) {
+			 if(!Character.isDigit(character.charAt(i))) {
+				 return 1010101010;
+		  	}
+		 }
+		  int result = Integer.parseInt(character);
+		  return result; 
+		}
+	
+	@Override
+	public void input() {
+		System.out.print("Try again! Input: ");
+	}
+
 	@Override
 	public String getNameInput() {
 		String temp = scan.next();
@@ -207,7 +224,7 @@ public class Console implements IView{
 	}
 	
 	@Override
-	public void findBoat() {
+	public void enterBoatName() {
 		System.out.print("Please enter existing boat's name: ");
 	}
 	
@@ -339,4 +356,13 @@ public class Console implements IView{
 		System.out.println("\n\t\t*** Sorry, you do not have any members in the registry to save! Exiting! ***");
 	}
 	
+	@Override
+	public void boatNotFound() {
+		System.out.println("\n\t\t*** Sorry, there is no boat with that name! ***");
+	}
+	
+	@Override
+	public void invalidBoatLength() {
+		System.out.println("\n\t\t*** Length must be a positive integer! ***");
+	}
 }

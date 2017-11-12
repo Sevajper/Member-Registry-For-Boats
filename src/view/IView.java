@@ -26,8 +26,10 @@ public interface IView {
 	
 	//input specific
 	String getStringInput();
+	void input();
 	int getIntInput();
 	String getNameInput();
+	int getBoatLength();
 	
 	void displayLastName();
 	void displayPersNum();
@@ -42,7 +44,7 @@ public interface IView {
 	void updatePersNum();
 	
 	void displayBoatFound();
-	void findBoat();
+	void enterBoatName();
 	void update();
 	void enterID();
 	
@@ -70,5 +72,7 @@ public interface IView {
 	void otherCharUsed(String name, int position);
 	void fileNotFound();
 	void exitOnEmpty();
+	void boatNotFound();
+	void invalidBoatLength();
 	
 }
