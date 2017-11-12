@@ -29,6 +29,7 @@ public interface IView {
 	void input();
 	int getIntInput();
 	String getNameInput();
+	int getBoatLength();
 	
 	void displayLastName();
 	void displayPersNum();

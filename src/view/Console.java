@@ -127,17 +127,18 @@ public class Console implements IView{
 	/*
 	 * Input specific 
 	 */
+	@Override
 	public String getStringInput() {
 		return scan.next();
 	}
 	
+	@Override
 	public int getIntInput() {
-		int i = 100;
+		int i = 1000;
 		do {
 		    while (!scan.hasNextInt()) {
-		    	inputError();
-		    	input();
 		        scan.next(); 
+		        input();
 		    }
 		    i = scan.nextInt();
 		} while (i < 0);
@@ -145,8 +146,20 @@ public class Console implements IView{
 	}
 	
 	@Override
+	public int getBoatLength(){
+		 String character = scan.next();
+		 for(int i = 0; i < character.length();i++) {
+			 if(!Character.isDigit(character.charAt(i))) {
+				 return 1010101010;
+		  	}
+		 }
+		  int result = Integer.parseInt(character);
+		  return result; 
+		}
+	
+	@Override
 	public void input() {
-		System.out.print("Input: ");
+		System.out.print("Try again! Input: ");
 	}
 
 	@Override

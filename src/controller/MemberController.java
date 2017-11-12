@@ -19,7 +19,6 @@ public class MemberController {
 	private File file = new File("Member_Registry.txt");
 	private RegistryController rc = new RegistryController();
 	ArrayList<Member> registryList = new ArrayList<Member>();
-	
 
 	// Take the input from the user and compare it with switch cases
 	public void getInputResult() { 
@@ -62,7 +61,8 @@ public class MemberController {
 			case 10:
 				System.exit(0); //Exit application
 			case 100:
-				appStart(mainView); // Display instructions
+				mainView.displayWelcome();
+				getInputResult();
 			default:
 				mainView.inputError(); // Handle wrong input
 				goBack();
@@ -83,7 +83,6 @@ public class MemberController {
 				e.printStackTrace();
 			}
 			view.fileCreated();
-			
 		} else if (file.length() == 0) {
 			view.displayWelcome();
 			getInputResult();
@@ -132,7 +131,7 @@ public class MemberController {
 		view.displayUpdateMember();
 		String temp = view.getStringInput();
 		goBackOnDemand(temp);
-		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);	// Making the first Letter of the persons first name to be uppercase
+		temp = IDtoUppercase(temp); // Making the first letter found in the persons ID to be uppercase
 		ifEmptyGoBack();	// If the registry is empty, there are no members to update, it will print an error message and go back to the main menu
 		try {
 			Member mem = memberList.getMember(temp);
@@ -144,10 +143,10 @@ public class MemberController {
 			nameCheckDigit(firstName);		// Checks that the name does not contain anything but letters
 			view.updateLastName();
 			String lastName = view.getNameInput();		// Check that last name does not contain anything but letters
-			lastName = lastName.substring(0, 1) + lastName.substring(1);
+			lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
 			goBackOnDemand(lastName);
 			nameCheckDigit(lastName);
-			String memberName = lastName + " " + lastName;
+			String memberName = firstName + " " + lastName;
 			view.updatePersNum();
 			String persnum = view.getStringInput();
 			goBackOnDemand(persnum);
@@ -158,7 +157,6 @@ public class MemberController {
 				view.persNumErr();
 				goBack();
 			}
-
 			mem.setName(memberName);
 			view.memberUpdated();
 			goBack();
@@ -168,7 +166,7 @@ public class MemberController {
 			goBack();
 		}
 	}
-	
+
 	// Remove member > check if user really wants to remove > check if empty > remove from registry
 	public void removeMember(IView view) {
 		ifEmptyGoBack();		// Can't remove any members if there are no members right?
@@ -180,7 +178,7 @@ public class MemberController {
 			view.displayMembersID();
 		}
 		String temp = view.getStringInput();
-		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2); // Formatting the Members ID to allow leisure of writing for the user
+		temp = IDtoUppercase(temp); // Formatting the Members ID to allow leisure of writing for the user
 		try {
 			Member mem = memberList.getMember(temp);		// Getting a member with the ID value that was input
 			checkID(mem);
@@ -197,10 +195,10 @@ public class MemberController {
 	// Register a boat > get member ID > find member > set boat info > add boat to Member
 	public void registerBoat(IView view) {
 		view.displayAddBoat();
-		String id = view.getStringInput();
-		goBackOnDemand(id);
-		id = id.substring(0, 1) + id.substring(1, 2).toUpperCase() + id.substring(2); // The Member ID is taken because the boat must be connected to a certain member
-		ifEmptyGoBack(); // If the registry is empty, then this will error message will show
+		String id = view.getStringInput(); // The Member ID is taken because the boat must be connected to a certain member
+		goBackOnDemand(id);				
+		id = IDtoUppercase(id); 			
+		ifEmptyGoBack(); 				// If the registry is empty, then this will error message will show
 		try {
 			Boat bt = new Boat();		// Create a new boat to have its details set and registered to a member
 			Member mem = memberList.getMember(id);
@@ -218,8 +216,8 @@ public class MemberController {
 			boatType = setBoatType(selectBoat, boatType, view);
 			
 			view.displayBoatLength();
-			int boatLength = view.getIntInput();
-
+			int boatLength = view.getBoatLength();
+			checkBoatLength(boatLength); //go back if the boat length is invalid
 			goBackOnDemand(Integer.toString(boatLength));
 			bt.setLength(boatLength);							// Setting the values of the boat to the created boat object
 			bt.setType(boatType);
@@ -243,7 +241,7 @@ public class MemberController {
 	public void updateBoat(IView view) {
 		view.displayUpdateBoat();
 		String temp = view.getStringInput();	// Takes a string input for member ID
-		temp = temp.substring(0, 1).toUpperCase() + temp.substring(1);	// Formats the ID so that the Letter is uppercase
+		temp = IDtoUppercase(temp); 	// Formats the ID so that the letter is uppercase
 		goBackOnDemand(temp);
 		ifEmptyGoBack();		// If the members registry is empty, goes back to main menu
 		
@@ -270,6 +268,7 @@ public class MemberController {
 					view.update();
 					view.displayBoatLength();
 					int boatLength = view.getIntInput();		// Input boat length
+					checkBoatLength(boatLength);
 					goBackOnDemand(Integer.toString(boatLength));                           
 					b.setName(boatName);
 					b.setType(boatType);
@@ -291,7 +290,7 @@ public class MemberController {
 		view.displayRemoveBoat();
 		String temp = view.getStringInput();		// Input for getting member ID, and for checking what member it is
 		goBackOnDemand(temp);
-		temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
+		temp = IDtoUppercase(temp); 
 		ifEmptyGoBack();		// If registry is empty, go back
 		Member mem = memberList.getMember(temp);
 		checkID(mem);
@@ -353,16 +352,15 @@ public class MemberController {
 			view.enterID();
 			String temp = view.getStringInput();
 			goBackOnDemand(temp);
-			temp = temp.substring(0, 1) + temp.substring(1, 2).toUpperCase() + temp.substring(2);
+			temp = IDtoUppercase(temp); 
 			Member mem = reg.getMember(temp);
-			if (mem == null) {
-				view.IDNotFoundError();
-				goBack();
-			} else {
-				view.printMember(mem);
+			checkID(mem);
+			view.printMember(mem);
+			if(mem.getBoats().iterator().hasNext()) {
 				view.printBoatArray(mem.getBoats());
-				goBack();
 			}
+			goBack();
+			
 		}
 	
 	/*
@@ -470,4 +468,19 @@ public class MemberController {
 		return boat;
 	}
 	
+	private void checkBoatLength(int boatLength) {
+		if(boatLength == 1010101010) {
+			mainView.invalidBoatLength();
+			goBack();
+		}
+	}
+	
+	private String IDtoUppercase(String temp) {
+		 for(int i = 0; i < temp.length();i++) {
+			 if(Character.isLetter(temp.charAt(i))) {
+				  temp = temp.toUpperCase(); 
+		  		}
+		 	} 
+		 return temp;
+		}
 }
