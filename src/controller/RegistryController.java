@@ -25,7 +25,7 @@ public class RegistryController {
 	 * the desktop
 	 */
 	public void saveToRegistry(IView view, Registry reg, File file) throws IOException, JAXBException {
-		if (reg.checkIfEmpty()) {												// If Registry is empty, prints out following message.
+		if (reg.checkIfListEmpty()) {												// If Registry is empty, prints out following message.
 			view.exitOnEmpty();
 			System.exit(0);
 		} else {

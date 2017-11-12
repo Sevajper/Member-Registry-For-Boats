@@ -446,7 +446,7 @@ public class MemberController {
 	}
 
 	private void ifEmptyGoBack() { // Go back to main menu if the member registry is empty
-		if (memberList.checkIfEmpty()) {
+		if (memberList.checkIfListEmpty()) {
 			mainView.emptyRegistry();
 			goBack();
 		}
