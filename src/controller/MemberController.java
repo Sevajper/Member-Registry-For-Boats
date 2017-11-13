@@ -309,15 +309,14 @@ public class MemberController {
 					mem.setNumOfBoats(numOfBoats);
 					view.boatRemoved();					
 					goBack();
-				} else {
-					view.inputError();
-					goBack();
-				}
+				} 
 			} catch (Exception e) {
 				view.inputError();
 				goBack();
 			}
 		}
+			view.boatNotFound();
+			goBack();
 	}
 	
 	// Method to display a detailed list of the members in the registry 
