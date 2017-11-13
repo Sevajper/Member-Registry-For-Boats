@@ -10,7 +10,6 @@ import view.IView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.xml.bind.JAXBException;
 
 public class MemberController {
@@ -18,8 +17,7 @@ public class MemberController {
 	private Registry memberList = new Registry();
 	private File file = new File("Member_Registry.txt");
 	private RegistryController rc = new RegistryController();
-	ArrayList<Member> registryList = new ArrayList<Member>();
-
+	
 	// Take the input from the user and compare it with switch cases
 	public void getInputResult() { 
 		try {
